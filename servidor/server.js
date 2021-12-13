@@ -33,7 +33,6 @@ db.sequelize.sync({force: true}).then(() => {
 // routes
 require('./app/routes/auth.routes')(app);
 require('./app/routes/user.routes')(app);
-require('./app/routes/tutorial.routes')(app);
 require('./app/routes/location.routes')(app);
 require('./app/routes/area.routes')(app);
 require('./app/routes/container.routes')(app);

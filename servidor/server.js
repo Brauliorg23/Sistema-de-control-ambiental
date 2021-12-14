@@ -39,6 +39,16 @@ require('./app/routes/container.routes')(app);
 require('./app/routes/material.routes')(app);
 require('./app/routes/tool.routes')(app);
 require('./app/routes/tree.routes')(app);
+require('./app/routes/moduleC.routes')(app);
+require('./app/routes/moduleM.routes')(app);
+require('./app/routes/reportC.routes')(app);
+require('./app/routes/reportM.routes')(app);
+require('./app/routes/reportT.routes')(app);
+require('./app/routes/typeC.routes')(app);
+require('./app/routes/typeM.routes')(app);
+require('./app/routes/typeT.routes')(app);
+require('./app/routes/typeReportC.routes')(app);
+require('./app/routes/typeReportM.routes')(app);
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8080;
@@ -49,20 +59,32 @@ app.listen(PORT, () => {
 function initial() {
     Role.create({
       id: 1,
-      name: "user"
+      name: "Chequeo de residuos"
     });
    
     Role.create({
       id: 2,
-      name: "moderator"
+      name: "Chequeo de inventario"
     });
    
     Role.create({
       id: 3,
-      name: "admin"
+      name: "chequeo de reserva"
     });
     Role.create({
       id: 4,
-      name: "holaquehaceXD"
+      name: "administrador de inventario"
+    });
+    Role.create({
+      id: 5,
+      name: "administrador de reserva"
+    });
+    Role.create({
+      id: 6,
+      name: "administrador de residuos"
+    });
+    Role.create({
+      id: 7,
+      name: "administrador global"
     });
   }

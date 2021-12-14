@@ -41,7 +41,6 @@ db.typeMs = require("./typeM.model.js")(sequelize, Sequelize);
 db.typeTs = require("./typeT.model.js")(sequelize, Sequelize);
 db.typeReportCs = require("./typeReportC.model.js")(sequelize, Sequelize);
 db.typeReportMs = require("./typeReportM.model.js")(sequelize, Sequelize);
-db.typeReportTs = require("./typeReportT.model.js")(sequelize, Sequelize);
 
 db.role.belongsToMany(db.user, {
   through: "user_roles",
@@ -54,6 +53,6 @@ db.user.belongsToMany(db.role, {
   otherKey: "roleId"
 });
 
-db.ROLES = ["user", "admin", "moderator","colon"];
+db.ROLES = ["user", "admin", "moderator"];
 
 module.exports = db;

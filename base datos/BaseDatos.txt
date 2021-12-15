@@ -1,6 +1,15 @@
 Create table TipoUsuarios(
-Id_TipoUsuario char(8) primary key,
-DescTipoUsuario varchar(20) not null
+id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title varchar(100) NOT NULL,
+description varchar(100) not null,
+published BOOLEAN DEFAULT false
+);
+
+Create table Ubicaciones(
+id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title varchar(100) NOT NULL,
+description varchar(100) not null,
+published BOOLEAN DEFAULT false
 );
 
 Create table TipoReporteContenedores(
@@ -23,11 +32,7 @@ Id_TipoMaterial char(8) primary key,
 DescTipoMaterial varchar(20) not null
 );
 
-Create table Ubicaciones(
-Id_Ubicacion char(8) primary key,
-DescUbicacion varchar(100) not null,
-published BOOLEAN DEFAULT false
-);
+
 
 Create table Areas(
 Id_Area char(8) primary key,
@@ -48,21 +53,21 @@ DescTipoHerramienta varchar(20) not null
 
 Create table Usuarios(
 Id_Usuario char(8) primary key,
-Id_TipoUsuario char(8) not null,
+Id_TipoUsuario int(11) not null AUTO_INCREMENT,
 NombreUsuario varchar(20) not null,
 ApellidoP varchar(20) not null,
 ApellidoM varchar(20) not null,
 Password char(8),
-CONSTRAINT fk_TipoUsuario FOREIGN KEY (Id_TipoUsuario) REFERENCES TipoUsuarios (Id_TipoUsuario)
+CONSTRAINT fk_TipoUsuario FOREIGN KEY (Id_TipoUsuario) REFERENCES TipoUsuarios (id)
 );
 
 
 
 Create table ModuloContenedores(
 Id_ModuloContenedor char(8) primary key,
-Id_Ubicacion char(8) not null,
+Id_Ubicacion int(11) not null AUTO_INCREMENT,
 DescModuloContenedor varchar(20) not null,
-CONSTRAINT fk_Ubicacion FOREIGN KEY (Id_Ubicacion) REFERENCES Ubicaciones (Id_Ubicacion)
+CONSTRAINT fk_Ubicacion FOREIGN KEY (Id_Ubicacion) REFERENCES Ubicaciones (id)
 );
 
 Create table ModuloMaterial(

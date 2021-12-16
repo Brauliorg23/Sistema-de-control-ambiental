@@ -13,40 +13,52 @@ published BOOLEAN DEFAULT false
 );
 
 Create table TipoReporteContenedores(
-Id_TipoReporteContenedor char(8) primary key,
-DescTipoReporteContenedor varchar(20) not null
+id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title varchar(100) NOT NULL,
+description varchar(100) not null,
+published BOOLEAN DEFAULT false
 );
 
 Create table TipoReporteMateriales(
-Id_TipoReporteMaterial char(8) primary key,
-DescTipoReporteMaterial varchar(20) not null
+id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title varchar(100) NOT NULL,
+description varchar(100) not null,
+published BOOLEAN DEFAULT false
 );
 
 Create table TipoContenedores(
-Id_TipoContenedor char(8) primary key,
-DescTipoContenedor varchar(20) not null
+id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title varchar(100) NOT NULL,
+description varchar(100) not null,
+published BOOLEAN DEFAULT false
 );
 
 Create table TipoMateriales(
-Id_TipoMaterial char(8) primary key,
-DescTipoMaterial varchar(20) not null
+id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title varchar(100) NOT NULL,
+description varchar(100) not null,
+published BOOLEAN DEFAULT false
 );
 
-
-
 Create table Areas(
-Id_Area char(8) primary key,
-DescArea varchar(20) not null
+id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title varchar(100) NOT NULL,
+description varchar(100) not null,
+published BOOLEAN DEFAULT false
 );
 
 Create table Arboles(
-Id_Arbol char(8) primary key,
-DescArbol varchar(20) not null
+id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title varchar(100) NOT NULL,
+description varchar(100) not null,
+published BOOLEAN DEFAULT false
 );
 
 Create table TipoHerramientas(
-Id_TipoHerramienta char(8) primary key,
-DescTipoHerramienta varchar(20) not null
+id int(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+title varchar(100) NOT NULL,
+description varchar(100) not null,
+published BOOLEAN DEFAULT false
 );
 
 
@@ -61,56 +73,55 @@ Password char(8),
 CONSTRAINT fk_TipoUsuario FOREIGN KEY (Id_TipoUsuario) REFERENCES TipoUsuarios (id)
 );
 
-
-
 Create table ModuloContenedores(
 Id_ModuloContenedor char(8) primary key,
-Id_Ubicacion int(11) not null AUTO_INCREMENT,
+Id_Ubicacion int(11) not null,
 DescModuloContenedor varchar(20) not null,
 CONSTRAINT fk_Ubicacion FOREIGN KEY (Id_Ubicacion) REFERENCES Ubicaciones (id)
 );
 
 Create table ModuloMaterial(
 Id_ModuloMaterial char(8) primary key,
-Id_Area char(8) not null,
+Id_Area int(11) not null,
 DescModuloMaterial varchar(20) not null,
-CONSTRAINT fk_Area FOREIGN KEY (Id_Area) REFERENCES Areas (Id_Area)
+CONSTRAINT fk_Area FOREIGN KEY (Id_Area) REFERENCES Areas (id)
 );
+
 
 
 Create table Materiales(
 Id_Material char(8) primary key,
-Id_TipoMaterial char(8) not null,
+Id_TipoMaterial int(11) not null,
 Id_ModuloMaterial char(8) not null,
 DescMaterial varchar(20) not null,
-CONSTRAINT fk_TipoMaterial FOREIGN KEY (Id_TipoMaterial) REFERENCES TipoMateriales (Id_TipoMaterial),
+CONSTRAINT fk_TipoMaterial FOREIGN KEY (Id_TipoMaterial) REFERENCES TipoMateriales (id),
 CONSTRAINT fk_ModuloMaterial FOREIGN KEY (Id_ModuloMaterial) REFERENCES ModuloMaterial (Id_ModuloMaterial)
 );
 
 Create table Herramientas(
 Id_Herramienta char(8) primary key,
-Id_TipoHerramienta char(8) not null,
+Id_TipoHerramienta int(11) not null,
 Id_ModuloMaterial2 char(8) not null,
 DescMaterial varchar(20) not null,
-CONSTRAINT fk_TipoHerramienta FOREIGN KEY (Id_TipoHerramienta) REFERENCES TipoHerramientas (Id_TipoHerramienta),
+CONSTRAINT fk_TipoHerramienta FOREIGN KEY (Id_TipoHerramienta) REFERENCES TipoHerramientas (id),
 CONSTRAINT fk_ModuloMaterial2 FOREIGN KEY (Id_ModuloMaterial2) REFERENCES ModuloMaterial (Id_ModuloMaterial)
 );
 
 Create table Contenedores(
 Id_Contenedor char(8) primary key,
-Id_TipoContenedor char(8) not null,
+Id_TipoContenedor int(11) not null,
 Id_ModuloContenedor char(8) not null,
 DescContenedor varchar(20) not null,
-CONSTRAINT fk_TipoContenedor FOREIGN KEY (Id_TipoContenedor) REFERENCES TipoContenedores (Id_TipoContenedor),
+CONSTRAINT fk_TipoContenedor FOREIGN KEY (Id_TipoContenedor) REFERENCES TipoContenedores (id),
 CONSTRAINT fk_ModuloContenedor FOREIGN KEY (Id_ModuloContenedor) REFERENCES ModuloContenedores (Id_ModuloContenedor)
 );
 
 Create table ReportesArboles(
 Id_ReporteArbol char(8) primary key,
 Id_Usuario char(8) not null,
-Id_Arbol char(8) not null,
+Id_Arbol int(11) not null,
 DescReporteArbol varchar(20) not null,
-CONSTRAINT fk_Arbol FOREIGN KEY (Id_Arbol) REFERENCES Arboles (Id_Arbol),
+CONSTRAINT fk_Arbol FOREIGN KEY (Id_Arbol) REFERENCES Arboles (id),
 CONSTRAINT fk_Usuario FOREIGN KEY (Id_Usuario) REFERENCES Usuarios (Id_Usuario)
 );
 
@@ -118,9 +129,9 @@ Create table ReportesContenedores(
 Id_ReporteContenedor char(8) primary key,
 Id_Usuario1 char(8) not null,
 Id_ModuloContenedor2 char(8) not null,
-Id_TipoReporteContenedor char(8) not null,
+Id_TipoReporteContenedor int(11) not null,
 DescReporteContenedor varchar(20) not null,
-CONSTRAINT fk_TipoReporteContenedor FOREIGN KEY (Id_TipoReporteContenedor) REFERENCES TipoReporteContenedores (Id_TipoReporteContenedor),
+CONSTRAINT fk_TipoReporteContenedor FOREIGN KEY (Id_TipoReporteContenedor) REFERENCES TipoReporteContenedores (id),
 CONSTRAINT fk_ModuloContenedor2 FOREIGN KEY (Id_ModuloContenedor2) REFERENCES ModuloContenedores (Id_ModuloContenedor),
 CONSTRAINT fk_Usuario1 FOREIGN KEY (Id_Usuario1) REFERENCES Usuarios (Id_Usuario)
 );
@@ -129,9 +140,9 @@ Create table ReportesMateriales(
 Id_ReporteMaterial char(8) primary key,
 Id_Usuario2 char(8) not null,
 Id_ModuloMaterial3 char(8) not null,
-Id_TipoReporteMaterial char(8) not null,
+Id_TipoReporteMaterial int(11) not null,
 DescReporteMaterial varchar(20) not null,
-CONSTRAINT fk_TipoReporteMaterial FOREIGN KEY (Id_TipoReporteMaterial) REFERENCES TipoReporteMateriales (Id_TipoReporteMaterial),
+CONSTRAINT fk_TipoReporteMaterial FOREIGN KEY (Id_TipoReporteMaterial) REFERENCES TipoReporteMateriales (id),
 CONSTRAINT fk_ModuloMaterial3 FOREIGN KEY (Id_ModuloMaterial3) REFERENCES ModuloMaterial (Id_ModuloMaterial),
 CONSTRAINT fk_Usuario2 FOREIGN KEY (Id_Usuario2) REFERENCES Usuarios (Id_Usuario)
 );

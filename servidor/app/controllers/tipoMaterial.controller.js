@@ -1,6 +1,6 @@
-const TipoUsuario = require("../models/tipoUsuario.model.js");
+const TipoMaterial = require("../models/tipoMaterial.model.js");
 
-// Create and Save a new tipoUsuario
+// Create and Save a new tipoMaterial
 exports.create = (req, res) => {
   // Validate request
   if (!req.body) {
@@ -9,60 +9,60 @@ exports.create = (req, res) => {
     });
   }
 
-  // Create a tipoUsuario
-  const tipoUsuario = {
+  // Create a tipoMaterial
+  const tipoMaterial = {
     title: req.body.title,
     description: req.body.description,
     published: req.body.published || false
   };
 
-  // Save tipoUsuario in the database
-  TipoUsuario.create(tipoUsuario, (err, data) => {
+  // Save tipoMaterial in the database
+  TipoMaterial.create(tipoMaterial, (err, data) => {
     if (err)
       res.status(500).send({
         message:
-          err.message || "Some error occurred while creating the tipoUsuario."
+          err.message || "Some error occurred while creating the tipoMaterial."
       });
     else res.send(data);
   });
 };
 
-// Retrieve all tipoUsuarios from the database.
+// Retrieve all tipoMateriales from the database.
 exports.findAll = (req, res) => {
     const title = req.query.title;
   
-    TipoUsuario.getAll(title, (err, data) => {
+    TipoMaterial.getAll(title, (err, data) => {
       if (err)
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tipoUsuarios."
+            err.message || "Some error occurred while retrieving tipoMateriales."
         });
       else res.send(data);
     });
   };
   
 exports.findAllPublished = (req, res) => {
-    TipoUsuario.getAllPublished((err, data) => {
+  TipoMaterial.getAllPublished((err, data) => {
       if (err)
         res.status(500).send({
           message:
-            err.message || "Some error occurred while retrieving tipoUsuarios."
+            err.message || "Some error occurred while retrieving tipoMateriales."
         });
       else res.send(data);
     });
   };
 
-// Find a single tipoUsuario with an id
+// Find a single tipoMaterial with an id
 exports.findOne = (req, res) => {
-    TipoUsuario.findById(req.params.id, (err, data) => {
+  TipoMaterial.findById(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found tipoUsuario with id ${req.params.id}.`
+          message: `Not found tipoMaterial with id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Error retrieving tipoUsuario with id " + req.params.id
+          message: "Error retrieving tipoMaterial with id " + req.params.id
         });
       }
     } else res.send(data);
@@ -72,7 +72,7 @@ exports.findOne = (req, res) => {
 
 
 
-// Update a tipoUsuario by the id in the request
+// Update a tipoMaterial by the id in the request
 exports.update = (req, res) => {
     // Validate Request
   if (!req.body) {
@@ -83,18 +83,18 @@ exports.update = (req, res) => {
 
   console.log(req.body);
 
-  TipoUsuario.updateById(
+  TipoMaterial.updateById(
     req.params.id,
-    new TipoUsuario(req.body),
+    new TipoMaterial(req.body),
     (err, data) => {
       if (err) {
         if (err.kind === "not_found") {
           res.status(404).send({
-            message: `Not found tipoUsuario with id ${req.params.id}.`
+            message: `Not found tipoMaterial with id ${req.params.id}.`
           });
         } else {
           res.status(500).send({
-            message: "Error updating tipoUsuario with id " + req.params.id
+            message: "Error updating tipoMaterial with id " + req.params.id
           });
         }
       } else res.send(data);
@@ -102,32 +102,32 @@ exports.update = (req, res) => {
   );
 };
 
-// Delete a tipoUsuario with the specified id in the request
+// Delete a tipoMaterial with the specified id in the request
 exports.delete = (req, res) => {
-    TipoUsuario.remove(req.params.id, (err, data) => {
+  TipoMaterial.remove(req.params.id, (err, data) => {
     if (err) {
       if (err.kind === "not_found") {
         res.status(404).send({
-          message: `Not found tipoUsuario with id ${req.params.id}.`
+          message: `Not found tipoMaterial with id ${req.params.id}.`
         });
       } else {
         res.status(500).send({
-          message: "Could not delete tipoUsuario with id " + req.params.id
+          message: "Could not delete tipoMaterial with id " + req.params.id
         });
       }
-    } else res.send({ message: `tipoUsuario was deleted successfully!` });
+    } else res.send({ message: `tipoMaterial was deleted successfully!` });
   });
 };
 
-// Delete all tipoUsuarios from the database.
+// Delete all tipoMateriales from the database.
 exports.deleteAll = (req, res) => {
-    TipoUsuario.removeAll((err, data) => {
+  TipoMaterial.removeAll((err, data) => {
     if (err)
       res.status(500).send({
         message:
           err.message || "Some error occurred while removing all loactions."
       });
-    else res.send({ message: `All tipoUsuarios were deleted successfully!` });
+    else res.send({ message: `All tipoMateriales were deleted successfully!` });
   });
 };
 

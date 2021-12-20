@@ -21,12 +21,12 @@ app.get("/", (req, res) => {
 });
 
 require("./app/routes/arbol.routes.js")(app);
-// // require("./app/routes/area.routes.js")(app);
-// require("./app/routes/tipoContenedor.routes.js")(app);
-// require("./app/routes/tipoHerramienta.routes.js")(app);
-// require("./app/routes/tipoMaterial.routes.js")(app);
-// require("./app/routes/tipoReporteContenedor.routes.js")(app);
-// require("./app/routes/tipoReporteMaterial.routes.js")(app);
+require("./app/routes/area.routes.js")(app);
+require("./app/routes/tipoContenedor.routes.js")(app);
+require("./app/routes/tipoHerramienta.routes.js")(app);
+require("./app/routes/tipoMaterial.routes.js")(app);
+require("./app/routes/tipoReporteContenedor.routes.js")(app);
+require("./app/routes/tipoReporteMaterial.routes.js")(app);
 require("./app/routes/tipoUsuario.routes.js")(app);
 require("./app/routes/ubicacion.routes.js")(app);
 

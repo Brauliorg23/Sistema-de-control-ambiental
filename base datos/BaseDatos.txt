@@ -64,12 +64,13 @@ published BOOLEAN DEFAULT false
 
 
 Create table Usuarios(
-Id_Usuario char(8) primary key,
+id char(8) NOT NULL PRIMARY KEY,
 Id_TipoUsuario int(11) not null AUTO_INCREMENT,
-NombreUsuario varchar(20) not null,
-ApellidoP varchar(20) not null,
-ApellidoM varchar(20) not null,
-Password char(8),
+nombre varchar(20) not null,
+apellidoP varchar(20) not null,
+apellidoM varchar(20) not null,
+password char(8),
+published BOOLEAN DEFAULT false,
 CONSTRAINT fk_TipoUsuario FOREIGN KEY (Id_TipoUsuario) REFERENCES TipoUsuarios (id)
 );
 
@@ -122,7 +123,7 @@ Id_Usuario char(8) not null,
 Id_Arbol int(11) not null,
 DescReporteArbol varchar(20) not null,
 CONSTRAINT fk_Arbol FOREIGN KEY (Id_Arbol) REFERENCES Arboles (id),
-CONSTRAINT fk_Usuario FOREIGN KEY (Id_Usuario) REFERENCES Usuarios (Id_Usuario)
+CONSTRAINT fk_Usuario FOREIGN KEY (Id_Usuario) REFERENCES Usuarios (id)
 );
 
 Create table ReportesContenedores(
@@ -133,7 +134,7 @@ Id_TipoReporteContenedor int(11) not null,
 DescReporteContenedor varchar(20) not null,
 CONSTRAINT fk_TipoReporteContenedor FOREIGN KEY (Id_TipoReporteContenedor) REFERENCES TipoReporteContenedores (id),
 CONSTRAINT fk_ModuloContenedor2 FOREIGN KEY (Id_ModuloContenedor2) REFERENCES ModuloContenedores (Id_ModuloContenedor),
-CONSTRAINT fk_Usuario1 FOREIGN KEY (Id_Usuario1) REFERENCES Usuarios (Id_Usuario)
+CONSTRAINT fk_Usuario1 FOREIGN KEY (Id_Usuario1) REFERENCES Usuarios (id)
 );
 
 Create table ReportesMateriales(
@@ -144,6 +145,6 @@ Id_TipoReporteMaterial int(11) not null,
 DescReporteMaterial varchar(20) not null,
 CONSTRAINT fk_TipoReporteMaterial FOREIGN KEY (Id_TipoReporteMaterial) REFERENCES TipoReporteMateriales (id),
 CONSTRAINT fk_ModuloMaterial3 FOREIGN KEY (Id_ModuloMaterial3) REFERENCES ModuloMaterial (Id_ModuloMaterial),
-CONSTRAINT fk_Usuario2 FOREIGN KEY (Id_Usuario2) REFERENCES Usuarios (Id_Usuario)
+CONSTRAINT fk_Usuario2 FOREIGN KEY (Id_Usuario2) REFERENCES Usuarios (id)
 );
 

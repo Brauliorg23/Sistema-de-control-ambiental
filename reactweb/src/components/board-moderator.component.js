@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 
 import UserService from "../services/user.service";
-import EventBus from "../common/EventBus";
 
-export default class BoardAdmin extends Component {
+export default class BoardModerator extends Component {
   constructor(props) {
     super(props);
 
@@ -13,7 +12,7 @@ export default class BoardAdmin extends Component {
   }
 
   componentDidMount() {
-    UserService.getAdminBoard().then(
+    UserService.getModeratorBoard().then(
       response => {
         this.setState({
           content: response.data
@@ -28,10 +27,6 @@ export default class BoardAdmin extends Component {
             error.message ||
             error.toString()
         });
-
-        if (error.response && error.response.status === 401) {
-          EventBus.dispatch("logout");
-        }
       }
     );
   }

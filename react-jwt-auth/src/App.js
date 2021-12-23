@@ -3,6 +3,8 @@ import { Switch, Route, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
+import { AppBar, Toolbar, Typography, withStyles } from '@material-ui/core';
+
 import AuthService from "./services/auth.service";
 
 import Login from "./components/login.component";

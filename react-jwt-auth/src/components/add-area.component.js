@@ -8,7 +8,7 @@ export default class AddArea extends Component {
     this.onChangeDescription = this.onChangeDescription.bind(this);
     this.saveArea = this.saveArea.bind(this);
     this.newArea = this.newArea.bind(this);
-
+    
     this.state = {
       id: null,
       title: "",

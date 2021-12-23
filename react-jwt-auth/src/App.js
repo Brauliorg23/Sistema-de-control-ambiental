@@ -13,7 +13,11 @@ import BoardUser from "./components/board-user.component";
 import BoardModerator from "./components/board-moderator.component";
 import BoardAdmin from "./components/board-admin.component";
 
-// import AuthVerify from "./common/auth-verify";
+import AddArea from "./components/add-area.component";
+import Area from "./components/area.component";
+import AreasList from "./components/areas-list.component";
+
+import AuthVerify from "./common/auth-verify";
 import EventBus from "./common/EventBus";
 
 class App extends Component {
@@ -137,10 +141,14 @@ class App extends Component {
             <Route path="/user" component={BoardUser} />
             <Route path="/mod" component={BoardModerator} />
             <Route path="/admin" component={BoardAdmin} />
+
+            <Route exact path={["/", "/areas"]} component={AreasList} />
+            <Route exact path="/add" component={AddArea} />
+            <Route path="/areas/:id" component={Area} />
           </Switch>
         </div>
 
-        { /*<AuthVerify logOut={this.logOut}/> */ }
+        <AuthVerify logOut={this.logOut}/>
       </div>
     );
   }

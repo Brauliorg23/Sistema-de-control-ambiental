@@ -28,6 +28,7 @@ db.user = require("../models/user.model.js")(sequelize, Sequelize);
 db.role = require("../models/role.model.js")(sequelize, Sequelize);
 db.areas = require("./area.model.js")(sequelize, Sequelize);
 db.containers = require("./container.model.js")(sequelize, Sequelize);
+db.locations = require("./location.model.js")(sequelize, Sequelize);
 db.materials = require("./material.model.js")(sequelize, Sequelize);
 db.tools = require("./tool.model.js")(sequelize, Sequelize);
 db.trees = require("./tree.model.js")(sequelize, Sequelize);
@@ -52,6 +53,30 @@ db.user.belongsToMany(db.role, {
   foreignKey: "userId",
   otherKey: "roleId"
 });
+
+db.moduleCs.belongsTo(db.locations);
+
+db.moduleMs.belongsTo(db.areas);
+
+db.materials.belongsTo(db.typeMs);
+db.materials.belongsTo(db.moduleMs);
+
+db.tools.belongsTo(db.typeTs);
+db.tools.belongsTo(db.moduleMs);
+
+db.containers.belongsTo(db.typeCs);
+db.containers.belongsTo(db.moduleCs);
+
+db.reportTs.belongsTo(db.user);
+db.reportTs.belongsTo(db.trees);
+
+db.reportCs.belongsTo(db.user);
+db.reportCs.belongsTo(db.moduleCs);
+db.reportCs.belongsTo(db.typeReportCs);
+
+db.reportMs.belongsTo(db.user);
+db.reportMs.belongsTo(db.moduleMs);
+db.reportMs.belongsTo(db.typeReportMs);
 
 db.ROLES = ["user", "admin", "moderator"];
 

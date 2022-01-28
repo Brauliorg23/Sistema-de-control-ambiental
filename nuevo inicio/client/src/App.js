@@ -1,29 +1,31 @@
 import React from "react";
 import './App.scss';
-import {BrowserRouter as Router, Route, Link} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import routes from "./config/routes";
 
 function App() {
   
   return (
-  <Router>
-    <div className="app">
-      <h1>Sistema de rutas basico</h1>
-      
-      <Route>holas</Route>
-      {/* <Route path="/" exact component={Home}/> */}
-    </div>
-  </Router>
+    <Router>
+      <Routes>
+        {routes.map((route, index)=>(
+          <RouteWithSubRoutes key={index} {...route} />
+        ))}
+      </Routes>
+    </Router>
   );
 }
 
-function Home (){
-  return <h2>Estamos en el inicio</h2>
+function RouteWithSubRoutes(route){
+  console.log(route);
+  return (
+    <Route
+      path={route.path}
+      exact={route.exact}
+      render={props => <route.element routes={route.routes} {...props}/>}
+    />
+  )
 }
-function Contact(){
-  return <h2>Componente contacto</h2>
-}
-function Users(){
-  return <h2>Estamos en el componente users</h2>
-}
+
 
 export default App;

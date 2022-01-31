@@ -1,12 +1,25 @@
 import React from "react";
 import {Layout} from "antd";
+import MenuTop from "../components/Admin/MenuTop/MenuTop";
 
-export default function LayoutAdmin(){
+import "./LayoutAdmin.scss";
+
+export default function LayoutAdmin(props){
+    const {children}=props;
+    const {Header, Content, Footer}=Layout;
+
     return(
         <Layout>
-            <h2>Menu sider</h2>
-            <div>Contenido...</div>
-            <h5>Footer..</h5>
+            {/* TO DO: Menu sider */}
+            <Layout className="layout-admin">
+                <Header className="layout-admin__header"> 
+                    <MenuTop/>
+                </Header>    
+                <Content className="layout-admin__content">
+                    {children}
+                </Content>
+                <Footer className="layout-admin__footer">piedepagina..</Footer>
+            </Layout> 
         </Layout>
     );
 } 

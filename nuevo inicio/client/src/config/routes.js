@@ -1,33 +1,48 @@
 //Layout
-import Layout from "antd/lib/layout/layout";
 import LayoutAdmin from "../layouts/LayoutAdmin";
+import LayoutBasic from "../layouts/LayoutBasic";
 
 //Admin pages
 import AdminHome from "../pages/Admin";
 import AdminSingIn from "../pages/Admin/Signin";
 
+//Client pages
+import Home from "../pages/Home";
+import Contact from "../pages/Contact";
 
-function Routes1(){
-    let routes = useRoutes([
-        {
-            path: "/admin",
-            element: <LayoutAdmin/>,
-            exact: false,
-            children:[
-                {
-                    path: "/admin",
-                    element: <AdminHome/>,
-                    exact: true
-                },
-                {
-                    path: "/admin/login",
-                    element: <AdminSingIn/>,
-                    exact: true
-                }
-            ]
-        }
-    ]);
-    return routes;
-}
+//other
+import Error404 from "../pages/Error404";
 
-export default Routes1;
+const routesAdmin = [
+    {
+        path: "/admin",
+        layout: LayoutAdmin,
+        component: AdminHome        
+    },
+    {
+        path: "/admin/login",
+        layout: LayoutAdmin,
+        component: AdminSingIn
+    },
+    {
+        layout: LayoutAdmin,
+        component: Error404
+    }
+];
+const routesClient = [
+    {
+        path: "/",
+        layout: LayoutBasic,
+        component: Home,
+    },
+    {
+        path: "/contact",
+        layout: LayoutBasic,
+        component: Contact,
+    }
+];
+
+const routes =[...routesAdmin, ...routesClient];
+    
+
+export default routes;

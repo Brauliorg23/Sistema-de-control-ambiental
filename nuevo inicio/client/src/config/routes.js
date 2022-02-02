@@ -12,6 +12,7 @@ import Contact from "../pages/Contact";
 
 //other
 import Error404 from "../pages/Error404";
+import Signin from "../pages/Admin/Signin";
 
 const routesAdmin = [
     {
@@ -20,11 +21,12 @@ const routesAdmin = [
         component: AdminHome        
     },
     {
-        path: "/admin/login",
-        layout: LayoutAdmin,
+        path: "/login",
+        layout: Signin,
         component: AdminSingIn
     },
     {
+        path: "/admin/*",
         layout: LayoutAdmin,
         component: Error404
     }
@@ -39,6 +41,11 @@ const routesClient = [
         path: "/contact",
         layout: LayoutBasic,
         component: Contact,
+    },
+    {
+        path: "/*",
+        layout: LayoutBasic,
+        component: Error404
     }
 ];
 

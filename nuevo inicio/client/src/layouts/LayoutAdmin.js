@@ -2,8 +2,8 @@ import React, {useState} from "react";
 import {Layout} from "antd";
 import MenuTop from "../components/Admin/MenuTop/MenuTop";
 import MenuSider from "../components/Admin/MenuSider";
-import AdminSignin from "../pages/Admin/Signin";
-import {Route} from 'react-router-dom';
+import AdminSingIn from "../pages/Admin/Signin";
+import {Routes, Route, Navigate} from 'react-router-dom';
 
 import "./LayoutAdmin.scss";
 
@@ -14,9 +14,12 @@ export default function LayoutAdmin(props){
 
     const user = null;
 
-    // if (!user) {
-    //     return <Route path="/admin/login" component={AdminSignin} />;
-    // } 
+    console.log(AdminSingIn);
+    if (!user) {
+        return(
+            <Navigate to="/login"/>            
+        );
+    }
 
     return(
         <Layout>
@@ -32,4 +35,7 @@ export default function LayoutAdmin(props){
             </Layout> 
         </Layout>
     );
+    
+
+    
 } 

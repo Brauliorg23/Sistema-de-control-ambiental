@@ -12,7 +12,7 @@ function signUp(req, res){
     user.active = false;
 
     if (!password || !repeatPassword) {
-        res.status(404).send({message: "Las contraseñas son obligatorias"});
+        res.status(404).send({message: "Las contraseñas kjkj son obligatorias"});
     }else{
         if(password !== repeatPassword){
             res.status(404).send({message: "Las contraseñas no son iguales."});

@@ -4,6 +4,7 @@ import { Navigate } from "react-router-dom";
 import Bird from '../../../assets/img/png/Bird2.png';
 import Nissan from '../../../assets/img/png/nissan3.png';
 import RegisterForm from "../../../components/Admin/RegisterForm/RegisterForm";
+import LoginForm from "../../../components/Admin/LoginForm/LoginForm";
 
 import './Signin.scss';
 
@@ -24,7 +25,7 @@ export default function Signin(){
                 <div className="sign-in__content-tabs">
                     <Tabs type="card">
                         <TabPane tab={<span>Entrar</span>} key={"1"}>
-                            Componente LoginForm
+                            <LoginForm />
                         </TabPane>
                         <TabPane tab={<span>Nuevo usuario</span>} key={"2"} >
                             <RegisterForm/>

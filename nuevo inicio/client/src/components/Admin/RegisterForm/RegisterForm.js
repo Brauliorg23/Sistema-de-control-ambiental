@@ -73,6 +73,7 @@ export default function RegisterForm() {
           notification["error"]({
             message: result.message
           });
+          resetForm();
         } else {
           notification["success"]({
             message: result.message

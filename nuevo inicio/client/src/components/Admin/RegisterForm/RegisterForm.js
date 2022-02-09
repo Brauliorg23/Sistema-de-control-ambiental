@@ -15,6 +15,7 @@ export default function RegisterForm() {
     repeatPassword: "",
     privacyPolicy: false
   });
+  
   const [formValid, setFormValid] = useState({
     email: false,
     password: false,

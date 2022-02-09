@@ -5,6 +5,7 @@ import Bird from '../../../assets/img/png/Bird2.png';
 import Nissan from '../../../assets/img/png/nissan3.png';
 import RegisterForm from "../../../components/Admin/RegisterForm/RegisterForm";
 import LoginForm from "../../../components/Admin/LoginForm/LoginForm";
+import { getAccessTokenApi } from "../../../api/auth";
 
 import './Signin.scss';
 
@@ -12,6 +13,9 @@ export default function Signin(){
     const {Content}=Layout;
     const {TabPane}=Tabs;
 
+    if(getAccessTokenApi()){
+        return <Navigate to="/admin"/>            
+    }
     return(
         <Layout className="sign-in">
             <Content className="sign-in__content">

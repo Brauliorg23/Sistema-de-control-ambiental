@@ -6,7 +6,7 @@ export function signUpApi(data){
         method: "POST",
         body: JSON.stringify(data),
         headers: {
-            "Content-Type": "aplication/json"
+            "Content-Type": "application/json"
         }
     };
     

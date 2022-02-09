@@ -8,7 +8,7 @@ function signUp(req, res){
     const {name, lastname, email, password, repeatPassword} = req.body;
     user.name = name;
     user.lastname = lastname;
-    user.email = email.toLowerCase;
+    user.email = email.toLowerCase();
     user.role = "admin";
     user.active = false;
     
@@ -76,7 +76,18 @@ function signIn(req, res) {
     });
 }
 
+function getUsers(req, res){
+    User.find().then(users => {
+        if(!users){
+            res.status(404).send({message: "No se ha encontrado ningun ususario. "});
+        }else{
+            res.status(200).send({users});
+        }
+    });
+}
+
 module.exports = {
     signUp, 
-    signIn
+    signIn,
+    getUsers
 };

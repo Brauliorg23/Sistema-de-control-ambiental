@@ -4,6 +4,7 @@ import MenuTop from "../components/Admin/MenuTop/MenuTop";
 import MenuSider from "../components/Admin/MenuSider";
 import AdminSingIn from "../pages/Admin/Signin";
 import {Routes, Route, Navigate} from 'react-router-dom';
+import useAuth from "../hooks/useAuth";
 
 import "./LayoutAdmin.scss";
 
@@ -11,13 +12,17 @@ export default function LayoutAdmin(props){
     const {children}=props;
     const [menuCollapsed, setMenuCollapsed] = useState(false);
     const {Header, Content, Footer}=Layout;
+    const {user, isLoading} = useAuth();
 
-    const user = null;
 
-    console.log(AdminSingIn);
-    if (!user) {
+
+    if (!user && !isLoading) {
+        
+        
         return(
-            <Navigate to="/login"/>            
+                        
+                <Navigate to="/admin/login"/>            
+           
         );
     }
 

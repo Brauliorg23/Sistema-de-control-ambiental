@@ -18,8 +18,8 @@ app.use(cors());
 
 
 // Router Basic
-app.use(`/api/${(API_VERSION)}`, authRoutes);
-app.use(`/api/${(API_VERSION)}`, userRoutes);
+app.use(`/api/${API_VERSION}`, authRoutes);
+app.use(`/api/${API_VERSION}`, userRoutes);
 
 
 module.exports = app;

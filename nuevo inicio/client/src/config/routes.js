@@ -13,6 +13,7 @@ import Contact from "../pages/Contact";
 //other
 import Error404 from "../pages/Error404";
 import Signin from "../pages/Admin/Signin";
+import RegisterForm from "../components/Admin/RegisterForm/RegisterForm";
 
 const routesAdmin = [
     {
@@ -29,6 +30,12 @@ const routesAdmin = [
         path: "/admin/users",
         layout: LayoutAdmin,
         component: AdminUsers,
+        exact: true
+    },
+    {
+        path: "/admin/register",
+        layout: LayoutAdmin,
+        component: RegisterForm,
         exact: true
     },
     {

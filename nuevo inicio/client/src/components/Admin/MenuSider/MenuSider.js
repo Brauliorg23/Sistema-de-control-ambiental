@@ -23,6 +23,12 @@ export default function MenuSider(props){
                     <span className="nac-text">Usuarios</span>
                     </Link>
                 </Menu.Item>
+                <Menu.Item key="3">
+                    <Link to={"/admin/register"}>
+                    <UserOutlined   />
+                    <span className="nac-text">Registrar usuarios</span>
+                    </Link>
+                </Menu.Item>
             </Menu>
         </Sider>
     );

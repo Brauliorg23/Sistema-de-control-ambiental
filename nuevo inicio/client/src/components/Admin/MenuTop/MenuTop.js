@@ -20,8 +20,8 @@ export default function MenuTop(props) {
     <div className="menu-top">
       <div className="menu-top__left">
         <img
-          className={menuCollapsed ? "menu-top__left-logo2" : "menu-top__left-logo" }
-          src={menuCollapsed ? nissan2 : nissanWhith3 }
+          className="menu-top__left-logo"
+          src={nissanWhith3}
           alt="Agustin Navarro Galdon"
         />
         <Button type="link" size="large" shape="round"

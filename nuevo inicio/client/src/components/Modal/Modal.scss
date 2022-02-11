@@ -1,0 +1,23 @@
+.ant-modal{
+    &-close-x{
+        color:aliceblue;
+    }
+
+    &-content{
+        border-radius:20px;
+        background-color: lightslategrey;
+    }
+     
+    &-title{
+        color:aliceblue;
+    }
+
+    &-header{
+        background-color:grey;        
+    }
+
+    &-body{
+        border-radius: 20px;
+        background-color: lightslategrey;
+    }
+}

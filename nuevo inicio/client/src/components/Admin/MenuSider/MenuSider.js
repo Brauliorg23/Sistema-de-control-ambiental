@@ -13,20 +13,20 @@ export default function MenuSider(props){
             <Menu mode="inline" className="admin-sider__option">
                 <Menu.Item key="1" >
                     <Link to={"/admin"}>
-                    <HomeOutlined />
+                    <HomeOutlined className="nav-text" />
                     <span className="nav-text">Home</span>
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="2">
                     <Link to={"/admin/users"}>
-                    <UserOutlined   />
-                    <span className="nac-text">Usuarios</span>
+                    <UserOutlined  className="nav-text" />
+                    <span className="nav-text">Usuarios</span>
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="3">
                     <Link to={"/admin/register"}>
-                    <UserOutlined   />
-                    <span className="nac-text">Registrar usuarios</span>
+                    <UserOutlined className="nav-text"  />
+                    <span className="nav-text">Registrar usuarios</span>
                     </Link>
                 </Menu.Item>
             </Menu>

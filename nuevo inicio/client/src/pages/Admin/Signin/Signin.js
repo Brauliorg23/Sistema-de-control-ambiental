@@ -1,5 +1,5 @@
 import React from "react";
-import {Layout, Tabs, Space} from 'antd';
+import {Layout, Tabs, Space, Modal} from 'antd';
 import { Navigate } from "react-router-dom";
 import Bird from '../../../assets/img/png/Bird2.png';
 import Nissan from '../../../assets/img/png/nissan3.png';

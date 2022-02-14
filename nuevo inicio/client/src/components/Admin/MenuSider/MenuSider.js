@@ -22,13 +22,31 @@ export default function MenuSider(props){
                     <UserOutlined  className="nav-text" />
                     <span className="nav-text">Usuarios</span>
                     </Link>
-                </Menu.Item>
-                <Menu.Item key="3">
-                    <Link to={"/admin/register"}>
-                    <UserOutlined className="nav-text"  />
-                    <span className="nav-text">Registrar usuarios</span>
+                </Menu.Item>  
+                <Menu.Item key="3" >
+                    <Link to={"/admin"}>
+                    <HomeOutlined className="nav-text" />
+                    <span className="nav-text">contenedores</span>
                     </Link>
                 </Menu.Item>
+                <Menu.Item key="4" >
+                    <Link to={"/admin"}>
+                    <HomeOutlined className="nav-text" />
+                    <span className="nav-text">modulos de contenedores</span>
+                    </Link>
+                </Menu.Item>   
+                <Menu.Item key="5" >
+                    <Link to={"/admin"}>
+                    <HomeOutlined className="nav-text" />
+                    <span className="nav-text">ubicaciones</span>
+                    </Link>
+                </Menu.Item>   
+                <Menu.Item key="6" >
+                    <Link to={"/admin"}>
+                    <HomeOutlined className="nav-text" />
+                    <span className="nav-text">Estadisticas</span>
+                    </Link>
+                </Menu.Item>          
             </Menu>
         </Sider>
     );

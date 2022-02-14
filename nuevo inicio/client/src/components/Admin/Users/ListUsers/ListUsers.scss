@@ -1,4 +1,6 @@
 .list-users {
+  background-color:rgb(209, 227, 238);
+  border-radius: 10px;
     &__header {
       display: flex;
       align-items: center;
@@ -8,20 +10,69 @@
       &-switch {
         display: flex;
         align-items: center;
+        position:absolute;
   
         > button {
           margin-right: 20px;          
         }
       }
     }
-  
-    .users-active {
-      background-color: #fff;
-      padding: 10px 20px;
-  
-      .ant-list-item-meta {
-        display: flex;
-        align-items: center;
+    &__switch{
+      padding: 20px 20px;
+      text-align: center;
+      background-color: rgb(175, 194, 206);
+      .ant-divider{
+        border-color: black;
+        font-size:xx-large;
+        
+      }
+      .ant-switch-checked {
+        background-color: #52c41a;
+        font-size: xx-large;
+      }
+      .ant-btn{
+        background-color: #52c41a;
+        border-color: #52c41a;
+        border-radius: 15px;
       }
     }
+    .users-active {
+      
+      padding: 20px 20px;
+      
+    }
   }
+
+  .Card-list{
+    box-sizing: border-box;
+    background-color: #789;
+    color: white;
+    border-radius: 15px;
+    &__user{
+      justify-content: center;
+      text-align: center;
+      display: flex;
+    }
+  }
+
+  .ant-card{
+    border: none;
+    border-radius: 10px;
+    &-head{
+      background-color:#808080;
+      color: white;
+      text-align: center;
+    }
+    &-actions{
+      background-color:#c1cdd4;
+      border-color: #c1cdd4;
+    }
+    &-meta-description{
+      color: aliceblue;
+    }
+  }
+
+  .ant-modal-header{
+    text-align: center;
+  }
+

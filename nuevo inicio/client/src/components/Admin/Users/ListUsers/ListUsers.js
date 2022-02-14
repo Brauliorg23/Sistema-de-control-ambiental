@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import {Switch, List, Avatar, Button, } from 'antd';
-import { EditOutlined , PoweroffOutlined, DeleteOutlined,  } from "@ant-design/icons";
+import {Switch, List, Card, Divider , Avatar, Button, } from 'antd';
+import { EditOutlined , PoweroffOutlined, EllipsisOutlined, DeleteOutlined, SettingOutlined,  } from "@ant-design/icons";
 import NoAvatar from '../../../../assets/img/jpg/Avatar.jpg';
 import Modal from '../../../Modal/Modal';
 import EditUserForm from "../EditUserForm/EditUserForm";
+import RegisterForm from "../../RegisterForm/RegisterForm"
 import "./ListUsers.scss";
 
 export default function ListUsers(props) {
@@ -13,16 +14,28 @@ export default function ListUsers(props) {
     const [modalTitle, setModalTitle] = useState("");
     const [modalContent, setModalContent] = useState(null);
 
+
+    function addUser (){
+        setIsVisibleModal(true);
+        setModalTitle(`Agregar un nuevo usuario`);
+        setModalContent(<RegisterForm  />)
+    }
     return(
         <div className='list-users'>
-            <div className='list-users__switch'>
-                <Switch
-                    defaultChecked
-                    onChange={() => setViewUsersActives(!viewUsersActives)}
-                />
-                <span>
-                    {viewUsersActives ? "Usuarios Activos" : "Usuarios inactivos"}
-                </span>
+            <div className='list-users__switch' >                
+                    <Switch
+                        defaultChecked
+                        checkedChildren="Usuarios Activos" 
+                        unCheckedChildren="Usuarios inactivos"
+                        onChange={() => setViewUsersActives(!viewUsersActives)}
+                    />
+                    <Divider  type='vertical'/>
+                    <Button 
+                        type='primary'
+                        onClick={() => addUser()}
+                    >
+                        Agregar usuario
+                    </Button>
             </div>
             {viewUsersActives ? (
             <UsersActive 
@@ -41,7 +54,7 @@ export default function ListUsers(props) {
                 setIsVisible={setIsVisibleModal}
             >
                 {modalContent}
-            </Modal>
+            </Modal>            
         </div>
     );
 }
@@ -58,86 +71,105 @@ function UsersActive(props){
         setModalTitle(`Editar ${user.name ? user.name : "..."} ${user.lastname ? user.lastname : "..."}`);
         setModalContent(<EditUserForm user={user} />)
     }
+    const { Meta } = Card;
+
     return (
         <List
             className='users-active'
             itemLayout='horizontal'
             dataSource={usersActive}
+            grid={{ gutter: 16, column: 4 }}
             renderItem={user => (
-                <List.Item 
-                    actions={[
-                        <Button
-                            type='primary'
-                            shape="circle"
-                            onClick={() => edidUser(user)}
-                        >
-                            <EditOutlined />
-                        </Button>,
-                        <Button
-                            type='danger'
-                            shape="circle"
-                            onClick={() => console.log("desactivar usuario")}
-                        >
-                            <PoweroffOutlined />
-                        </Button>,
-                        <Button
-                            type='danger'
-                            shape="circle"
-                            onClick={() => console.log("eliminar usuario")}
-                        >
-                            <DeleteOutlined />
-                        </Button>
-                    ]}
-                >
-                    <List.Item.Meta
-                        avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
+                <List.Item >                    
+                    <Card 
+                        className='Card-list'
+                        
+                        actions={[
+                            <Button
+                                type='primary'
+                                shape="circle"
+                                onClick={() => edidUser(user)}
+                            >
+                                <EditOutlined />
+                            </Button>,
+                            <Button
+                                type='danger'
+                                shape="circle"
+                                onClick={() => console.log("desactivar usuario")}
+                            >
+                                <PoweroffOutlined />
+                            </Button>,
+                            <Button
+                                type='danger'
+                                shape="circle"
+                                onClick={() => console.log("eliminar usuario")}
+                            >
+                                <DeleteOutlined />
+                            </Button>
+                        ]}                        
+                        
                         title={`
-                            ${user.name ? user.name : "..."}
+                            ${user.name ? user.name : "..Hola."}
                             ${user.lastname ? user.lastname : "..."}
                         `}
-                        description={user.email}
-                    />
+                        
+                    >
+                        <Meta
+                            className='Card-list__user'
+                            avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
+                            description={user.email}
+                        />
+                    </Card>
                 </List.Item>
             )}
         />
+                    
     );
 }
 
 function UsersInactive(props){
     const {usersIniactive} = props;
-
+    const { Meta } = Card;
     return (
         <List
             className='users-active'
             itemLayout='horizontal'
             dataSource={usersIniactive}
+            grid={{ gutter: 16, column: 4 }}
             renderItem={user => (
-                <List.Item 
-                    actions={[                        
-                        <Button
-                            type='primary'
-                            shape="circle"
-                            onClick={() => console.log("activar usuario usuario")}
-                        >
-                            <PoweroffOutlined />
-                        </Button>,
-                        <Button
-                            type='danger'
-                            shape="circle"
-                            onClick={() => console.log("eliminar usuario")}
-                        >
-                            <DeleteOutlined />
-                        </Button>
-                    ]}
-                >
-                    <List.Item.Meta
-                        avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
+                <List.Item >
+                    <Card
+                        className='Card-list'
+                        
+                        actions={[                        
+                            <Button
+                                type='primary'
+                                shape="circle"
+                                onClick={() => console.log("activar usuario usuario")}
+                            >
+                                <PoweroffOutlined />
+                            </Button>,
+                            <Button
+                                type='danger'
+                                shape="circle"
+                                onClick={() => console.log("eliminar usuario")}
+                            >
+                                <DeleteOutlined />
+                            </Button>
+                        ]}
+                        
                         title={`
                             ${user.name ? user.name : "..."}
                             ${user.lastname ? user.lastname : "..."}
                         `}
-                        description={user.email}
-                    />
+                        
+                    >
+                        <Meta 
+                            className='Card-list__user'
+                            avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
+                            description={user.email}
+                        />
+                    </Card>
                 </List.Item>
             )}
         />

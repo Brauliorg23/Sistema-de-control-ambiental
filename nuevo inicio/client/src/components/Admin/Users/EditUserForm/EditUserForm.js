@@ -3,19 +3,35 @@ import {Avatar, Form, Input, Select, Button, Row, Col}from "antd";
 import { EditOutlined , PoweroffOutlined, DeleteOutlined,  } from "@ant-design/icons";
 import {useDropzone} from "react-dropzone";
 import NoAvatar from '../../../../assets/img/jpg/Avatar.jpg';
+import {getAvatarApi} from "../../../../api/user";
+
 
 import "./EditUserForm.scss";
 
 export default function EditUserForm(props) {
     const {user} = props;
     const [avatar, setAvatar] = useState(null);
-    const [userData, setUserData] = useState({
+    const [userData, setUserData] = useState({});
+
+    useEffect(() => {
+      setUserData({
         name: user.name,
         lastname: user.lastname,
-        email:user.email,
+        email: user.email,
         role: user.role,
         avatar: user.avatar
-    });
+      });
+    }, [user]);
+  
+    useEffect(() => {
+      if (user.avatar) {
+        getAvatarApi(user.avatar).then(response => {
+          setAvatar(response);
+        });
+      } else {
+        setAvatar(null);
+      }
+    }, [user]);
 
     useEffect(() => {
         if (avatar) {
@@ -40,6 +56,19 @@ export default function EditUserForm(props) {
 
 function UploadAvatar(props){
     const {avatar, setAvatar} = props;
+    const [avatarUrl, setAvatarUrl] = useState(null);
+
+    useEffect(() => {
+      if (avatar) {
+        if (avatar.preview) {
+          setAvatarUrl(avatar.preview);
+        } else {
+          setAvatarUrl(avatar);
+        }
+      } else {
+        setAvatarUrl(null);
+      }
+    }, [avatar]);
 
     const onDrop = useCallback(
         acceptedFiles => {
@@ -61,7 +90,7 @@ function UploadAvatar(props){
             {isDragActive ? (
                 <Avatar size={150} src={NoAvatar} />
             ) : (
-                <Avatar size={150} src={avatar ? avatar.preview : NoAvatar} />
+                <Avatar size={150} src={avatarUrl  ? avatarUrl  : NoAvatar} />
             )}
         </div>
     )

@@ -1,10 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {Switch, List, Card, Divider , Avatar, Button, } from 'antd';
 import { EditOutlined , PoweroffOutlined, EllipsisOutlined, DeleteOutlined, SettingOutlined,  } from "@ant-design/icons";
 import NoAvatar from '../../../../assets/img/jpg/Avatar.jpg';
 import Modal from '../../../Modal/Modal';
 import EditUserForm from "../EditUserForm/EditUserForm";
 import RegisterForm from "../../RegisterForm/RegisterForm"
+import { getAvatarApi } from '../../../../api/user';
+
+
 import "./ListUsers.scss";
 
 export default function ListUsers(props) {
@@ -13,7 +16,7 @@ export default function ListUsers(props) {
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalContent, setModalContent] = useState(null);
-
+    
 
     function addUser (){
         setIsVisibleModal(true);
@@ -59,6 +62,8 @@ export default function ListUsers(props) {
     );
 }
 
+
+
 function UsersActive(props){
     const {
         usersActive,
@@ -66,12 +71,13 @@ function UsersActive(props){
         setModalTitle,
         setModalContent
     } = props;
-    const edidUser = user => {
+
+    const editUser = user => {
         setIsVisibleModal(true);
         setModalTitle(`Editar ${user.name ? user.name : "..."} ${user.lastname ? user.lastname : "..."}`);
         setModalContent(<EditUserForm user={user} />)
     }
-    const { Meta } = Card;
+    
 
     return (
         <List
@@ -79,51 +85,69 @@ function UsersActive(props){
             itemLayout='horizontal'
             dataSource={usersActive}
             grid={{ gutter: 16, column: 4 }}
-            renderItem={user => (
-                <List.Item >                    
-                    <Card 
-                        className='Card-list'
-                        
-                        actions={[
-                            <Button
-                                type='primary'
-                                shape="circle"
-                                onClick={() => edidUser(user)}
-                            >
-                                <EditOutlined />
-                            </Button>,
-                            <Button
-                                type='danger'
-                                shape="circle"
-                                onClick={() => console.log("desactivar usuario")}
-                            >
-                                <PoweroffOutlined />
-                            </Button>,
-                            <Button
-                                type='danger'
-                                shape="circle"
-                                onClick={() => console.log("eliminar usuario")}
-                            >
-                                <DeleteOutlined />
-                            </Button>
-                        ]}                        
-                        
-                        title={`
-                            ${user.name ? user.name : "..Hola."}
-                            ${user.lastname ? user.lastname : "..."}
-                        `}
-                        
-                    >
-                        <Meta
-                            className='Card-list__user'
-                            avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
-                            description={user.email}
-                        />
-                    </Card>
-                </List.Item>
-            )}
+            renderItem={user => <UserActive user={user} editUser={editUser} />}
         />
                     
+    );
+}
+
+function UserActive(props){
+    const {user, editUser} = props;
+    const [avatar, setAvatar] = useState(null);
+    const { Meta } = Card;
+
+    useEffect(() => {
+        if(user.avatar){
+            getAvatarApi(user.avatar).then(response => {
+                setAvatar(response);
+            })
+        }else {
+            setAvatar(null);
+        }        
+    }, [user])
+    
+    return (
+        <List.Item >                    
+                <Card 
+                    className='Card-list'
+                    
+                    actions={[
+                        <Button
+                            type='primary'
+                            shape="circle"
+                            onClick={() => editUser(user)}
+                        >
+                            <EditOutlined />
+                        </Button>,
+                        <Button
+                            type='danger'
+                            shape="circle"
+                            onClick={() => console.log("desactivar usuario")}
+                        >
+                            <PoweroffOutlined />
+                        </Button>,
+                        <Button
+                            type='danger'
+                            shape="circle"
+                            onClick={() => console.log("eliminar usuario")}
+                        >
+                            <DeleteOutlined />
+                        </Button>
+                    ]}                        
+                    
+                    title={`
+                        ${user.name ? user.name : "..Hola."}
+                        ${user.lastname ? user.lastname : "..."}
+                    `}
+                    
+                >
+                    <Meta
+                        className='Card-list__user'
+                        avatar={<Avatar src={avatar ? avatar : NoAvatar} />}
+                        description={user.email}
+                    />
+                </Card>
+            </List.Item>
     );
 }
 
@@ -136,8 +160,29 @@ function UsersInactive(props){
             itemLayout='horizontal'
             dataSource={usersIniactive}
             grid={{ gutter: 16, column: 4 }}
-            renderItem={user => (
-                <List.Item >
+            renderItem={user => <UserInactive user={user}/>}
+        />
+    );
+}
+
+function UserInactive(props){
+    const {user} = props;
+
+    const [avatar, setAvatar] = useState(null);
+    const { Meta } = Card;
+
+    useEffect(() => {
+        if(user.avatar){
+            getAvatarApi(user.avatar).then(response => {
+                setAvatar(response);
+            })
+        }else {
+            setAvatar(null);
+        }        
+    }, [user])
+
+    return(
+        <List.Item >
                     <Card
                         className='Card-list'
                         
@@ -166,12 +211,10 @@ function UsersInactive(props){
                     >
                         <Meta 
                             className='Card-list__user'
-                            avatar={<Avatar src={user.avatar ? user.avatar : NoAvatar} />}
+                            avatar={<Avatar src={avatar ? avatar : NoAvatar} />}
                             description={user.email}
                         />
                     </Card>
                 </List.Item>
-            )}
-        />
-    );
+    )
 }

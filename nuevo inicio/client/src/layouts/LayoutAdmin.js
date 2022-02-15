@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Layout} from "antd";
+import {Layout, Breadcrumb} from "antd";
 import MenuTop from "../components/Admin/MenuTop/MenuTop";
 import MenuSider from "../components/Admin/MenuSider";
 import AdminSingIn from "../pages/Admin/Signin";
@@ -31,8 +31,8 @@ export default function LayoutAdmin(props){
                 <Header className="layout-admin__header"> 
                     <MenuTop menuCollapsed={menuCollapsed} setMenuCollapsed={setMenuCollapsed}/>
                 </Header>    
-                <Content className="layout-admin__content">
-                    {children}
+                <Content className="layout-admin__content">                    
+                    {children}                    
                 </Content>
                 <Footer className="layout-admin__footer">piedepagina..</Footer>
             </Layout> 

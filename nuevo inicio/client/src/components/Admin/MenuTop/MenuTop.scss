@@ -1,7 +1,8 @@
 @import "../../../scss/index.scss";
 
 .menu-top {
-  display: flex;
+  position: unset;
+  display:flex;
 
   button {
     color: $font-light;

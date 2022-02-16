@@ -1,9 +1,8 @@
 import React from "react";
-import {Layout, Tabs, Space, Modal} from 'antd';
+import {Layout, Tabs, Space} from 'antd';
 import { Navigate } from "react-router-dom";
 import Bird from '../../../assets/img/png/Bird2.png';
 import Nissan from '../../../assets/img/png/nissan3.png';
-import RegisterForm from "../../../components/Admin/RegisterForm/RegisterForm";
 import LoginForm from "../../../components/Admin/LoginForm/LoginForm";
 import { getAccessTokenApi } from "../../../api/auth";
 
@@ -23,7 +22,7 @@ export default function Signin(){
                     <Space>
                         <img src={Bird}  alt="Bird the control ambiental" />
                         <br/>
-                        <img src={Nissan} alt="Bird the control ambiental" />
+                        <img src={Nissan} alt="Logo de nissan" />
                     </Space>
                 </h1>
                 <div className="sign-in__content-tabs">

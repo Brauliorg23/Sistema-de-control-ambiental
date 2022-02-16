@@ -1,17 +1,20 @@
 import React, {useState, useEffect} from 'react';
-import {Switch, List, Card, Divider , Avatar, Button, } from 'antd';
-import { EditOutlined , PoweroffOutlined, EllipsisOutlined, DeleteOutlined, SettingOutlined,  } from "@ant-design/icons";
+import {Switch, List, Card, Divider , Avatar, Button, Modal as ModalAntd, notification } from 'antd';
+import { EditOutlined , PoweroffOutlined, DeleteOutlined, SettingOutlined,  } from "@ant-design/icons";
 import NoAvatar from '../../../../assets/img/jpg/Avatar.jpg';
 import Modal from '../../../Modal/Modal';
 import EditUserForm from "../EditUserForm/EditUserForm";
 import RegisterForm from "../../RegisterForm/RegisterForm"
-import { getAvatarApi } from '../../../../api/user';
-
+import { getAvatarApi, activateUserApi, deleteUserApi} from '../../../../api/user';
+import {getAccessTokenApi} from "../../../../api/auth";
+import AddUserDorm from "../AddUserForm";
 
 import "./ListUsers.scss";
 
+const { confirm } = ModalAntd;
+
 export default function ListUsers(props) {
-    const {usersActive, usersIniactive} = props;    
+    const {usersActive, usersIniactive, setReloadUsers} = props;    
     const [viewUsersActives, setViewUsersActives] = useState(true);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
@@ -21,7 +24,7 @@ export default function ListUsers(props) {
     function addUser (){
         setIsVisibleModal(true);
         setModalTitle(`Agregar un nuevo usuario`);
-        setModalContent(<RegisterForm  />)
+        setModalContent(<AddUserDorm setIsVisibleModal={setIsVisibleModal} setReloadUsers={setReloadUsers}/>)
     }
     return(
         <div className='list-users'>
@@ -46,9 +49,10 @@ export default function ListUsers(props) {
                 setIsVisibleModal={setIsVisibleModal}
                 setModalTitle={setModalTitle}  
                 setModalContent={setModalContent}  
+                setReloadUsers={setReloadUsers}
             /> 
             ) : (
-             <UsersInactive usersIniactive={usersIniactive}/>
+             <UsersInactive usersIniactive={usersIniactive} setReloadUsers={setReloadUsers}/>
             )}
             
             <Modal
@@ -69,13 +73,14 @@ function UsersActive(props){
         usersActive,
         setIsVisibleModal,
         setModalTitle,
-        setModalContent
+        setModalContent,
+        setReloadUsers
     } = props;
 
     const editUser = user => {
         setIsVisibleModal(true);
         setModalTitle(`Editar ${user.name ? user.name : "..."} ${user.lastname ? user.lastname : "..."}`);
-        setModalContent(<EditUserForm user={user} />)
+        setModalContent(<EditUserForm user={user} setIsVisibleModal={setIsVisibleModal} setReloadUsers={setReloadUsers} />)
     }
     
 
@@ -85,14 +90,14 @@ function UsersActive(props){
             itemLayout='horizontal'
             dataSource={usersActive}
             grid={{ gutter: 16, column: 4 }}
-            renderItem={user => <UserActive user={user} editUser={editUser} />}
+            renderItem={user => <UserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers} />}
         />
                     
     );
 }
 
 function UserActive(props){
-    const {user, editUser} = props;
+    const {user, editUser, setReloadUsers} = props;
     const [avatar, setAvatar] = useState(null);
     const { Meta } = Card;
 
@@ -105,6 +110,50 @@ function UserActive(props){
             setAvatar(null);
         }        
     }, [user])
+
+
+    const desactivateUser = () => {
+        const accesToken = getAccessTokenApi();
+    
+        activateUserApi(accesToken, user._id, false)
+          .then(response => {
+            notification["success"]({
+              message: response
+            });
+            setReloadUsers(true);
+          })
+          .catch(err => {
+            notification["error"]({
+              message: err
+            });
+          });
+      };
+
+    const showDeleteConfirm = () => {
+        const accesToken = getAccessTokenApi();
+    
+        confirm({
+          title: "Eliminando usuario",
+          content: `¿Estas seguro que quieres eliminar a ${user.email}?`,
+          okText: "Eliminar",
+          okType: "danger",
+          cancelText: "Cancelar",
+          onOk() {
+            deleteUserApi(accesToken, user._id)
+              .then(response => {
+                notification["success"]({
+                  message: response
+                });
+                setReloadUsers(true);
+              })
+              .catch(err => {
+                notification["error"]({
+                  message: err
+                });
+              });
+          }
+        });
+      };
     
     return (
         <List.Item >                    
@@ -122,14 +171,14 @@ function UserActive(props){
                         <Button
                             type='danger'
                             shape="circle"
-                            onClick={() => console.log("desactivar usuario")}
+                            onClick={desactivateUser}
                         >
                             <PoweroffOutlined />
                         </Button>,
                         <Button
                             type='danger'
                             shape="circle"
-                            onClick={() => console.log("eliminar usuario")}
+                            onClick={showDeleteConfirm}
                         >
                             <DeleteOutlined />
                         </Button>
@@ -152,7 +201,7 @@ function UserActive(props){
 }
 
 function UsersInactive(props){
-    const {usersIniactive} = props;
+    const {usersIniactive, setReloadUsers} = props;
     const { Meta } = Card;
     return (
         <List
@@ -160,13 +209,13 @@ function UsersInactive(props){
             itemLayout='horizontal'
             dataSource={usersIniactive}
             grid={{ gutter: 16, column: 4 }}
-            renderItem={user => <UserInactive user={user}/>}
+            renderItem={user => <UserInactive user={user} setReloadUsers={setReloadUsers}/>}
         />
     );
 }
 
 function UserInactive(props){
-    const {user} = props;
+    const {user, setReloadUsers} = props;
 
     const [avatar, setAvatar] = useState(null);
     const { Meta } = Card;
@@ -181,6 +230,49 @@ function UserInactive(props){
         }        
     }, [user])
 
+    const activateUser = () => {
+        const accesToken = getAccessTokenApi();
+    
+        activateUserApi(accesToken, user._id, true)
+          .then(response => {
+            notification["success"]({
+              message: response
+            });
+            setReloadUsers(true);
+          })
+          .catch(err => {
+            notification["error"]({
+              message: err
+            });
+          });
+      };
+
+    const showDeleteConfirm = () => {
+        const accesToken = getAccessTokenApi();
+    
+        confirm({
+          title: "Eliminando usuario",
+          content: `¿Estas seguro que quieres eliminar a ${user.email}?`,
+          okText: "Eliminar",
+          okType: "danger",
+          cancelText: "Cancelar",
+          onOk() {
+            deleteUserApi(accesToken, user._id)
+              .then(response => {
+                notification["success"]({
+                  message: response
+                });
+                setReloadUsers(true);
+              })
+              .catch(err => {
+                notification["error"]({
+                  message: err
+                });
+              });
+          }
+        });
+      };
+
     return(
         <List.Item >
                     <Card
@@ -190,14 +282,14 @@ function UserInactive(props){
                             <Button
                                 type='primary'
                                 shape="circle"
-                                onClick={() => console.log("activar usuario usuario")}
+                                onClick={activateUser}
                             >
                                 <PoweroffOutlined />
                             </Button>,
                             <Button
                                 type='danger'
                                 shape="circle"
-                                onClick={() => console.log("eliminar usuario")}
+                                onClick={showDeleteConfirm}
                             >
                                 <DeleteOutlined />
                             </Button>

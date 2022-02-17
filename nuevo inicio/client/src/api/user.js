@@ -1,12 +1,13 @@
 import {basePath, apiVersion} from './config';
 
-export function signUpApi(data){
+export function signUpApi(token, data){
     const url = `${basePath}/${apiVersion}/sign-up`;
     const params = {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            Authorization: token
         }
     };
     
@@ -189,30 +190,6 @@ export function deleteUserApi(token, userId) {
       "Content-Type": "application/json",
       Authorization: token
     }
-  };
-
-  return fetch(url, params)
-    .then(response => {
-      return response.json();
-    })
-    .then(result => {
-      return result.message;
-    })
-    .catch(err => {
-      return err.message;
-    });
-}
-
-export function signUpAdminApi(token, data) {
-  const url = `${basePath}/${apiVersion}/sign-up-admin`;
-
-  const params = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: token
-    },
-    body: JSON.stringify(data)
   };
 
   return fetch(url, params)

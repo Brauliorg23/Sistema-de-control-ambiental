@@ -6,6 +6,7 @@ import LayoutBasic from "../layouts/LayoutBasic";
 import AdminHome from "../pages/Admin";
 import AdminSingIn from "../pages/Admin/Signin";
 import AdminUsers from "../pages/Admin/Users";
+import MenuWeb from "../pages/Admin/MenuWeb/MenuWeb";
 //Client pages
 import Home from "../pages/Home";
 import Contact from "../pages/Contact";
@@ -34,6 +35,12 @@ const routesAdmin = [
     },
     {
         path: "/admin/register",
+        layout: LayoutAdmin,
+        component: RegisterForm,
+        exact: true
+    },
+    {
+        path: "/admin/menu",
         layout: LayoutAdmin,
         component: RegisterForm,
         exact: true

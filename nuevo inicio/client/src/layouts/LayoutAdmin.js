@@ -13,9 +13,6 @@ export default function LayoutAdmin(props){
     const [menuCollapsed, setMenuCollapsed] = useState(false);
     const {Header, Content, Footer}=Layout;
     const {user, isLoading} = useAuth();
-
-    console.log(user);
-
     if (!user && !isLoading) {
            return(
                         

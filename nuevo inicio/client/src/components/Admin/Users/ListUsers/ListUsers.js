@@ -7,7 +7,6 @@ import EditUserForm from "../EditUserForm/EditUserForm";
 import RegisterForm from "../../RegisterForm/RegisterForm"
 import { getAvatarApi, activateUserApi, deleteUserApi} from '../../../../api/user';
 import {getAccessTokenApi} from "../../../../api/auth";
-import AddUserDorm from "../AddUserForm";
 
 import "./ListUsers.scss";
 
@@ -24,7 +23,7 @@ export default function ListUsers(props) {
     function addUser (){
         setIsVisibleModal(true);
         setModalTitle(`Agregar un nuevo usuario`);
-        setModalContent(<AddUserDorm setIsVisibleModal={setIsVisibleModal} setReloadUsers={setReloadUsers}/>)
+        setModalContent(<RegisterForm setIsVisibleModal={setIsVisibleModal} setReloadUsers={setReloadUsers}/>)
     }
     return(
         <div className='list-users'>

@@ -1,4 +1,4 @@
-const ubication = require("../models/ubication");
+const Ubication = require("../models/ubication");
 
 function addUbication(req, res){
     const ubication = new Ubication();
@@ -27,7 +27,7 @@ function addUbication(req, res){
 }
 
 function getUbications(req, res){
-    ubication.find().then(ubication => {
+    Ubication.find().then(ubication => {
         if(!ubication){
             res.status(404).send({message: "No se ha encontrado ninguna ubicasion. "});
         }else{
@@ -40,7 +40,7 @@ function updateUbication(req, res) {
     let ubicationData = req.body;
     const params = req.params;
   
-    ubication.findByIdAndUpdate({_id: params.id}, ubicationData, (err, ubicationUpdate) => {
+    Ubication.findByIdAndUpdate({_id: params.id}, ubicationData, (err, ubicationUpdate) => {
       if (err) {
         res.status(500).send({ message: "Error del servidor." });
       } else {
@@ -57,7 +57,7 @@ function activateUbication(req, res) {
     const { id } = req.params;
     const { active } = req.body;
   
-    ubication.findByIdAndUpdate(id, { active }, (err, ubicationStored) => {
+    Ubication.findByIdAndUpdate(id, { active }, (err, ubicationStored) => {
       if (err) {
         res.status(500).send({ message: "Erro del servidor." });
       } else {
@@ -78,7 +78,7 @@ function activateUbication(req, res) {
 function deleteUbication(req, res) {
     const { id } = req.params;
   
-    ubication.findByIdAndRemove(id, (err, UbicationDeleted) => {
+    Ubication.findByIdAndRemove(id, (err, UbicationDeleted) => {
       if (err) {
         res.status(500).send({ message: "Error del servidor." });
       } else {

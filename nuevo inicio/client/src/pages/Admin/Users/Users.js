@@ -1,4 +1,3 @@
-import { List } from "antd/lib/form/Form";
 import React, {useState, useEffect} from "react";
 import {getAccessTokenApi} from "../../../api/auth";
 import { getUsersActiveApi } from "../../../api/user";

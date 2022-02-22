@@ -36,6 +36,18 @@ function getUbications(req, res){
     });
 }
 
+function getUbicationssActive(req, res){
+  const query = req.query;
+
+  Ubication.find({active: query.active}).then(ubications => {
+      if(!ubications){
+          res.status(404).send({message: "No se ha encontrado ningun ususario. "});
+      }else{
+          res.status(200).send({ubications});
+      }
+  });
+}
+
 function updateUbication(req, res) {
     let ubicationData = req.body;
     const params = req.params;
@@ -74,6 +86,68 @@ function activateUbication(req, res) {
     });
   }
   
+  function uploadAvatar(req, res) {
+    const params = req.params;
+    console.log("uploadAvatar");
+    Ubication.findById({ _id: params.id }, (err, ubicationData) => {
+      if (err) {
+        res.status(500).send({ message: "Error del servidor." });
+      } else {
+        if (!ubicationData) {
+          res.status(404).send({ message: "Nose ha encontrado ningun usuario." });
+        } else {
+          let ubication = ubicationData;
+  
+          if (req.files) {
+            let filePath = req.files.avatar.path;            
+            let fileSplit = filePath.split("\\");            
+            let fileName = fileSplit[2];            
+            let extSplit = fileName.split(".");
+            let fileExt = extSplit[1];
+  
+            if (fileExt !== "png" && fileExt !== "jpg") {
+              res.status(400).send({
+                message:
+                  "La extension de la imagen no es valida. (Extensiones permitidas: .png y .jpg)"
+              });
+            } else {
+              ubication.avatar = fileName;
+              ubication.findByIdAndUpdate(
+                { _id: params.id },
+                ubication,
+                (err, ubicationResult) => {
+                  if (err) {
+                    res.status(500).send({ message: "Error del servidor." });
+                  } else {
+                    if (!ubicationResult) {
+                      res
+                        .status(404)
+                        .send({ message: "No se ha encontrado ningun usuario." });
+                    } else {
+                      res.status(200).send({ avatarName: fileName });
+                    }
+                  }
+                }
+              );
+            }
+          }
+        }
+      }
+    });
+  }
+  
+function getAvatar(req, res) { 
+    const avatarName = req.params.avatarName;
+    const filePath = "./uploads/avatar/" + avatarName;
+  
+    fs.exists(filePath, exists => {
+      if (!exists) {
+        res.status(404).send({ message: "El avatar que buscas no existe." });
+      } else {
+        res.sendFile(path.resolve(filePath));
+      }
+    });
+  }
 
 function deleteUbication(req, res) {
     const { id } = req.params;
@@ -96,7 +170,10 @@ function deleteUbication(req, res) {
 module.exports = {
     addUbication,
     getUbications,
+    getUbicationssActive,
     updateUbication,
+    uploadAvatar,
+    getAvatar,
     activateUbication,
     deleteUbication
 }

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Switch, List, Card, Divider , Avatar, Button, Modal as ModalAntd, notification } from 'antd';
-import { EditOutlined , PoweroffOutlined, DeleteOutlined, SettingOutlined,  } from "@ant-design/icons";
+import { EditOutlined , PoweroffOutlined, DeleteOutlined, EllipsisOutlined } from "@ant-design/icons";
 import NoAvatar from '../../../../assets/img/jpg/Avatar.jpg';
 import Modal from '../../../Modal/Modal';
 import EditUserForm from "../EditUserForm/EditUserForm";
@@ -155,47 +155,33 @@ function UserActive(props){
       };
     
     return (
-        <List.Item >                    
-                <Card 
-                    className='Card-list'
-                    
-                    actions={[
-                        <Button
-                            type='primary'
-                            shape="circle"
-                            onClick={() => editUser(user)}
-                        >
-                            <EditOutlined />
-                        </Button>,
-                        <Button
-                            type='danger'
-                            shape="circle"
-                            onClick={desactivateUser}
-                        >
-                            <PoweroffOutlined />
-                        </Button>,
-                        <Button
-                            type='danger'
-                            shape="circle"
-                            onClick={showDeleteConfirm}
-                        >
-                            <DeleteOutlined />
-                        </Button>
-                    ]}                        
-                    
+        <List.Item >                                    
+            <Card
+                className='Card-list'
+                style={{ width: 200 }}
+                cover={
+                <img
+                    alt="example"
+                    src={avatar ? avatar : NoAvatar}
+                /> 
+                                    
+                }
+                actions={[
+                    <PoweroffOutlined key="setting"  onClick={desactivateUser}/>,
+                    <EditOutlined key="edit" onClick={() => editUser(user)}/>,
+                    <DeleteOutlined key="ellipsis" onClick={showDeleteConfirm}/>,
+                ]}
+            >
+                <Meta
+                    className='Card-list__ubication'  
                     title={`
                         ${user.name ? user.name : "..Hola."}
                         ${user.lastname ? user.lastname : "..."}
                     `}
-                    
-                >
-                    <Meta
-                        className='Card-list__user'
-                        avatar={<Avatar src={avatar ? avatar : NoAvatar} />}
-                        description={user.email}
-                    />
-                </Card>
-            </List.Item>
+                    description={user.email}
+                />
+            </Card>
+        </List.Item>
     );
 }
 
@@ -273,39 +259,31 @@ function UserInactive(props){
       };
 
     return(
-        <List.Item >
-                    <Card
-                        className='Card-list'
-                        
-                        actions={[                        
-                            <Button
-                                type='primary'
-                                shape="circle"
-                                onClick={activateUser}
-                            >
-                                <PoweroffOutlined />
-                            </Button>,
-                            <Button
-                                type='danger'
-                                shape="circle"
-                                onClick={showDeleteConfirm}
-                            >
-                                <DeleteOutlined />
-                            </Button>
-                        ]}
-                        
-                        title={`
-                            ${user.name ? user.name : "..."}
-                            ${user.lastname ? user.lastname : "..."}
-                        `}
-                        
-                    >
-                        <Meta 
-                            className='Card-list__user'
-                            avatar={<Avatar src={avatar ? avatar : NoAvatar} />}
-                            description={user.email}
-                        />
-                    </Card>
-                </List.Item>
+        <List.Item >            
+            <Card
+                className='Card-list'
+                style={{ width: 200 }}
+                cover={
+                <img
+                    alt="example"
+                    src={avatar ? avatar : NoAvatar}
+                /> 
+                                    
+                }
+                actions={[
+                    <PoweroffOutlined key="setting"  onClick={activateUser}/>,
+                    <DeleteOutlined key="ellipsis" onClick={showDeleteConfirm}/>,
+                ]}
+            >
+                <Meta
+                    className='Card-list__ubication'  
+                    title={`
+                        ${user.name ? user.name : "..Hola."}
+                        ${user.lastname ? user.lastname : "..."}
+                    `}
+                    description={user.email}
+                />
+            </Card>
+        </List.Item>
     )
 }

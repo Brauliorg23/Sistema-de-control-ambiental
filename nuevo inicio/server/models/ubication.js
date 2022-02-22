@@ -8,7 +8,8 @@ const UbicationSchema = Schema({
     },
     title: String,
     description: String,
-    active: Boolean
+    active: Boolean,
+    avatar: String
 });
 
 module.exports = mongoose.model("Ubication", UbicationSchema);

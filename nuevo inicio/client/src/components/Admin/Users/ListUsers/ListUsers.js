@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {Switch, List, Card, Divider , Avatar, Button, Modal as ModalAntd, notification } from 'antd';
-import { EditOutlined , PoweroffOutlined, DeleteOutlined, EllipsisOutlined } from "@ant-design/icons";
+import {Switch, List, Card, Divider , Button, Modal as ModalAntd, notification } from 'antd';
+import { EditOutlined , PoweroffOutlined, DeleteOutlined } from "@ant-design/icons";
 import NoAvatar from '../../../../assets/img/jpg/Avatar.jpg';
 import Modal from '../../../Modal/Modal';
 import EditUserForm from "../EditUserForm/EditUserForm";

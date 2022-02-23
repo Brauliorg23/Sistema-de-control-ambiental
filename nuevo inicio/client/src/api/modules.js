@@ -1,0 +1,1 @@
+import {basePath, apiVersion} from './config';

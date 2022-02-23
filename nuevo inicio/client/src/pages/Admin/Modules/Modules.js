@@ -6,7 +6,7 @@ export default function MenuWeb(){
 
     return (
         <div className="menu-web">
-            <h1>contenedores</h1>
+            <h1>Modulos</h1>
         </div>
     )
 }

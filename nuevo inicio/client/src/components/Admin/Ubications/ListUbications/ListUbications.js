@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {Switch, List, Card, Divider , Avatar, Button, Modal as ModalAntd, notification } from 'antd';
-import { EditOutlined , PoweroffOutlined, DeleteOutlined, SettingOutlined, EllipsisOutlined } from "@ant-design/icons";
+import {Switch, List, Card, Divider , Button, Modal as ModalAntd, notification } from 'antd';
+import { EditOutlined , PoweroffOutlined, DeleteOutlined } from "@ant-design/icons";
 import Modal from '../../../Modal/Modal';
 import NoAvatar from '../../../../assets/img/jpg/Avatar2.jpg';
 import EditUbicationForm from "../EditUbicationForm/EditUbicationForm";
-import RegisterForm from "../../RegisterForm/RegisterForm"
+import AddUbication from "../AddUbication/AddUbication"
 import { getAvatarApi, activateUbicationApi, deleteUbicationApi} from '../../../../api/ubication';
 import {getAccessTokenApi} from "../../../../api/auth";
 
@@ -23,7 +23,7 @@ export default function ListUbications(props) {
     function addUbication (){
         setIsVisibleModal(true);
         setModalTitle(`Agregar un nuevo usuario`);
-        setModalContent(<RegisterForm setIsVisibleModal={setIsVisibleModal} setReloadUbications={setReloadUbications}/>)
+        setModalContent(<AddUbication setIsVisibleModal={setIsVisibleModal} setReloadUbications={setReloadUbications}/>)
     }
     return(
         <div className='list-ubications'>

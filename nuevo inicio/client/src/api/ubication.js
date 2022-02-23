@@ -35,7 +35,6 @@ export function getUbicationsApi(token) {
     };
     return fetch(url, params)
       .then(response => {
-        console.log(response.json());
         return response.json();
       })
       .then(result => {

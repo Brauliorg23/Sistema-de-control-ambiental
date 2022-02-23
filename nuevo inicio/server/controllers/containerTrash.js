@@ -4,8 +4,8 @@ const ContainerTrash = require("../models/containerTrash");
 function addContainerTrash(req, res){
     const containerTrash = new ContainerTrash();
 
-    const {idContainerTrash, color, description} = req.body;
-    containerTrash.idContainerTrash = idContainerTrash;
+    const {codigo, color, description} = req.body;
+    containerTrash.idContainerTrash = codigo;
     containerTrash.color = color;
     containerTrash.description = description;
     containerTrash.active = true;
@@ -35,6 +35,18 @@ function getContainerTrash(req, res){
             res.status(200).send({containerTrash});
         }
     });
+}
+
+function getContainersActive(req, res){
+  const query = req.query;
+
+  ContainerTrash.find({active: query.active}).then(containerTrash => {
+      if(!containerTrash){
+          res.status(404).send({message: "No se ha encontrado ningun ususario. "});
+      }else{
+          res.status(200).send({ubications});
+      }
+  });
 }
 
 function updateContainerTrash(req, res) {

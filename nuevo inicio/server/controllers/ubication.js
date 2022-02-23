@@ -3,13 +3,13 @@ const Ubication = require("../models/ubication");
 function addUbication(req, res){
     const ubication = new Ubication();
 
-    const {idUbication, title, description } = req.body;
-    ubication.idUbication = idUbication;
+    const {codigo, title, description } = req.body;
+    ubication.codigo = codigo;
     ubication.title = title;
     ubication.description = description;
     ubication.active = true;
     
-    if (!description || !title || !idUbication) {
+    if (!description || !title || !codigo) {
         res.status(500).send({message: "Los campos son obligatorios"});
     }else{    
         ubication.save((err, createdUbication) => {
@@ -86,7 +86,7 @@ function activateUbication(req, res) {
     });
   }
   
-  function uploadAvatar(req, res) {
+function uploadAvatar(req, res) {
     const params = req.params;
     console.log("uploadAvatar");
     Ubication.findById({ _id: params.id }, (err, ubicationData) => {

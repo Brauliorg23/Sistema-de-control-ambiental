@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ModuleSchema = Schema({
-    idModule: {
-        type: Number,
+    codigo: {
+        type: String,
         unique: true
     },
     color: String,

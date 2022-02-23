@@ -11,6 +11,8 @@ import Signin from "../pages/Admin/Signin";
 import RegisterForm from "../components/Admin/RegisterForm/RegisterForm";
 import Ubications from "../pages/Admin/Ubications/Ubications";
 import Containers from "../pages/Admin/Containers/Containers";
+import Modules from "../pages/Admin/Modules/Modules";
+import Reports from "../pages/Admin/Reports/Reports";
 
 
 //Client pages
@@ -55,6 +57,18 @@ const routesAdmin = [
         path: "/admin/containers",
         layout: LayoutAdmin,
         component: Containers,
+        exact: true
+    },
+    {
+        path: "/admin/modules",
+        layout: LayoutAdmin,
+        component: Modules,
+        exact: true
+    },
+    {
+        path: "/admin/reports",
+        layout: LayoutAdmin,
+        component: Reports,
         exact: true
     },
     {

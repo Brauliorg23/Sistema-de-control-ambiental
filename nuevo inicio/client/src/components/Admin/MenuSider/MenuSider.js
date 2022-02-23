@@ -30,7 +30,7 @@ export default function MenuSider(props){
                     </Link>
                 </Menu.Item>
                 <Menu.Item key="4" >
-                    <Link to={"/admin"}>
+                    <Link to={"/admin/modules"}>
                     <HomeOutlined className="nav-text" />
                     <span className="nav-text">modulos de contenedores</span>
                     </Link>
@@ -42,7 +42,7 @@ export default function MenuSider(props){
                     </Link>
                 </Menu.Item>   
                 <Menu.Item key="6" >
-                    <Link to={"/admin"}>
+                    <Link to={"/admin/reports"}>
                     <HomeOutlined className="nav-text" />
                     <span className="nav-text">Estadisticas</span>
                     </Link>

@@ -9,7 +9,7 @@ export default function MenuWeb(){
 
     return (
         <div className="menu-web">
-            <h1>reportes</h1>
+            <ListReports/>
         </div>
     )
 }

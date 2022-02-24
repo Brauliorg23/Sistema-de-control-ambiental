@@ -104,10 +104,12 @@ function deleteContainerTrash(req, res) {
       }
     });
   }
+
 module.exports = {
     addContainerTrash,
     getContainerTrash,
     updateContainerTrash,
     activateContainerTrash,
+    getContainersActive,
     deleteContainerTrash
 }

@@ -22,7 +22,7 @@ export default function Ubications(){
     }, [token, reloadUbications]);
 
     return (
-        <div className="users">
+        <div >
             <ListUbications ubicationsActive={ubicationsActive} ubicationsInactive={ubicationsInactive} setReloadUbications={setReloadUbications} />
         </div>
     );

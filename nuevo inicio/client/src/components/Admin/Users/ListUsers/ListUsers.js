@@ -26,7 +26,7 @@ export default function ListUsers(props) {
         setModalContent(<RegisterForm setIsVisibleModal={setIsVisibleModal} setReloadUsers={setReloadUsers}/>)
     }
     return(
-        <div className='list-users'>
+        <div className='list-users' >
             <div className='list-users__switch' >                
                     <Switch
                         defaultChecked

@@ -44,7 +44,7 @@ function getContainersActive(req, res){
       if(!containerTrash){
           res.status(404).send({message: "No se ha encontrado ningun ususario. "});
       }else{
-          res.status(200).send({ubications});
+          res.status(200).send({containerTrash});
       }
   });
 }

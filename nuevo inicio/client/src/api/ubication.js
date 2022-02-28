@@ -58,7 +58,6 @@ export function getUbicationsActiveApi(token, status) {
   
     return fetch(url, params)
       .then(response => {
-        console.log(response);
         return response.json();
       })
       .then(result => {

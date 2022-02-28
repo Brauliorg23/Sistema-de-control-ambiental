@@ -27,7 +27,7 @@ export default function ListUbications(props) {
     }
     return(
         <div className='list-ubications'>
-            <div className='list-ubications' >                
+            <div className='list-ubications__switch' >                
                     <Switch
                         defaultChecked
                         checkedChildren="Ubicasiones Activas" 

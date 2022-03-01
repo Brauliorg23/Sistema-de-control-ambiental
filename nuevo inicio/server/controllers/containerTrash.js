@@ -4,13 +4,13 @@ const ContainerTrash = require("../models/containerTrash");
 function addContainerTrash(req, res){
     const containerTrash = new ContainerTrash();
 
-    const {codigo, color, description} = req.body;
-    containerTrash.idContainerTrash = codigo;
-    containerTrash.color = color;
+    const {codigo, tittle, description} = req.body;
+    containerTrash.code = codigo;
+    containerTrash.title = tittle;
     containerTrash.description = description;
     containerTrash.active = true;
 
-    if (!idContainerTrash || !color || !description) {
+    if (!code || !tittle || !description) {
         res.status(500).send({message: "Los campos son obligatorios"});
     }else{    
         containerTrash.save((err, createdContainerTrash) => {

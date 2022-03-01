@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const ContainerTrashSchema = Schema({
-    idContainerTrash: {
-        type: Number,
+    code: {
+        type: String,
         unique: true
     },
-    color: String,
+    title: String,
     description: String,
-    active: String,
+    active: Boolean,
 });
 
 module.exports = mongoose.model("ContainerTrash", ContainerTrashSchema);

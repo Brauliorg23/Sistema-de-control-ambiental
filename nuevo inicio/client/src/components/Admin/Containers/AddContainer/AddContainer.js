@@ -3,35 +3,36 @@ import { Form, Input, Button, Checkbox, notification } from "antd";
 import {
   emailValidation,
 } from "../../../../utils/formValidation";
-import { addUbicationApi } from "../../../../api/ubication";
+import { addContainerApi } from "../../../../api/containers";
 import { getAccessTokenApi } from "../../../../api/auth";
 
+import "./AddContainer.scss";
 
-export default function AddUbication(props) {
-  const { setIsVisibleModal, setReloadUbications } = props;
-  const [ubication, setUbication] = useState({
+export default function AddContainers(props) {
+  const { setIsVisibleModal, setReloadContainers } = props;
+  const [container, setContainer] = useState({
     title: "",
     description : "",
-    codigo: "",
+    code: "",
     privacyPolicy: false
   });
 
   const [formValid, setFormValid] = useState({
     title: false,
     description : false,
-    codigo: false,
+    code: false,
     privacyPolicy: false
   });
 
   const changeForm = e => {
     if (e.target.name === "privacyPolicy") {
-        setUbication({
-        ...ubication,
+      setContainer({
+        ...container,
         [e.target.name]: e.target.checked
       });
     } else {      
-        setUbication({
-        ...ubication,
+      setContainer({
+        ...container,
         [e.target.name]: e.target.value
       });           
     }
@@ -40,7 +41,7 @@ export default function AddUbication(props) {
   const inputValidation = e => {
     const { type, name1 } = e.target;
 
-    if (type === "title" || type === "description" || type === "codigo") {
+    if (type === "title" || type === "description" || type === "code") {
       setFormValid({ ...formValid, [name1]: emailValidation(e.target) });
     }
     if (type === "checkbox") {
@@ -50,39 +51,25 @@ export default function AddUbication(props) {
 
   const register = async e => {
     e.preventDefault();
-    const titleVal = ubication.title;
-    const descriptionVal =ubication.description;
-    const codigoVal = ubication.codigo;
-    const privacyPolicyVal = ubication.privacyPolicy;
-    if ( !titleVal || !descriptionVal || !privacyPolicyVal || !codigoVal) {
+    const titleVal = container.title;
+    const descriptionVal =container.description;
+    const codeVal = container.code;
+    const privacyPolicyVal = container.privacyPolicy;
+    if ( !titleVal || !descriptionVal || !privacyPolicyVal || !codeVal) {
       notification["error"]({
         message: "Todos los campos son obligatorios"
       });
     } else {
         const accesToken = getAccessTokenApi();
-        addUbicationApi(accesToken, ubication).then( result => {
+        addContainerApi(accesToken, container).then( result => {
+            console.log(result);
             notification["success"]({
                 message: result.message
               });
               setIsVisibleModal(false);
-              setReloadUbications(true);
+              setReloadContainers(true);
               resetForm();
-        })
-        // const result = await addUbicationApi(accesToken, ubication);
-        // console.log(result);
-        // if (!result.ok) {
-        //   notification["error"]({
-        //     message: result.message
-        //   });
-        //   resetForm();
-        // } else {
-        //   notification["success"]({
-        //     message: result.message
-        //   });          
-        //   setIsVisibleModal(false);
-        //   setReloadUbications(true);
-        //   resetForm();
-        // }
+        })        
     }
 };
 
@@ -94,70 +81,67 @@ export default function AddUbication(props) {
       inputs[i].classList.remove("error");
     }
 
-    setUbication({
+    setContainer({
       title: "",
       description : "",
-      codigo: "",
+      code: "",
       privacyPolicy: false
     });
 
     setFormValid({
       title: false,
       description : false,
-      codigo: false,
+      code: false,
       privacyPolicy: false
     });
   };
 
   return (
-    // <Form className="register-form" onSubmitCapture={register} onChange={changeForm}>
-    //   <Form.Item>
-    //       <Input
-    //         type="text"
-    //         name="title"
-    //         placeholder="Nombre"
-    //         className="register-form__input"
-    //         value={ubication.title}
-    //         onChange={inputValidation}
-    //       />
-    //   </Form.Item>
-    //   <Form.Item>
-    //       <Input
-    //         type="text"
-    //         name="description"
-    //         placeholder="Descripcion"
-    //         className="register-form__input"
-    //         value={ubication.description}
-    //         onChange={inputValidation}
-    //       />
-    //   </Form.Item>
-    //   <Form.Item>
-    //       <Input
-    //         type="text"
-    //         name="codigo"
-    //         placeholder="Identificador"
-    //         className="register-form__input"
-    //         value={ubication.codigo}
-    //         onChange={inputValidation}
-    //       />
-    //   </Form.Item>
-    //   <Form.Item>
-    //     <Checkbox
-    //       name="privacyPolicy"
-    //       onChange={inputValidation}
-    //       checked={ubication.privacyPolicy}
-    //     >
-    //       He leído y acepto la política de privacidad.
-    //     </Checkbox>
-    //   </Form.Item>
-    //   <Form.Item>
-    //     <Button htmlType="submit" className="register-form__button">
-    //       Crear cuenta
-    //     </Button>
-    //   </Form.Item>
-    // </Form>
-    <div>
-      holalalalalal
-    </div>
+    <Form className="register-form" onSubmitCapture={register} onChange={changeForm}>
+      <Form.Item>
+          <Input
+            type="text"
+            name="code"
+            placeholder="Identificador"
+            className="register-form__input"
+            value={container.code}
+            onChange={inputValidation}
+          />
+      </Form.Item>
+      <Form.Item>
+          <Input
+            type="text"
+            name="title"
+            placeholder="Nombre"
+            className="register-form__input"
+            value={container.title}
+            onChange={inputValidation}
+          />
+      </Form.Item>
+      <Form.Item>
+          <Input
+            type="text"
+            name="description"
+            placeholder="Descripcion"
+            className="register-form__input"
+            value={container.description}
+            onChange={inputValidation}
+          />
+      </Form.Item>      
+      <Form.Item>
+        <Checkbox
+          name="privacyPolicy"
+          onChange={inputValidation}
+          checked={container.privacyPolicy}
+        >
+          He leído y acepto la política de privacidad.
+        </Checkbox>
+      </Form.Item>
+      <Form.Item>
+        <Button htmlType="submit" className="register-form__button">
+          Crear cuenta
+        </Button>
+      </Form.Item>
+    </Form>
   );
 }

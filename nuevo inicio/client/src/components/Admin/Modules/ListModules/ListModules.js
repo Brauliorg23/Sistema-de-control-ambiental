@@ -1,5 +1,6 @@
 import React, {state} from 'react';
 import { List, Avatar, Button, Skeleton } from 'antd';
+import QRModules from "../QRModules/QRModules";
 
 const count = 3;
 const fakeDataUrl = `https://randomuser.me/api/?results=${count}&inc=name,gender,email,nat,picture&noinfo`;
@@ -73,7 +74,7 @@ class LoadMoreList extends React.Component {
           <Button onClick={this.onLoadMore}>loading more</Button>
         </div>
       ) : null;
-
+      
     return (
       <List
         className="demo-loadmore-list"
@@ -83,7 +84,7 @@ class LoadMoreList extends React.Component {
         dataSource={list}
         renderItem={item => (
           <List.Item
-            actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-more">more</a>]}
+            actions={[<a key="list-loadmore-edit">edit</a>, <a key="list-loadmore-QR" onClick={console.log("hiodus")} >QR</a>, <a key="list-loadmore-more">more</a>]}
           >
             <Skeleton avatar title={false} loading={item.loading} active>
               <List.Item.Meta

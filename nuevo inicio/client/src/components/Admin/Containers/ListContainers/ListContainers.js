@@ -9,6 +9,7 @@ import EditContainerFrom from "../EditContainerForm/EditContainerForm";
 import AddContainer from "../AddContainer/AddContainer";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import VirtualList from 'rc-virtual-list';
+import QRModules from "../../Modules/QRModules/QRModules";
 
 
 
@@ -48,7 +49,7 @@ export default function ListContainer(props){
                 onClick={() => addContainer()}
             >
                 Agregar contenedor
-            </Button>
+            </Button>            
           </div>
           {viewContainersActives ? (
             <ContainersActive
@@ -59,7 +60,7 @@ export default function ListContainer(props){
               setReloadContainers={setReloadContainers}
             />
           ) : (
-            <containersInactive 
+            <ContainersInactive 
               containersInactive={containersInactive}
               setReloadContainers={setReloadContainers}
             />
@@ -77,7 +78,14 @@ export default function ListContainer(props){
       );
 }
 
-const ContainersActive = () => {
+const ContainersActive = (props) => {
+  const {
+    containersActive,
+    setIsVisibleModal,
+    setModalTitle,
+    setModalContent,
+    setReloadContainers
+} = props;
   const [data, setData] = useState([]);
 
   const appendData = () => {
@@ -99,6 +107,12 @@ const ContainersActive = () => {
     }
   };
 
+  const QRModule = module =>{
+    setIsVisibleModal(true);
+    setModalTitle(`Agreagar un nuevo contenedor`);
+    setModalContent(<QRModules module={module} setIsVisibleModal={setIsVisibleModal} setReloadContainers={setReloadContainers} />);
+  }
+
   return (
     <List>
       <VirtualList
@@ -115,7 +129,34 @@ const ContainersActive = () => {
               title={<a href="https://ant.design">{item.name.last}</a>}
               description={item.email}
             />
-            <div>Content</div>
+            <Divider  type='vertical'/>            
+            <Button 
+                type='primary'
+                onClick={() => QRModule(item)}
+            >
+                <PoweroffOutlined/>
+            </Button> 
+            <Divider  type='vertical'/>
+            <Button 
+                type='primary'
+                onClick={() => QRModule(item)}
+            >
+                <EditOutlined/>
+            </Button> 
+            <Button 
+                type='primary'
+                onClick={() => QRModule(item)}
+            >
+                qr
+            </Button> 
+            <Divider  type='vertical'/>
+            <Button 
+                type='primary'
+                onClick={() => QRModule(item)}
+            >
+                <DeleteOutlined/>
+            </Button> 
+            <Divider  type='vertical'/>
           </List.Item>
         )}
       </VirtualList>
@@ -123,154 +164,93 @@ const ContainersActive = () => {
   );
 };
 
+const ContainersInactive = (props) => {
+  const {
+    containersInactive,
+    setReloadContainers
+  } = props;
 
-// const containersInactive = () => {
-//   const [loading, setLoading] = useState(false);
-//   const [data, setData] = useState([]);
+  const [data, setData] = useState([]);
 
-//   const loadMoreData = () => {
-//     if (loading) {
-//       return;
-//     }
-//     setLoading(true);
-//     fetch('https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo')
-//       .then(res => res.json())
-//       .then(body => {
-//         setData([...data, ...body.results]);
-//         setLoading(false);
-//       })
-//       .catch(() => {
-//         setLoading(false);
-//       });
-//   };
+  const appendData = () => {
+    fetch(fakeDataUrl)
+      .then(res => res.json())
+      .then(body => {
+        setData(data.concat(body.results));
+        message.success(`${body.results.length} more items loaded!`);
+      });
+  };
 
-//   useEffect(() => {
-//     loadMoreData();
-//   }, []);
+  useEffect(() => {
+    appendData();
+  }, []);
 
-//   return (
-//     <div
-//       id="scrollableDiv"
-//       style={{
-//         height: 400,
-//         overflow: 'auto',
-//         padding: '0 16px',
-//         border: '1px solid rgba(140, 140, 140, 0.35)',
-//       }}
-//     >
-//       <InfiniteScroll
-//         dataLength={data.length}
-//         next={loadMoreData}
-//         hasMore={data.length < 50}
-//         loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-//         endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
-//         scrollableTarget="scrollableDiv"
-//       >
-//         <List
-//           dataSource={data}
-//           renderItem={item => (
-//             <List.Item key={item.id}>
-//               <List.Item.Meta
-//                 avatar={<Avatar src={item.picture.large} />}
-//                 title={<a href="https://ant.design">{item.name.last}</a>}
-//                 description={item.email}
-//               />
-//               <div>Content</div>
-//             </List.Item>
-//           )}
-//         />
-//       </InfiniteScroll>
-//     </div>
-//   );
-// };
+  const onScroll = e => {
+    if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {
+      appendData();
+    }
+  };
 
-// class ContainersInactive extends React.Component {
-//   state = {
-//     initLoading: true,
-//     loading: false,
-//     data: [],
-//     list: [],
-//   };
+  const showDeleteConfirm = container => {
+    const accesToken = getAccessTokenApi();
 
-//   componentDidMount() {
-//     fetch(fakeDataUrl)
-//       .then(res => res.json())
-//       .then(res => {
-//         this.setState({
-//           initLoading: false,
-//           data: res.results,
-//           list: res.results,
-//         });
-//       });
-//   }
+    confirm({
+      title: "Eliminando usuario",
+      content: `¿Estas seguro que quieres eliminar a ?`,
+      okText: "Eliminar",
+      okType: "danger",
+      cancelText: "Cancelar",
+      onOk() {
+        deleteContainerApi(accesToken, container._id)
+          .then(response => {
+            notification["success"]({
+              message: response
+            });
+            setReloadContainers(true);
+          })
+          .catch(err => {
+            notification["error"]({
+              message: err
+            });
+          });
+      }
+    });
+  };
 
-//   onLoadMore = () => {
-//     this.setState({
-//       loading: true,
-//       list: this.state.data.concat(
-//         [...new Array(count)].map(() => ({ loading: true, name: {}, picture: {} })),
-//       ),
-//     });
-//     fetch(fakeDataUrl)
-//       .then(res => res.json())
-//       .then(res => {
-//         const data = this.state.data.concat(res.results);
-//         this.setState(
-//           {
-//             data,
-//             list: data,
-//             loading: false,
-//           },
-//           () => {
-//             // Resetting window's offsetTop so as to display react-virtualized demo underfloor.
-//             // In real scene, you can using public method of react-virtualized:
-//             // https://stackoverflow.com/questions/46700726/how-to-use-public-method-updateposition-of-react-virtualized
-//             window.dispatchEvent(new Event('resize'));
-//           },
-//         );
-//       });
-//   };
-
-//   render(props) {
-//     console.log(props);
-//     const { initLoading, loading, list } = this.state;
-//     const loadMore =
-//       !initLoading && !loading ? (
-//         <div
-//           style={{
-//             textAlign: 'center',
-//             marginTop: 12,
-//             height: 32,
-//             lineHeight: '32px',
-//           }}
-//         >
-//           <Button onClick={this.onLoadMore}>loading more</Button>
-//         </div>
-//       ) : null;
-
-//     return (
-//       <div className='list-cont' >
-//         <List
-//           className="list-cont"
-//           loading={initLoading}
-//           itemLayout="horizontal"
-//           loadMore={loadMore}
-//           dataSource={list}
-//           renderItem={item => (
-//             <List.Item
-//               actions={[<a key="list-loadmore-edit"><PoweroffOutlined/></a>, <a key="list-loadmore-more"><DeleteOutlined/></a>]}
-//             >
-//               <Skeleton avatar title={false} loading={item.loading} active>
-//                 <List.Item.Meta
-//                   src={AvatarC}
-//                   title={<a href="https://ant.design">{item.name.last}</a>}
-//                   description="Ant Design, a design language for background applications, is refined by Ant UED Team"
-//                 />
-//               </Skeleton>
-//             </List.Item>
-//           )}
-//         />
-//       </div>
-//     );
-//   }
-// }
+  return (
+    <List >
+      <VirtualList
+        data={data}
+        height={ContainerHeight}
+        itemHeight={47}
+        itemKey="email"
+        onScroll={onScroll}
+      >
+        {item => (
+          <List.Item key={item.email}>
+            <List.Item.Meta
+              avatar={<Avatar src={item.picture.large} />}
+              title={<a href="https://ant.design">{item.name.last}</a>}
+              description={item.email}
+            />
+            <Divider  type='vertical'/>            
+            <Button 
+                type='primary'
+                onClick={() => console.log("gisdutdsiu")}
+            >
+                <PoweroffOutlined/>
+            </Button>             
+            <Divider  type='vertical'/>
+            <Button 
+                type='primary'
+                onClick={() => showDeleteConfirm(item)}
+            >
+                <DeleteOutlined/>
+            </Button> 
+            <Divider  type='vertical'/>
+          </List.Item>
+        )}
+      </VirtualList>
+    </List>
+  );
+};

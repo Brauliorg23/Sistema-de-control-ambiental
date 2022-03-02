@@ -10,7 +10,7 @@ const authRoutes = require('./routers/auth');
 const userRoutes = require('./routers/user');
 const ubicationRoutes = require("./routers/ubication");
 const containerTrashRoutes = require("./routers/containerTrash");
-// const moduleRoutes = require("./routers/module");
+const moduleRoutes = require("./routers/module");
 // const reportRoutes = require("./routers/report");
 
 app.use(bodyParser.urlencoded({extended: false}));
@@ -26,7 +26,7 @@ app.use(`/api/${API_VERSION}`, authRoutes);
 app.use(`/api/${API_VERSION}`, userRoutes);
 app.use(`/api/${API_VERSION}`, ubicationRoutes);
 app.use(`/api/${API_VERSION}`, containerTrashRoutes);
-// app.use(`/api/${API_VERSION}`, moduleRoutes);
+app.use(`/api/${API_VERSION}`, moduleRoutes);
 // app.use(`/api/${API_VERSION}`, reportRoutes);
 
 module.exports = app;

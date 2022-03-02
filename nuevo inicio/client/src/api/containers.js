@@ -13,7 +13,6 @@ export function addContainerApi(token, data){
 
     return (
         fetch(url, params).then(response => {
-          console.log(response.json());
             return response.json();
         }).then(result => {
             return result;
@@ -59,7 +58,6 @@ export function getContainersActiveApi(token, status) {
   
     return fetch(url, params)
       .then(response => {
-        console.log(response);
         return response.json();
       })
       .then(result => {

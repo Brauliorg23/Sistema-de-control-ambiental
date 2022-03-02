@@ -14,6 +14,7 @@ const { confirm } = ModalAntd;
 
 export default function ListUbications(props) {
     const {ubicationsActive, ubicationsInactive, setReloadUbications} = props;    
+    console.log(ubicationsActive);
     const [viewUbicationsActives, setViewUbicationsActives] = useState(true);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");

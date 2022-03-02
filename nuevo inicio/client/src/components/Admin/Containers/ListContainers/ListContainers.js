@@ -7,23 +7,19 @@ import {activateContainerApi, deleteContainerApi} from "../../../../api/containe
 import {getAccessTokenApi} from "../../../../api/auth";
 import EditContainerFrom from "../EditContainerForm/EditContainerForm";
 import AddContainer from "../AddContainer/AddContainer";
-import InfiniteScroll from 'react-infinite-scroll-component';
 import VirtualList from 'rc-virtual-list';
 import QRModules from "../../Modules/QRModules/QRModules";
-
-
-
 
 import "./ListContainers.scss";
 
 const { confirm } = ModalAntd;
-const count = 3;
 const fakeDataUrl =
   'https://randomuser.me/api/?results=20&inc=name,gender,email,nat,picture&noinfo';
-const ContainerHeight = 700;
+const ContainerHeight = 733;
 
 export default function ListContainer(props){
     const {containersActive, containersInactive, setReloadContainers} = props;
+    
     const [viewContainersActives, setViewContainersActives] = useState(true);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
@@ -86,24 +82,17 @@ const ContainersActive = (props) => {
     setModalContent,
     setReloadContainers
 } = props;
-  const [data, setData] = useState([]);
 
-  const appendData = () => {
-    fetch(fakeDataUrl)
-      .then(res => res.json())
-      .then(body => {
-        setData(data.concat(body.results));
-        message.success(`${body.results.length} more items loaded!`);
-      });
-  };
+  const editContainer = container => {
+    setIsVisibleModal(true);
+    setModalTitle(`Editar el contenedor ${container.title ? container.title : "..."}`);
+    setModalContent(<EditContainerFrom container={container} setIsVisibleModal={setIsVisibleModal} setReloadContainers={setReloadContainers} />)
+  }
 
-  useEffect(() => {
-    appendData();
-  }, []);
+  
 
   const onScroll = e => {
-    if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {
-      appendData();
+    if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {      
     }
   };
 
@@ -112,57 +101,105 @@ const ContainersActive = (props) => {
     setModalTitle(`Agreagar un nuevo contenedor`);
     setModalContent(<QRModules module={module} setIsVisibleModal={setIsVisibleModal} setReloadContainers={setReloadContainers} />);
   }
-
   return (
-    <List>
+    <List >
       <VirtualList
-        data={data}
+        data={containersActive}
         height={ContainerHeight}
         itemHeight={47}
         itemKey="email"
         onScroll={onScroll}
       >
-        {item => (
-          <List.Item key={item.email}>
-            <List.Item.Meta
-              avatar={<Avatar src={item.picture.large} />}
-              title={<a href="https://ant.design">{item.name.last}</a>}
-              description={item.email}
-            />
-            <Divider  type='vertical'/>            
-            <Button 
-                type='primary'
-                onClick={() => QRModule(item)}
-            >
-                <PoweroffOutlined/>
-            </Button> 
-            <Divider  type='vertical'/>
-            <Button 
-                type='primary'
-                onClick={() => QRModule(item)}
-            >
-                <EditOutlined/>
-            </Button> 
-            <Button 
-                type='primary'
-                onClick={() => QRModule(item)}
-            >
-                qr
-            </Button> 
-            <Divider  type='vertical'/>
-            <Button 
-                type='primary'
-                onClick={() => QRModule(item)}
-            >
-                <DeleteOutlined/>
-            </Button> 
-            <Divider  type='vertical'/>
-          </List.Item>
+        {container => (
+          <ContainerActive 
+                  container={container} 
+                  editContainer={editContainer}
+                  setReloadContainers={setReloadContainers}
+                />
         )}
-      </VirtualList>
-    </List>
+    </VirtualList>
+  </List>
   );
 };
+
+function ContainerActive(props){
+  const {container, editContainer, setReloadContainers} = props;
+
+  const desactivateContainer = () => {
+      const accesToken = getAccessTokenApi();
+  
+      activateContainerApi(accesToken, container._id, false)
+        .then(response => {
+          notification["success"]({
+            message: response
+          });
+          setReloadContainers(true);
+        })
+        .catch(err => {
+          notification["error"]({
+            message: err
+          });
+        });
+    };
+
+  const showDeleteConfirm = () => {
+      const accesToken = getAccessTokenApi();
+  
+      confirm({
+        title: "Eliminando usuario",
+        content: `¿Estas seguro que quieres eliminar el ${container.title}?`,
+        okText: "Eliminar",
+        okType: "danger",
+        cancelText: "Cancelar",
+        onOk() {
+          deleteContainerApi(accesToken, container._id)
+            .then(response => {
+              notification["success"]({
+                message: response
+              });
+              setReloadContainers(true);
+            })
+            .catch(err => {
+              notification["error"]({
+                message: err
+              });
+            });
+        }
+      });
+    };
+  
+  return (
+    <List.Item key={container.title}>
+      <List.Item.Meta
+        avatar={<Avatar src={AvatarC} />}
+        title={<a href="https://ant.design">{container.title}</a>}
+        description={container.description}
+      />
+      <Divider  type='vertical'/>            
+      <Button 
+          type='primary'
+          onClick={desactivateContainer}
+      >
+          <PoweroffOutlined/>
+      </Button> 
+      <Divider  type='vertical'/>
+      <Button 
+          type='primary'
+          onClick={() => editContainer(container)}
+      >
+          <EditOutlined/>
+      </Button> 
+      <Divider  type='vertical'/>
+      <Button 
+          type='primary'
+          onClick={showDeleteConfirm}
+      >
+          <DeleteOutlined/>
+      </Button> 
+      <Divider  type='vertical'/>
+    </List.Item>
+  );
+}
 
 const ContainersInactive = (props) => {
   const {
@@ -170,87 +207,100 @@ const ContainersInactive = (props) => {
     setReloadContainers
   } = props;
 
-  const [data, setData] = useState([]);
-
-  const appendData = () => {
-    fetch(fakeDataUrl)
-      .then(res => res.json())
-      .then(body => {
-        setData(data.concat(body.results));
-        message.success(`${body.results.length} more items loaded!`);
-      });
-  };
-
-  useEffect(() => {
-    appendData();
-  }, []);
-
   const onScroll = e => {
-    if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {
-      appendData();
+    if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {      
     }
-  };
-
-  const showDeleteConfirm = container => {
-    const accesToken = getAccessTokenApi();
-
-    confirm({
-      title: "Eliminando usuario",
-      content: `¿Estas seguro que quieres eliminar a ?`,
-      okText: "Eliminar",
-      okType: "danger",
-      cancelText: "Cancelar",
-      onOk() {
-        deleteContainerApi(accesToken, container._id)
-          .then(response => {
-            notification["success"]({
-              message: response
-            });
-            setReloadContainers(true);
-          })
-          .catch(err => {
-            notification["error"]({
-              message: err
-            });
-          });
-      }
-    });
   };
 
   return (
     <List >
       <VirtualList
-        data={data}
+        data={containersInactive}
         height={ContainerHeight}
         itemHeight={47}
         itemKey="email"
         onScroll={onScroll}
       >
-        {item => (
-          <List.Item key={item.email}>
-            <List.Item.Meta
-              avatar={<Avatar src={item.picture.large} />}
-              title={<a href="https://ant.design">{item.name.last}</a>}
-              description={item.email}
-            />
-            <Divider  type='vertical'/>            
-            <Button 
-                type='primary'
-                onClick={() => console.log("gisdutdsiu")}
-            >
-                <PoweroffOutlined/>
-            </Button>             
-            <Divider  type='vertical'/>
-            <Button 
-                type='primary'
-                onClick={() => showDeleteConfirm(item)}
-            >
-                <DeleteOutlined/>
-            </Button> 
-            <Divider  type='vertical'/>
-          </List.Item>
+        {container => (
+          <ContainerInactive
+            container={container}
+            setReloadContainers={setReloadContainers}
+          />
         )}
       </VirtualList>
     </List>
   );
 };
+
+
+function ContainerInactive(props){
+  const {container, setReloadContainers} = props;
+
+  const desactivateContainer = () => {
+      const accesToken = getAccessTokenApi();
+  
+      activateContainerApi(accesToken, container._id, true)
+        .then(response => {
+          notification["success"]({
+            message: response
+          });
+          setReloadContainers(true);
+        })
+        .catch(err => {
+          notification["error"]({
+            message: err
+          });
+        });
+    };
+
+  const showDeleteConfirm = () => {
+      const accesToken = getAccessTokenApi();
+  
+      confirm({
+        title: "Eliminando usuario",
+        content: `¿Estas seguro que quieres eliminar el ${container.title}?`,
+        okText: "Eliminar",
+        okType: "danger",
+        cancelText: "Cancelar",
+        onOk() {
+          deleteContainerApi(accesToken, container._id)
+            .then(response => {
+              notification["success"]({
+                message: response
+              });
+              setReloadContainers(true);
+            })
+            .catch(err => {
+              notification["error"]({
+                message: err
+              });
+            });
+        }
+      });
+    };
+  
+  return (
+    <List.Item key={container.title}>
+      <List.Item.Meta
+        avatar={<Avatar src={AvatarC} />}
+        title={<a href="https://ant.design">{container.title}</a>}
+        description={container.description}
+      />
+      <Divider  type='vertical'/>            
+      <Button 
+          type='primary'
+          onClick={desactivateContainer}
+      >
+          <PoweroffOutlined/>
+      </Button> 
+      <Divider  type='vertical'/>
+      <Button 
+          type='primary'
+          onClick={showDeleteConfirm}
+      >
+          <DeleteOutlined/>
+      </Button> 
+      <Divider  type='vertical'/>
+    </List.Item>
+  );
+}

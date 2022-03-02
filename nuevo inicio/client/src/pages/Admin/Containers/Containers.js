@@ -12,15 +12,17 @@ export default function MenuWeb(){
     const [reloadContainers, setReloadContainers] = useState(false);
 
     useEffect(() => {
-        getContainersActiveApi(token, true).then(response => {
-            setContainersActive(response.containers);
+        getContainersActiveApi(token, true).then(result => {
+            console.log(result.containerTrash);
+            setContainersActive(result.containerTrash);
         });
-        getContainersActiveApi(token, false).then(response => {
-            serContainersInactive(response.users);
+        getContainersActiveApi(token, false).then(result => {
+            serContainersInactive(result.containerTrash);
         });
         setReloadContainers(false);
     }, [token, reloadContainers]);
 
+    console.log(containersActive);
     return (
         <div className="containers">
             <ListContainers containersActive={containersActive} containersInactive={containersInactive} setReloadContainers={setReloadContainers} />

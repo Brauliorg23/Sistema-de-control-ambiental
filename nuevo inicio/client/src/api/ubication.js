@@ -11,9 +11,12 @@ export function addUbicationApi(token, data){
         }
     };
 
+    console.log(url);
+    console.log(params);
     return (
         fetch(url, params).then(response => {
-            return response.json();
+          console.log(response.json());
+          return response.json();
         }).then(result => {
             return result;
         })
@@ -57,7 +60,7 @@ export function getUbicationsActiveApi(token, status) {
     };
   
     return fetch(url, params)
-      .then(response => {
+      .then(response => {      
         return response.json();
       })
       .then(result => {

@@ -2,138 +2,65 @@ import React, { useState, useEffect, useCallback } from "react";
 import {Avatar, Form, Input, Select, Button, Row, Col, notification}from "antd";
 import {useDropzone} from "react-dropzone";
 import NoAvatar from '../../../../assets/img/jpg/Avatar.jpg';
-import { updateUbicationApi , uploadAvatarApi ,getAvatarApi} from "../../../../api/ubication";
+import { updateContainerApi } from "../../../../api/containers";
 import {getAccessTokenApi} from "../../../../api/auth";
 
 import "./EditContainerForm";
 
-export default function EditUbicationForm(props) {
-    const {ubication, setIsVisibleModal, setReloadUbications} = props;
-    const [avatar, setAvatar] = useState(null);
-    const [ubicationData, setUbicationData] = useState({});
+export default function EditContainerFrom(props) {
+    const {container, setIsVisibleModal, setReloadContainers} = props;
+    const [containerData, setContainerData] = useState({});
 
     useEffect(() => {
-        setUbicationData({
-        name: ubication.title,
-        lastname: ubication.description,
-        avatar: ubication.avatar
+      setContainerData({
+        name: container.title,
+        lastname: container.description,
       });
-    }, [ubication]);
-  
-    useEffect(() => {
-      if (ubication.avatar) {
-        getAvatarApi(ubication.avatar).then(response => {
-          setAvatar(response);
-        });
-      } else {
-        setAvatar(null);
-      }
-    }, [ubication]);
+    }, [container]);
 
-    useEffect(() => {
-        if (avatar) {
-            setUbicationData({ ...ubicationData, avatar: avatar.file });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [avatar]);
-
-    const updateUbication = e => {
+    const updateContainer = e => {
       e.preventDefault();
       const token = getAccessTokenApi();
-      let ubicationUpdate = ubicationData;
+      let containerUpdate = containerData;
   
-      if (!ubicationUpdate.title || !ubicationUpdate.description ) {
+      if (!containerUpdate.title || !containerUpdate.description ) {
         notification["error"]({
           message: "El nombre, apellidos y email son obligatorios."
         });
         return;
       }
   
-      if (typeof ubicationUpdate.avatar === "object") {
-        uploadAvatarApi(token, ubicationUpdate.avatar, ubication._id).then(response => {
-            ubicationUpdate.avatar = response.avatarName;
-          updateUbicationApi(token, ubicationUpdate, ubication._id).then(result => {
-            notification["success"]({
-              message: result.message
-            });
-            setIsVisibleModal(false);
-            setReloadUbications(true);
-          });
+      
+      updateContainerApi(token, containerUpdate, container._id).then(result => {
+        notification["success"]({
+          message: result.message
         });
-      } else {
-        updateUbicationApi(token, ubicationUpdate, ubication._id).then(result => {
-          notification["success"]({
-            message: result.message
-          });
-          setIsVisibleModal(false);
-          setReloadUbications(true);
-        });
-      }
+        setIsVisibleModal(false);
+        setReloadContainers(true);
+      });
+      
     };
 
 
     return (
-        <div className="edit-ubication-form">
-        <UploadAvatar avatar={avatar} setAvatar={setAvatar} />
-        <EditForm  ubicationData={ubicationData} setUbicationData={setUbicationData} updateUbication={updateUbication}/>
+        <div className="edit-container-form">        
+        <EditForm  containerData={containerData} setContainerData={setContainerData} updateContainer={updateContainer}/>
         </div>
     );
-}
-
-function UploadAvatar(props){
-    const {avatar, setAvatar} = props;
-    const [avatarUrl, setAvatarUrl] = useState(null);
-
-    useEffect(() => {
-      if (avatar) {
-        if (avatar.preview) {
-          setAvatarUrl(avatar.preview);
-        } else {
-          setAvatarUrl(avatar);
-        }
-      } else {
-        setAvatarUrl(null);
-      }
-    }, [avatar]);
-
-    const onDrop = useCallback(
-        acceptedFiles => {
-           const file = acceptedFiles[0];
-           setAvatar({file, preview: URL.createObjectURL(file)});
-       },
-       [setAvatar]
-    );
-
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({
-        accept: "image/jpeg, image/png",
-        noKeyboard: true,
-        onDrop
-      });
-
-    return (
-        <div className="upload-avatar" {...getRootProps()}>
-            <Input {...getInputProps()} />
-            {isDragActive ? (
-                <Avatar size={150} src={NoAvatar} />
-            ) : (
-                <Avatar size={150} src={avatarUrl  ? avatarUrl  : NoAvatar} />
-            )}
-        </div>
-    )
 }
 
 function EditForm(props) {
-    const {  ubicationData, setUbicationData, updateUbication } = props;    
+    const {  containerData, setContainerData, updateContainer } = props;    
 
     return (
-      <Form className="form-edit" onSubmitCapture={updateUbication}>
+      <Form className="form-edit" onSubmitCapture={updateContainer}>
         <Row gutter={24}>
           <Col span={12}>
             <Form.Item>
               <Input               
                 placeholder="Title"
-                value={ubicationData.title}
-                onChange={e => setUbicationData({ ...ubicationData, title: e.target.value })}
+                value={containerData.title}
+                onChange={e => setContainerData({ ...containerData, title: e.target.value })}
               />
             </Form.Item>
           </Col>
@@ -141,9 +68,9 @@ function EditForm(props) {
             <Form.Item>
               <Input                
                 placeholder="Description"
-                value={ubicationData.description}
+                value={containerData.description}
                 onChange={e =>
-                    setUbicationData({ ...ubicationData, description: e.target.value })
+                  setContainerData({ ...containerData, description: e.target.value })
                 }
               />
             </Form.Item>

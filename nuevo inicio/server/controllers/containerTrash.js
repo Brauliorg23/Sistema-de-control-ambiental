@@ -1,16 +1,17 @@
+const { countDocuments } = require("../models/containerTrash");
 const ContainerTrash = require("../models/containerTrash");
 
 
 function addContainerTrash(req, res){
     const containerTrash = new ContainerTrash();
-
-    const {codigo, tittle, description} = req.body;
-    containerTrash.code = codigo;
-    containerTrash.title = tittle;
+    console.log(req.body);
+    const {code, title, description} = req.body;
+    containerTrash.code = code;
+    containerTrash.title = title;
     containerTrash.description = description;
     containerTrash.active = true;
 
-    if (!code || !tittle || !description) {
+    if (!code || !title || !description) {
         res.status(500).send({message: "Los campos son obligatorios"});
     }else{    
         containerTrash.save((err, createdContainerTrash) => {
@@ -20,7 +21,7 @@ function addContainerTrash(req, res){
                if(!createdContainerTrash){
                    res.status(500).send({message: "Error al crear la ubicacion"});
                }else{
-                   res.status(200).send({containerTrash: createdContainerTrash});
+                   res.status(200).send({message: "Contenedor creado con exito"});
                }
             }
         })
@@ -108,8 +109,8 @@ function deleteContainerTrash(req, res) {
 module.exports = {
     addContainerTrash,
     getContainerTrash,
-    updateContainerTrash,
-    activateContainerTrash,
     getContainersActive,
+    updateContainerTrash,
+    activateContainerTrash,    
     deleteContainerTrash
 }

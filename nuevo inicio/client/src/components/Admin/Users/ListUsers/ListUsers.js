@@ -5,13 +5,14 @@ import NoAvatar from '../../../../assets/img/jpg/Avatar.jpg';
 import Modal from '../../../Modal/Modal';
 import EditUserForm from "../EditUserForm/EditUserForm";
 import RegisterForm from "../../RegisterForm/RegisterForm"
+import VirtualList from 'rc-virtual-list';
 import { getAvatarApi, activateUserApi, deleteUserApi} from '../../../../api/user';
 import {getAccessTokenApi} from "../../../../api/auth";
 
 import "./ListUsers.scss";
 
 const { confirm } = ModalAntd;
-
+const UserHeight = 733;
 export default function ListUsers(props) {
     const {usersActive, usersIniactive, setReloadUsers} = props;    
     const [viewUsersActives, setViewUsersActives] = useState(true);
@@ -82,15 +83,35 @@ function UsersActive(props){
         setModalContent(<EditUserForm user={user} setIsVisibleModal={setIsVisibleModal} setReloadUsers={setReloadUsers} />)
     }
     
+    const onScroll = e => {
+      if (e.target.scrollHeight - e.target.scrollTop === UserHeight ) {        
+      }
+    };
 
     return (
+        // <List
+        //     className='users-active'
+        //     itemLayout='horizontal'
+        //     dataSource={usersActive}
+        //     grid={{ gutter: 16, column: 4 }}
+        //     renderItem={user => <UserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers} />}
+        // />
         <List
-            className='users-active'
-            itemLayout='horizontal'
-            dataSource={usersActive}
-            grid={{ gutter: 16, column: 4 }}
-            renderItem={user => <UserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers} />}
-        />
+        grid={{ gutter: 16, column: 3 }}
+        >
+          <VirtualList
+            data={usersActive}
+            height={UserHeight}
+            itemHeight={47}            
+            itemKey="email"
+            onScroll={onScroll}
+          >
+            { user => (
+              <UserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers} />
+            )
+            }
+          </VirtualList>
+        </List>
                     
     );
 }

@@ -1,105 +1,135 @@
 import { Table } from 'antd';
 
-const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    width: 100,
-    fixed: 'left',
-    filters: [
+
+
+export default function ListReports(props){
+    const {modules, setReloadModules} =props
+
+    const columns = [
       {
-        text: 'Joe',
-        value: 'Joe',
-      },
-      {
-        text: 'John',
-        value: 'John',
-      },
-    ],
-    onFilter: (value, record) => record.name.indexOf(value) === 0,
-  },
-  {
-    title: 'Other',
-    children: [
-      {
-        title: 'Age',
-        dataIndex: 'age',
-        key: 'age',
-        width: 150,
-        sorter: (a, b) => a.age - b.age,
-      },
-      {
-        title: 'Address',
-        children: [
+        title: 'Usuario',
+        dataIndex: 'name',
+        key: 'name',
+        width: 100,
+        fixed: 'left',
+        filters: [
           {
-            title: 'Street',
-            dataIndex: 'street',
-            key: 'street',
-            width: 150,
+            text: 'Joe',
+            value: 'Joe',
           },
           {
-            title: 'Block',
+            text: 'John',
+            value: 'John',
+          },
+        ],
+        onFilter: (value, record) => record.name.indexOf(value) === 0,
+      },
+      {
+        title: 'Modulo',
+        children: [
+          {
+            title: 'ubicacion',
+            dataIndex: 'ubication',
+            key: 'age',
+            width: 150,
+            sorter: (a, b) => a.age - b.age,
+          },
+          {
+            title: 'Contenedores',
             children: [
               {
-                title: 'Building',
-                dataIndex: 'building',
-                key: 'building',
-                width: 100,
+                title: 'contenedor 1',
+                dataIndex: 'contenedor 1',
+                key: 'contenedor 1',
+                children: [
+                  {
+                    title: 'nombre',
+                    dataIndex: 'street',
+                    key: 'street',
+                    width: 100,
+                  },
+                  {
+                    title: 'estado',
+                    dataIndex: 'number',
+                    key: 'number',
+                    width: 100,
+                  },
+                ],
+                width: 150,
               },
               {
-                title: 'Door No.',
-                dataIndex: 'number',
-                key: 'number',
-                width: 100,
+                title: 'contenedor 2',
+                dataIndex: 'contenedor 2',
+                key: 'contenedor 2',
+                children: [
+                  {
+                    title: 'nombre',
+                    dataIndex: 'street',
+                    key: 'street',
+                    width: 100,
+                  },
+                  {
+                    title: 'estado',
+                    dataIndex: 'number',
+                    key: 'number',
+                    width: 100,
+                  },
+                ],
+                width: 150,
               },
             ],
           },
         ],
       },
-    ],
-  },
-  {
-    title: 'Company',
-    children: [
       {
-        title: 'Company Address',
-        dataIndex: 'companyAddress',
-        key: 'companyAddress',
-        width: 200,
+        title: 'Company',
+        children: [
+          {
+            title: 'Company Address',
+            dataIndex: 'companyAddress',
+            key: 'companyAddress',
+            width: 200,
+          },
+          {
+            title: 'Company Name',
+            dataIndex: 'companyName',
+            key: 'companyName',
+          },
+        ],
       },
       {
-        title: 'Company Name',
-        dataIndex: 'companyName',
-        key: 'companyName',
+        title: 'Gender',
+        dataIndex: 'gender',
+        key: 'gender',
+        width: 80,
+        fixed: 'right',
       },
-    ],
-  },
-  {
-    title: 'Gender',
-    dataIndex: 'gender',
-    key: 'gender',
-    width: 80,
-    fixed: 'right',
-  },
-];
+    ];
+    
+    const data = [];
+    // for (let i = 0; i < 100; i++) {
+    //   data.push({
+    //     key: i,
+    //     name: modules.map(function(module){return module.user.name}),
+    //     age: i + 1,
+    //     street: 'Lake Park',
+    //     building: 'C',
+    //     number: 2035,
+    //     companyAddress: 'Lake Street 42',
+    //     companyName: 'SoftLake Co',
+    //     gender: 'M',
+    //   });
+    // }
 
-const data = [];
-for (let i = 0; i < 100; i++) {
-  data.push({
-    key: i,
-    name: 'John Brown',
-    age: i + 1,
-    street: 'Lake Park',
-    building: 'C',
-    number: 2035,
-    companyAddress: 'Lake Street 42',
-    companyName: 'SoftLake Co',
-    gender: 'M',
-  });
-}
+    modules.map(function(module){
+      return data.push({
+        name: module.user.name,
+        ubication: module.module.ubication.title
+      })
+    })
 
-export default function ListReports(){
+    
+    console.log(data);
     return(
         <Table
             columns={columns}

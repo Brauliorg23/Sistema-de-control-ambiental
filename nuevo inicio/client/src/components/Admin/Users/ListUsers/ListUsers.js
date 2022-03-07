@@ -89,29 +89,31 @@ function UsersActive(props){
     };
 
     return (
-        // <List
-        //     className='users-active'
-        //     itemLayout='horizontal'
-        //     dataSource={usersActive}
-        //     grid={{ gutter: 16, column: 4 }}
-        //     renderItem={user => <UserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers} />}
-        // />
         <List
-        grid={{ gutter: 16, column: 3 }}
-        >
-          <VirtualList
-            data={usersActive}
+            className='users-active'
+            itemLayout='horizontal'
             height={UserHeight}
-            itemHeight={47}            
-            itemKey="email"
+            dataSource={usersActive}
+            grid={{ gutter: 16, column: 4 }}
             onScroll={onScroll}
-          >
-            { user => (
-              <UserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers} />
-            )
-            }
-          </VirtualList>
-        </List>
+            renderItem={user => <UserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers} />}
+        />
+        // <List
+        // grid={{ gutter: 16, column: 3 }}
+        // >
+        //   <VirtualList
+        //     data={usersActive}
+        //     height={UserHeight}
+        //     itemHeight={47}            
+        //     itemKey="email"
+        //     onScroll={onScroll}
+        //   >
+        //     { user => (
+        //       <UserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers} />
+        //     )
+        //     }
+        //   </VirtualList>
+        // </List>
                     
     );
 }

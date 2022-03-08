@@ -14,7 +14,7 @@ export default function EditUbicationForm(props) {
 
     useEffect(() => {
         setUbicationData({
-        name: ubication.title,
+        name: ubication.title, 
         lastname: ubication.description,
         avatar: ubication.avatar
       });

@@ -21,7 +21,6 @@ export default function Ubications(){
         setReloadUbications(false);
     }, [token, reloadUbications]);
 
-    console.log(ubicationsActive);
     return (
         <div >
             <ListUbications ubicationsActive={ubicationsActive} ubicationsInactive={ubicationsInactive} setReloadUbications={setReloadUbications} />

@@ -3,7 +3,7 @@ import { Table } from 'antd';
 
 
 export default function ListReports(props){
-    const {modules, setReloadModules} =props
+    const {reports, setReloadReports} =props
 
     const columns = [
       {
@@ -121,7 +121,7 @@ export default function ListReports(props){
     //   });
     // }
 
-    modules.map(function(module){
+    reports.map(function(module){
       return data.push({
         name: module.user.name,
         ubication: module.module.ubication.title

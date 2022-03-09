@@ -5,13 +5,13 @@ const Ubication = require("../models/ubication");
 function addModule(req,res){
     const module = new Module();
 
-    const {codigo, title, description, conten1, conten2, conten3, conten4, conten5, conten6, conten7, conten8, conten9, conten10, ubication} = req.body;
+    const {codigo, title, condition, description, conten1, conten2, conten3, conten4, conten5, conten6, conten7, conten8, conten9, conten10, ubication} = req.body;
 
     module.codigo = codigo;
     module.title = title;
     module.description = description;
     module.active = true;
-    module.condition = true;
+    module.condition = condition;
     module.conten1 = conten1;
     module.conten2 = conten2;
     module.conten3 = conten3;

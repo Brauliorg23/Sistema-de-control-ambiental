@@ -1,6 +1,6 @@
 import {basePath, apiVersion} from './config';
 
-export function addModuleApi(token, data){
+export function addReportApi(token, data){
     const url = `${basePath}/${apiVersion}/add-report`;
     const params = {
         method: "POST",
@@ -26,7 +26,7 @@ export function addModuleApi(token, data){
     );
 }
 
-export function getModulesApi(token) {
+export function getReportsApi(token) {
     const url = `${basePath}/${apiVersion}/report`;
   
     const params = {

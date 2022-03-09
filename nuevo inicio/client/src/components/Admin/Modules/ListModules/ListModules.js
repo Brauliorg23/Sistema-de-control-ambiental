@@ -283,7 +283,7 @@ function ModuleInactive(props){
     <List.Item key={module.title}>
       <List.Item.Meta
         avatar={<Avatar src={AvatarC} />}
-        title={<a href="https://ant.design">{module.title}</a>}
+        title={<a>{module.title}</a>}
         description={module.description}
       />
       <Divider  type='vertical'/>            

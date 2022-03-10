@@ -3,30 +3,30 @@ import { EditOutlined , PoweroffOutlined, DeleteOutlined } from "@ant-design/ico
 import { List, Avatar, notification,  Button,  Switch, Divider, Modal as ModalAntd, } from 'antd';
 import Modal from '../../../Modal/Modal';
 import AvatarC from "../../../../assets/img/png/containerAvatar.png";
-import {activateContainerApi, deleteContainerApi} from "../../../../api/containers";
+import {activateAreaApi, deleteAreaApi} from "../../../../api/area";
 import {getAccessTokenApi} from "../../../../api/auth";
-import EditContainerFrom from "../EditContainerForm/EditContainerForm";
-import AddContainer from "../AddContainer/AddContainer";
+import EditAreaFrom from "../EditAreasForm/EditAreasForm";
+import AddAreas from "../AddAreas/AddAreas";
 import VirtualList from 'rc-virtual-list';
 import QRModules from "../../Modules/QRModules/QRModules";
 
-import "./ListContainers.scss";
+import "./ListAreas.scss";
 
 const { confirm } = ModalAntd;
-const ContainerHeight = 733;
+const AreaHeight = 733;
 
-export default function ListContainer(props){
-    const {containersActive, containersInactive, setReloadContainers} = props;
-    
-    const [viewContainersActives, setViewContainersActives] = useState(true);
+export default function ListArea(props){
+    const {areasActive, areasInactive, setReloadAreas} = props;
+    // console.log(areasActive);
+    const [viewAreasActives, setViewAreasActives] = useState(true);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalContent, setModalContent] = useState(null);
 
-    function addContainer (){
+    function addArea (){
       setIsVisibleModal(true);
       setModalTitle(`Agreagar un nuevo contenedor`);
-      setModalContent(<AddContainer setIsVisibleModal={setIsVisibleModal} setReloadContainers={setReloadContainers} />);
+      setModalContent(<AddAreas setIsVisibleModal={setIsVisibleModal} setReloadAreas={setReloadAreas} />);
     }
     return (
         <div className='list-cont' >
@@ -35,28 +35,28 @@ export default function ListContainer(props){
                 defaultChecked
                 checkedChildren="Ubicasiones Activas" 
                 unCheckedChildren="Ubicasiones inactivas"
-                onChange={() => setViewContainersActives(!viewContainersActives)}
+                onChange={() => setViewAreasActives(!viewAreasActives)}
             />
             <Divider  type='vertical'/>
             <Button 
                 type='primary'
-                onClick={() => addContainer()}
+                onClick={() => addArea()}
             >
                 Agregar contenedor
             </Button>            
           </div>
-          {viewContainersActives ? (
-            <ContainersActive
-              containersActive={containersActive}
+          {viewAreasActives ? (
+            <AreasActive
+              areasActive={areasActive}
               setIsVisibleModal={setIsVisibleModal}
               setModalTitle={setModalTitle}
               setModalContent={setModalContent}
-              setReloadContainers={setReloadContainers}
+              setReloadAreas={setReloadAreas}
             />
           ) : (
-            <ContainersInactive 
-              containersInactive={containersInactive}
-              setReloadContainers={setReloadContainers}
+            <AreasInactive 
+              areasInactive={areasInactive}
+              setReloadAreas={setReloadAreas}
             />
           )}
           
@@ -72,48 +72,47 @@ export default function ListContainer(props){
       );
 }
 
-const ContainersActive = (props) => {
+const AreasActive = (props) => {
   const {
-    containersActive,
+    areasActive,
     setIsVisibleModal,
     setModalTitle,
     setModalContent,
-    setReloadContainers
+    setReloadAreas
 } = props;
 
-  const editContainer = container => {
+  const editArea = area => {
     setIsVisibleModal(true);
-    setModalTitle(`Editar el contenedor ${container.title ? container.title : "..."}`);
-    setModalContent(<EditContainerFrom container={container} setIsVisibleModal={setIsVisibleModal} setReloadContainers={setReloadContainers} />)
+    setModalTitle(`Editar el contenedor ${area.title ? area.title : "..."}`);
+    setModalContent(<EditAreaFrom area={areasActive} setIsVisibleModal={setIsVisibleModal} setReloadAreas={setReloadAreas} />)
   }
 
   
 
   const onScroll = e => {
-    if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {      
+    if (e.target.scrollHeight - e.target.scrollTop === AreaHeight) {      
     }
   };
 
   const QRModule = module =>{
     setIsVisibleModal(true);
     setModalTitle(`Agreagar un nuevo contenedor`);
-    setModalContent(<QRModules module={module} setIsVisibleModal={setIsVisibleModal} setReloadContainers={setReloadContainers} />);
+    setModalContent(<QRModules module={module} setIsVisibleModal={setIsVisibleModal} setReloadAreas={setReloadAreas} />);
   }
-  
   return (
     <List >
       <VirtualList
-        data={containersActive}
-        height={ContainerHeight}
+        data={areasActive}
+        height={AreaHeight}
         itemHeight={47}
         itemKey="email"
         onScroll={onScroll}
       >
-        {container => (
-          <ContainerActive 
-                  container={container} 
-                  editContainer={editContainer}
-                  setReloadContainers={setReloadContainers}
+        {area => (
+          <AreaActive 
+                  area={area} 
+                  editArea={editArea}
+                  setReloadAreas={setReloadAreas}
                 />
         )}
     </VirtualList>
@@ -121,18 +120,18 @@ const ContainersActive = (props) => {
   );
 };
 
-function ContainerActive(props){
-  const {container, editContainer, setReloadContainers} = props;
+function AreaActive(props){
+  const {area, editArea, setReloadAreas} = props;
 
-  const desactivateContainer = () => {
+  const desactivateArea = () => {
       const accesToken = getAccessTokenApi();
   
-      activateContainerApi(accesToken, container._id, false)
+      activateAreaApi(accesToken, area._id, false)
         .then(response => {
           notification["success"]({
             message: response
           });
-          setReloadContainers(true);
+          setReloadAreas(true);
         })
         .catch(err => {
           notification["error"]({
@@ -146,17 +145,17 @@ function ContainerActive(props){
   
       confirm({
         title: "Eliminando usuario",
-        content: `¿Estas seguro que quieres eliminar el ${container.title}?`,
+        content: `¿Estas seguro que quieres eliminar el ${area.title}?`,
         okText: "Eliminar",
         okType: "danger",
         cancelText: "Cancelar",
         onOk() {
-          deleteContainerApi(accesToken, container._id)
+            deleteAreaApi(accesToken, area._id)
             .then(response => {
               notification["success"]({
                 message: response
               });
-              setReloadContainers(true);
+              setReloadAreas(true);
             })
             .catch(err => {
               notification["error"]({
@@ -168,23 +167,23 @@ function ContainerActive(props){
     };
   
   return (
-    <List.Item key={container.title}>
+    <List.Item key={area.title}>
       <List.Item.Meta
         avatar={<Avatar src={AvatarC} />}
-        title={<a href="https://ant.design">{container.title}</a>}
-        description={container.description}
+        title={<a href="https://ant.design">{area.title}</a>}
+        description={area.description}
       />
       <Divider  type='vertical'/>            
       <Button 
           type='primary'
-          onClick={desactivateContainer}
+          onClick={desactivateArea}
       >
           <PoweroffOutlined/>
       </Button> 
       <Divider  type='vertical'/>
       <Button 
           type='primary'
-          onClick={() => editContainer(container)}
+          onClick={() => editArea(area)}
       >
           <EditOutlined/>
       </Button> 
@@ -200,30 +199,30 @@ function ContainerActive(props){
   );
 }
 
-const ContainersInactive = (props) => {
+const AreasInactive = (props) => {
   const {
-    containersInactive,
-    setReloadContainers
+    areasInactive,
+    setReloadAreas
   } = props;
 
   const onScroll = e => {
-    if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {      
+    if (e.target.scrollHeight - e.target.scrollTop === AreaHeight) {      
     }
   };
 
   return (
     <List >
       <VirtualList
-        data={containersInactive}
-        height={ContainerHeight}
+        data={areasInactive}
+        height={AreaHeight}
         itemHeight={47}
         itemKey="email"
         onScroll={onScroll}
       >
-        {container => (
-          <ContainerInactive
-            container={container}
-            setReloadContainers={setReloadContainers}
+        {area => (
+          <AreaInactive
+            area={area}
+            setReloadAreas={setReloadAreas}
           />
         )}
       </VirtualList>
@@ -232,18 +231,18 @@ const ContainersInactive = (props) => {
 };
 
 
-function ContainerInactive(props){
-  const {container, setReloadContainers} = props;
+function AreaInactive(props){
+  const {area, setReloadAreas} = props;
 
-  const desactivateContainer = () => {
+  const desactivateArea = () => {
       const accesToken = getAccessTokenApi();
   
-      activateContainerApi(accesToken, container._id, true)
+      activateAreaApi(accesToken, area._id, true)
         .then(response => {
           notification["success"]({
             message: response
           });
-          setReloadContainers(true);
+          setReloadAreas(true);
         })
         .catch(err => {
           notification["error"]({
@@ -257,17 +256,17 @@ function ContainerInactive(props){
   
       confirm({
         title: "Eliminando usuario",
-        content: `¿Estas seguro que quieres eliminar el ${container.title}?`,
+        content: `¿Estas seguro que quieres eliminar el ${area.title}?`,
         okText: "Eliminar",
         okType: "danger",
         cancelText: "Cancelar",
         onOk() {
-          deleteContainerApi(accesToken, container._id)
+            deleteAreaApi(accesToken, area._id)
             .then(response => {
               notification["success"]({
                 message: response
               });
-              setReloadContainers(true);
+              setReloadAreas(true);
             })
             .catch(err => {
               notification["error"]({
@@ -279,16 +278,16 @@ function ContainerInactive(props){
     };
   
   return (
-    <List.Item key={container.title}>
+    <List.Item key={area.title}>
       <List.Item.Meta
         avatar={<Avatar src={AvatarC} />}
-        title={<a href="https://ant.design">{container.title}</a>}
-        description={container.description}
+        title={<a href="https://ant.design">{area.title}</a>}
+        description={area.description}
       />
       <Divider  type='vertical'/>            
       <Button 
           type='primary'
-          onClick={desactivateContainer}
+          onClick={desactivateArea}
       >
           <PoweroffOutlined/>
       </Button> 

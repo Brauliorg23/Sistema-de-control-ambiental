@@ -5,7 +5,7 @@ const Ubication = require("../models/ubication");
 function addModule(req,res){
     const module = new Module();
 
-    const {codigo, title, condition, description, conten1, conten2, conten3, conten4, conten5, conten6, conten7, conten8, conten9, conten10, ubication} = req.body;
+    const {area, codigo, title, condition, description, conten1, conten2, conten3, conten4, conten5, conten6, conten7, conten8, conten9, conten10, ubication} = req.body;
 
     module.codigo = codigo;
     module.title = title;
@@ -23,8 +23,9 @@ function addModule(req,res){
     module.conten9 = conten9;
     module.conten10 = conten10;
     module.ubication = ubication;
+    module.area = area;
 
-    if(!codigo || !title || !description || !ubication){
+    if(!codigo || !title || !description || !ubication ||!area){
         res.status(500).send({message: "Los campos son oblicatorios"})
     }else{
         module.save((err, createModule) => {

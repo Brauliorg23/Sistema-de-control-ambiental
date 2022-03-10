@@ -3,6 +3,7 @@ const Module = require("../models/module");
 const User = require("../models/user");
 const ContainerTrash = require("../models/containerTrash");
 const Ubication = require("../models/ubication");
+const Area = require('../models/area');
 
 function addReport(req, res){
     const report = new Report();
@@ -63,8 +64,10 @@ function getReport(req, res){
                                                     ContainerTrash.populate(modules, {path: "module.conten10",}, function (err, modules) {
                                                         Ubication.populate(modules, {path: "module.ubication",}, function (err, report) {
                                                             User.populate(report, {path:"user"}, function(err, report){                                                                
-                                                                res.status(200).send(report);
-                                                            })
+                                                                Area.populate(report, {path: "area"}, function (err, report){
+                                                                    res.status(200).send(report);
+                                                                });
+                                                            });
                                                         });
                                                     });
                                                 });
@@ -75,10 +78,10 @@ function getReport(req, res){
                             });
                         });
                     });
-                })
-           })
+                });
+           });
         }
-    })
+    });
 }
 
 module.exports = {

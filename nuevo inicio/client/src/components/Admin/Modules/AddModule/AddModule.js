@@ -9,6 +9,7 @@ import {
 import { addModuleApi } from "../../../../api/modules";
 import {getUbicationsApi} from "../../../../api/ubication";
 import {getContainersApi} from "../../../../api/containers";
+import {getAreasApi} from "../../../../api/area";
 import { getAccessTokenApi } from "../../../../api/auth";
 
 import "./AddModule.scss";
@@ -17,6 +18,7 @@ export default function AddModule(props) {
   const { setIsVisibleModal, setReloadModules } = props;
   const [ubications, setUbications] = useState([]);
   const [containers, setContainers] = useState([]);
+  const [areas, setAreas] = useState([]);
   const { Option } = Select;
   const token = getAccessTokenApi();
   const [module, setModule] = useState({
@@ -35,6 +37,7 @@ export default function AddModule(props) {
     conten9: "",
     conten10: "",
     ubication: "",
+    area: "",
     privacyPolicy: false
     
   });
@@ -55,6 +58,7 @@ export default function AddModule(props) {
     conten9: false,
     conten10: false,
     ubication: false,
+    area: false,
     privacyPolicy: false
   });
 
@@ -89,9 +93,11 @@ export default function AddModule(props) {
     const descriptionVal =module.description;
     const codigoVal = module.codigo;
     const conditionVal = module.condition;    
-    const ubicationVal = module.ubication;    
+    const ubicationVal = module.ubication;  
+    const areaVal = module.ubication;  
     const privacyPolicyVal = module.privacyPolicy;
-    if ( !titleVal || !descriptionVal || !privacyPolicyVal || !codigoVal || !conditionVal|| !ubicationVal ) {
+    
+    if ( !titleVal || !descriptionVal || !privacyPolicyVal || !codigoVal || !conditionVal|| !ubicationVal ||!areaVal ) {
       notification["error"]({
         message: "Todos los campos son obligatorios"
       });
@@ -132,6 +138,7 @@ export default function AddModule(props) {
       conten9: "",
       conten10: "",
       ubication: "",
+      area: "",
       privacyPolicy: false
     });
 
@@ -151,6 +158,7 @@ export default function AddModule(props) {
       conten9: false,
       conten10: false,
       ubication: false,
+      area: false,
       privacyPolicy: false
     });
   };
@@ -161,6 +169,9 @@ export default function AddModule(props) {
     })
     getContainersApi(token).then(response => {      
       setContainers(response.containerTrash);
+    })
+    getAreasApi(token).then(response => {
+      setAreas(response.area);
     })
   }, [token]);
   
@@ -395,7 +406,7 @@ export default function AddModule(props) {
       </Row>      
       
       <Row gutter={24}>
-        <Col span={24}>
+        <Col span={12}>
           <Select
               className="selectModal"
               placeholder="Seleccióna el contenedor"
@@ -408,7 +419,21 @@ export default function AddModule(props) {
                 )
               })}
           </Select>
-        </Col>        
+        </Col>   
+        <Col span={12}>
+          <Select
+              className="selectModal"
+              placeholder="Seleccióna el contenedor"
+              onChange={e => setModule({ ...module, area: e})}
+              value={module.area}
+            >
+              {areas.map(function (area) {
+                return(
+                  <Option value={area._id}>{area.title}</Option>
+                )
+              })}
+          </Select>
+        </Col>         
       </Row>
 
       <Form.Item>

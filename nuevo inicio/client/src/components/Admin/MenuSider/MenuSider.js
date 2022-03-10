@@ -1,5 +1,5 @@
 import React from "react";
-import {Link, withRouter} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {Layout, Menu} from "antd";
 import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 import './MenuSider.scss';
@@ -34,14 +34,20 @@ export default function MenuSider(props){
                     <HomeOutlined className="nav-text" />
                     <span className="nav-text">modulos de contenedores</span>
                     </Link>
-                </Menu.Item>   
+                </Menu.Item> 
                 <Menu.Item key="5" >
+                    <Link to={"/admin/areas"}>
+                    <HomeOutlined className="nav-text" />
+                    <span className="nav-text">Areas</span>
+                    </Link>
+                </Menu.Item>   
+                <Menu.Item key="6" >
                     <Link to={"/admin/ubications"}>
                     <HomeOutlined className="nav-text" />
                     <span className="nav-text">ubicaciones</span>
                     </Link>
                 </Menu.Item>   
-                <Menu.Item key="6" >
+                <Menu.Item key="7" >
                     <Link to={"/admin/reports"}>
                     <HomeOutlined className="nav-text" />
                     <span className="nav-text">Estadisticas</span>

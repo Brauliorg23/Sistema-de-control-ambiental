@@ -1,0 +1,95 @@
+.list-cont{
+  
+    background-color:rgb(209, 227, 238);
+    border-radius: 10px;
+      &__header {
+        align-items: center;
+        margin-bottom: 20px;
+    
+        &-switch {
+          align-items: center;
+          
+    
+          > button {
+            margin-right: 20px;          
+          }
+        }
+      }
+      &__switch{
+        padding: 20px 20px;
+        text-align: center;
+        background-color: rgb(175, 194, 206);
+        .ant-divider{
+          border-color: black;
+          font-size:xx-large;
+          
+        }
+        .ant-switch-checked {
+          background-color: #52c41a;
+          font-size: xx-large;
+        }
+        .ant-btn{
+          background-color: #52c41a;
+          border-color: #52c41a;
+          border-radius: 15px;
+        }
+      }
+      .conts-active {
+        
+        padding: 20px 20px;
+        
+      }
+    }
+  
+    .Card-list{
+      box-sizing: border-box;
+      background-color: #789;
+      color: white;
+      &__cont{
+        justify-content: center;
+        text-align: center;
+      }
+  
+      &__avatar{
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+  
+        &__div{
+          border-color:rgb(68, 72, 76);
+          font-size:xx-large;
+        }
+      }
+    }
+  
+    .ant-card{
+      border: none;
+      border-radius: 15px;
+      &-head{
+        background-color:#808080;
+        color: white;
+        text-align: center;
+        border-radius: 10px 10px 0px 0px;
+      }
+      &-actions{
+        background-color:#c1cdd4;
+        border-color: #c1cdd4;
+        border-radius: 0px 0px 10px 10px;
+      }
+      &-meta-description{
+        color: aliceblue;
+      }
+    }
+  
+    .ant-modal-header{
+      text-align: center;
+    }
+  
+    .ant-modal-confirm-body .ant-modal-confirm-title, .ant-modal-confirm-body .ant-modal-confirm-content{
+      color: aliceblue;
+    }
+    
+    .ant-list-item-meta-avatar {
+      margin-right: 16px;
+      margin-left: 16px;
+  }

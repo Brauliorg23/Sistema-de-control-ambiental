@@ -7,6 +7,7 @@ import LayoutBasic from "../layouts/LayoutBasic";
 import AdminHome from "../pages/Admin";
 import AdminSingIn from "../pages/Admin/Signin";
 import AdminUsers from "../pages/Admin/Users";
+import AreaMenu from "../pages/Admin/areas";
 import Signin from "../pages/Admin/Signin";
 import RegisterForm from "../components/Admin/RegisterForm/RegisterForm";
 import Ubications from "../pages/Admin/Ubications/Ubications";
@@ -51,6 +52,12 @@ const routesAdmin = [
         path: "/admin/ubications",
         layout: LayoutAdmin,
         component: Ubications,
+        exact: true
+    },
+    {
+        path: "/admin/areas",
+        layout: LayoutAdmin,
+        component: AreaMenu,
         exact: true
     },
     {

@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const ContainerTrash = mongoose.model('ContainerTrash');
 const Ubication = mongoose.model('Ubication');
+const Area = mongoose.model('Area');
 
 const ModuleSchema = Schema({
     codigo: {
@@ -22,7 +23,8 @@ const ModuleSchema = Schema({
     conten8: {type: Schema.ObjectId, ref: "ContainerTrash"},
     conten9: {type: Schema.ObjectId, ref: "ContainerTrash"},
     conten10: {type: Schema.ObjectId, ref: "ContainerTrash"},
-    ubication: {type: Schema.ObjectId, ref: "Ubication"}
+    ubication: {type: Schema.ObjectId, ref: "Ubication"},
+    area: {type: Schema.ObjectId, ref: "Area"}
 });
 
 module.exports = mongoose.model("Module", ModuleSchema);

@@ -1,6 +1,7 @@
 const Module = require("../models/module");
 const ContainerTrash = require("../models/containerTrash");
 const Ubication = require("../models/ubication");
+const Area = require('../models/area');
 
 function addModule(req,res){
     const module = new Module();
@@ -60,7 +61,9 @@ function getModule(req,res){
                                             ContainerTrash.populate(modules, {path: "conten9",}, function (err, modules) {
                                                 ContainerTrash.populate(modules, {path: "conten10",}, function (err, modules) {
                                                     Ubication.populate(modules, {path: "ubication",}, function (err, modules) {
-                                                        res.status(200).send(modules);
+                                                        Area.populate(modules, {path: "area"}, function (err, modules){
+                                                            res.status(200).send(modules);
+                                                        });
                                                     });
                                                 });
                                             });

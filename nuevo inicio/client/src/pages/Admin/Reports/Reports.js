@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from "react";
-import { Tabs, Collapse } from 'antd';
+import { Tabs, Collapse, Progress} from 'antd';
 import {getAccessTokenApi} from "../../../api/auth";
 import {getReportsApi} from "../../../api/reports";
 import {getUbicationsApi} from "../../../api/ubication";
@@ -11,7 +11,6 @@ import "./Reports.scss"
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
 
-
 export default function MenuWeb(){
     const [reports, setReports] = useState([]);
     const [ubications, setUbicaions] = useState([]);
@@ -20,44 +19,54 @@ export default function MenuWeb(){
     const [reloadReports, setReloadReports] = useState(false);     
 
     useEffect(() => {
-        getReportsApi(token).then(response => {     
-            console.log(response);       
+        getReportsApi(token).then(response => {       
             setReports(response);
         });
         getUbicationsApi(token).then(response => {
-            console.log(response.ubication);
             setUbicaions(response.ubication);
         })
         getAreasApi(token).then(response =>{
-            console.log(response);
             setAreas(response.area);
         })
         setReloadReports(false);
     }, [token, reloadReports]);
-
+    var ubi = "";
+    var ar = "";
     return (
         <div className="menu-web">
-            <Tabs  type="card">
-                
+            <Tabs  type="card">                
                 {ubications.map(function(ubication) {  
-                                       
-                        return(
-                            <TabPane tab={ubication.title} key={ubication._id}>
-                                <>
-                                <Collapse>
-                                    {areas.map(function(area){                                                                                
-                                        return(
-                                            // <Panel header={area.title} key={area._id}>
-                                            //     <ListReports reports={reports} setReloadReports={setReloadReports} />    
-                                            // </Panel>
-                                            <h1>{area.description}{ubication.title}</h1>
-                                        )
-                                    })}
-                                </Collapse>
-                                </>
-                            </TabPane>                            
-                        )
-                                      
+                    ubi = ubication.title;           
+                    return(
+                        <TabPane tab={ubication.title} key={ubication._id}>                           
+                            {reports.map(function(report) {  
+                                if (ubi === report.module.ubication.title ) {                                  
+                                    return(
+                                        <Collapse>
+                                            {areas.map(function(area) {    
+                                                ar = area.title; 
+                                                if (ar === report.module.area.title ) {
+                                                    return(
+                                                        <Panel 
+                                                        header={
+                                                            <>
+                                                                <h1>{area.title}</h1>
+                                                                <Progress type="circle" percent={75} />
+                                                            </>
+                                                        } 
+                                                        key={area._id}>
+                                                            <ListReports reports={reports} ubi={ubi} ar={ar} setReloadReports={setReloadReports} />    
+                                                        </Panel>
+                                                    )
+                                                }                                                                        
+                                                
+                                            })}
+                                        </Collapse>
+                                    )
+                                }
+                            })}  
+                        </TabPane>                            
+                    )                                      
                 })}                
             </Tabs>            
         </div>

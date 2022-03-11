@@ -63,8 +63,8 @@ function getReport(req, res){
                                                 ContainerTrash.populate(modules, {path: "module.conten9",}, function (err, modules) {
                                                     ContainerTrash.populate(modules, {path: "module.conten10",}, function (err, modules) {
                                                         Ubication.populate(modules, {path: "module.ubication",}, function (err, report) {
-                                                            User.populate(report, {path:"user"}, function(err, report){                                                                
-                                                                Area.populate(report, {path: "area"}, function (err, report){
+                                                            User.populate(report, {path:"user"}, function(err, report){                                                                                                                                
+                                                                Area.populate(report, {path: "module.area"}, function (err, report){
                                                                     res.status(200).send(report);
                                                                 });
                                                             });

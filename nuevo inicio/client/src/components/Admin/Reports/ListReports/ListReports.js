@@ -46,20 +46,20 @@ export default function ListReports(props){
         title: 'Tipo de reciduo',
         children: [
           {
-            title: 'Reciduo 1',
+            title: 'Contenedor 1',
             dataIndex: 'reciduo 1',
             key: 'reciduo 1',
             children: [
               {
-                title: 'nombre',
-                dataIndex: 'street',
-                key: 'street',
+                title: 'Typo ',
+                dataIndex: 'type1',
+                key: 'type1',
                 width: 100,
               },
               {
                 title: 'estado',
-                dataIndex: 'number',
-                key: 'number',
+                dataIndex: 'des1',
+                key: 'des1',
                 width: 100,
               },
             ],
@@ -71,24 +71,24 @@ export default function ListReports(props){
             key: 'reciduo 2',
             children: [
               {
-                title: 'nombre',
-                dataIndex: 'street',
-                key: 'street',
+                title: 'Tipo ',
+                dataIndex: 'type2',
+                key: 'type2',
                 width: 100,
               },
               {
                 title: 'estado',
-                dataIndex: 'number',
-                key: 'number',
+                dataIndex: 'des2',
+                key: 'des2',
                 width: 100,
               },
             ],
             width: 150,
           },
           {
-            title: 'Reciduo 3',
-            dataIndex: 'reciduo 3',
-            key: 'reciduo 3',
+            title: 'Tipo',
+            dataIndex: 'type3',
+            key: 'type3',
             children: [
               {
                 title: 'nombre',
@@ -106,9 +106,9 @@ export default function ListReports(props){
             width: 150,
           },
           {
-            title: 'Reciduo 4',
-            dataIndex: 'reciduo 4',
-            key: 'reciduo 4',
+            title: 'Tipo',
+            dataIndex: 'type4',
+            key: 'type4',
             children: [
               {
                 title: 'nombre',
@@ -126,9 +126,9 @@ export default function ListReports(props){
             width: 150,
           },
           {
-            title: 'Reciduo 5',
-            dataIndex: 'reciduo 5',
-            key: 'reciduo 5',
+            title: 'Tipo',
+            dataIndex: 'type5',
+            key: 'type5',
             children: [
               {
                 title: 'nombre',
@@ -146,9 +146,9 @@ export default function ListReports(props){
             width: 150,
           },
           {
-            title: 'Reciduo 6',
-            dataIndex: 'reciduo 6',
-            key: 'reciduo 6',
+            title: 'Tipo',
+            dataIndex: 'type6',
+            key: 'type6',
             children: [
               {
                 title: 'nombre',
@@ -166,9 +166,9 @@ export default function ListReports(props){
             width: 150,
           },
           {
-            title: 'Reciduo 7',
-            dataIndex: 'reciduo 7',
-            key: 'reciduo 7',
+            title: 'Tipo',
+            dataIndex: 'type7',
+            key: 'type7',
             children: [
               {
                 title: 'nombre',
@@ -211,13 +211,20 @@ export default function ListReports(props){
           return data.push({
             codigo: report.module.codigo,
             name: report.user.name,
-            ubication: report.module.ubication.title
+            date: report.date,
+            type1: report.module.conten1.title,
+            type2: report.module.conten2.title,
+            type3: report.module.conten3.title,
+            type4: report.module.conten4.title,
+            type5: report.module.conten5.title,
+            type6: report.module.conten6.title,
+            type7: report.module.conten7.title,
           })
         }
       }      
     })
 
-    
+    console.log(reports);
     console.log(data);
     return(
         <Table

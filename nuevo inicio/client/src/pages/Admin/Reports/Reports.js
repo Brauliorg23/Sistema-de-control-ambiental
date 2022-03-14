@@ -4,8 +4,8 @@ import {getAccessTokenApi} from "../../../api/auth";
 import {getReportsApi} from "../../../api/reports";
 import {getUbicationsApi} from "../../../api/ubication";
 import {getAreasApi} from "../../../api/area";
-import ListReports from "../../../components/Admin/Reports/ListReports/ListReports"
-
+import ListReports from "../../../components/Admin/Reports/ListReports/ListReports";
+import ListReportsGrafic from "../../../components/Admin/Reports/ListReportsGrafic/ListReportsGrafic";
 import "./Reports.scss"
 
 const { TabPane } = Tabs;
@@ -33,21 +33,22 @@ export default function MenuWeb(){
     var ubi = "";
     var ar = "";
     return (
-        <div className="menu-web">
-            <Tabs  type="card">                
+        <div className="reports">
+            <Tabs  type="card" className="reports-list">                
                 {ubications.map(function(ubication) {  
                     ubi = ubication.title;           
                     return(
-                        <TabPane tab={ubication.title} key={ubication._id}>                           
+                        <TabPane className="reports-list_header" tab={ubication.title} key={ubication._id} >                           
                             {reports.map(function(report) {  
                                 if (ubi === report.module.ubication.title ) {                                  
                                     return(
-                                        <Collapse>
+                                        <Collapse className="reports-list_cont">
                                             {areas.map(function(area) {    
                                                 ar = area.title; 
                                                 if (ar === report.module.area.title ) {
                                                     return(
                                                         <Panel 
+                                                        className="reports-list_cont-list"
                                                         header={
                                                             <>
                                                                 <h1>{area.title}</h1>

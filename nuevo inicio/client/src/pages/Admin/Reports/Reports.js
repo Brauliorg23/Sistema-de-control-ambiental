@@ -5,7 +5,6 @@ import {getReportsApi} from "../../../api/reports";
 import {getUbicationsApi} from "../../../api/ubication";
 import {getAreasApi} from "../../../api/area";
 import ListReports from "../../../components/Admin/Reports/ListReports/ListReports";
-import ListReportsGrafic from "../../../components/Admin/Reports/ListReportsGrafic/ListReportsGrafic";
 import "./Reports.scss"
 
 const { TabPane } = Tabs;
@@ -32,6 +31,7 @@ export default function MenuWeb(){
     }, [token, reloadReports]);
     var ubi = "";
     var ar = "";
+    var mod = "";
     return (
         <div className="reports">
             <Tabs  type="card" className="reports-list">                
@@ -40,12 +40,14 @@ export default function MenuWeb(){
                     return(
                         <TabPane className="reports-list_header" tab={ubication.title} key={ubication._id} >                           
                             {reports.map(function(report) {  
+                                console.log(report);
                                 if (ubi === report.module.ubication.title ) {                                  
                                     return(
                                         <Collapse className="reports-list_cont">
                                             {areas.map(function(area) {    
                                                 ar = area.title; 
                                                 if (ar === report.module.area.title ) {
+                                                    mod = report.module;
                                                     return(
                                                         <Panel 
                                                         className="reports-list_cont-list"
@@ -56,7 +58,7 @@ export default function MenuWeb(){
                                                             </>
                                                         } 
                                                         key={area._id}>
-                                                            <ListReports reports={reports} ubi={ubi} ar={ar} setReloadReports={setReloadReports} />    
+                                                            <ListReports reports={reports} ubi={ubi} ar={ar} mod={mod} setReloadReports={setReloadReports} />    
                                                         </Panel>
                                                     )
                                                 }                                                                        

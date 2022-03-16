@@ -1,9 +1,18 @@
 .reports{
 
-    &-list{
-     
-        &_header{
+    background-color:rgb(209, 227, 238);
+    border-radius: 10px;
+    height: 733px;
+    margin-top: -16px;
 
+    &-list{
+        background-color:rgb(209, 227, 238);
+        border-radius: 10px;
+        height: 733px;
+        margin-top: -16px;
+
+        &_header{
+            
         }
 
         &_cont{
@@ -13,4 +22,41 @@
             }
         }
     }
+}
+
+.ant-tabs-nav{
+    background-color:#808080;
+    height: 60px;
+}
+
+.ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab{
+    background: #808080;
+    border-radius:0%;
+}
+
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn{
+    color: aliceblue;
+}
+
+.ant-tabs > .ant-tabs-nav .ant-tabs-nav-wrap{
+    background: #808080;
+}
+
+.ant-tabs-tab{
+    font-size: 18px;
+}
+
+.ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab-active{
+    border-bottom-color: #52c41a;
+}
+.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab{
+    border: 0px;
+}
+
+.ant-progress{
+    margin-left: auto;
+}
+
+.ant-btn{
+    margin-left: auto;
 }

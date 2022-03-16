@@ -1,14 +1,16 @@
 import React, {useState, useEffect} from "react";
-import { Tabs, Collapse, Progress} from 'antd';
+import { Tabs,  Collapse, Progress, List, Button} from 'antd';
 import {getAccessTokenApi} from "../../../api/auth";
 import {getReportsApi} from "../../../api/reports";
 import {getUbicationsApi} from "../../../api/ubication";
+import VirtualList from 'rc-virtual-list';
 import {getAreasApi} from "../../../api/area";
 import ListReports from "../../../components/Admin/Reports/ListReports/ListReports";
 import "./Reports.scss"
 
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
+const ContainerHeight = 733;
 
 export default function MenuWeb(){
     const [reports, setReports] = useState([]);
@@ -32,43 +34,60 @@ export default function MenuWeb(){
     var ubi = "";
     var ar = "";
     var mod = "";
+    const onScroll = e => {
+        if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {      
+        }
+      };
     return (
         <div className="reports">
-            <Tabs  type="card" className="reports-list">                
+            <Tabs  type="card" className="reports-list" height={ContainerHeight}>                
                 {ubications.map(function(ubication) {  
                     ubi = ubication.title;           
                     return(
-                        <TabPane className="reports-list_header" tab={ubication.title} key={ubication._id} >                           
-                            {reports.map(function(report) {  
-                                console.log(report);
-                                if (ubi === report.module.ubication.title ) {                                  
-                                    return(
-                                        <Collapse className="reports-list_cont">
-                                            {areas.map(function(area) {    
+                        
+                        <TabPane className="reports-list_header"  tab={ubication.title} key={ubication._id} >                           
+                            {areas.map(function(area)  {                                                                  
+                                return(
+                                    <>                                    
+                                        {reports.map(function(report) {   
+                                            if (ubi === report.module.ubication.title) {
                                                 ar = area.title; 
                                                 if (ar === report.module.area.title ) {
                                                     mod = report.module;
                                                     return(
-                                                        <Panel 
-                                                        className="reports-list_cont-list"
-                                                        header={
-                                                            <>
-                                                                <h1>{area.title}</h1>
-                                                                <Progress type="circle" percent={75} />
-                                                            </>
-                                                        } 
-                                                        key={area._id}>
-                                                            <ListReports reports={reports} ubi={ubi} ar={ar} mod={mod} setReloadReports={setReloadReports} />    
-                                                        </Panel>
+                                                        <List >
+                                                        <VirtualList data={reports} onScroll={onScroll} itemHeight={47}>
+                                                            {report => (
+                                                                <Collapse className="reports-list_cont"  >
+                                                                <Panel 
+                                                                className="reports-list_cont-list"
+                                                                header={
+                                                                    <>
+                                                                        <h1>{area.title}</h1>
+                                                                        <Progress type="circle" percent={75} />
+                                                                        <Button>Ver estadisticas</Button>
+                                                                    </>
+                                                                } 
+                                                                key={area._id}>
+                                                                    <ListReports reports={reports} ubi={ubi} ar={ar} mod={mod} setReloadReports={setReloadReports} />    
+                                                                </Panel>
+                                                            </Collapse>
+                                                            )}
+                                                            
+                                                        </VirtualList>
+                                                        </List>
                                                     )
-                                                }                                                                        
-                                                
-                                            })}
-                                        </Collapse>
-                                    )
-                                }
+                                                } 
+                                            } 
+                                                                                                                       
+                                            
+                                        })}
+                                    
+                                    </>
+                                )
+                                
                             })}  
-                        </TabPane>                            
+                        </TabPane>                        
                     )                                      
                 })}                
             </Tabs>            

@@ -1,10 +1,19 @@
-import { Table } from 'antd';
-
-
+import { Table, Tag } from 'antd';
 
 export default function ListReports(props){
-    const {reports, mod, ubi, ar} =props
-    console.log(mod);
+    const {reports, mod, ubi, ar} =props    
+    var contens = [{
+      conten: mod.conten1,},
+      {conten: mod.conten2,},
+      {conten: mod.conten3,},
+      {conten: mod.conten4,},
+      {conten: mod.conten5,},
+      {conten: mod.conten6,},
+      {conten: mod.conten7,},
+      {conten: mod.conten8,},
+      {conten: mod.conten9,},
+      {conten: mod.conten10,
+    }];
 
     const columns = [
       {
@@ -42,80 +51,63 @@ export default function ListReports(props){
           },
         ],
         sorter: (a, b) => a.date - b.date,
-      },
-      {
-        title: 'Tipo de reciduo',
-        key: 'TypeR',
-        children: [
-          
-        ],
-      }
+      },      
     ];
 
-    if (mod.conten3 !== "null" ) {
-      columns.TypeR.children.push(
-        
-            {
-              title: 'Contenedor 1',
-              dataIndex: 'reciduo 1',
-              key: 'reciduo 1',
-              children: [
-                {
-                  title: mod.conten1.title,
-                  dataIndex: 'type1',
-                  key: 'type1',
-                  width: 100,
-                },
-                {
-                  title: 'estado',
-                  dataIndex: 'des1',
-                  key: 'des1',
-                  width: 100,
-                },
-              ],
-              width: 150,
-            },
-    );
-    } else {
-      
+    for (let index = 0; index < 10; index++) {
+      var cont = contens[index].conten;
+      if (cont !== null) {
+        columns.push(
+          {
+            title: cont.title,
+            dataIndex: cont._id,
+            key: cont._id,
+            children: [            
+              {
+                title: 'Estado de la condicion',
+                dataIndex: index,
+                key: index,
+                width: 50,
+              },
+            ],
+            width: 100,
+            render: tags => (
+              <>
+                {tags.map(tag => {
+                  let color = tag.length > 5 ? 'geekblue' : 'green';
+                  if (tag === 'loser') {
+                    color = 'volcano';
+                  }
+                  return (
+                    { text: 'bien', status: 'Success' }
+                  );
+                })}
+              </>
+            ),
+          }
+      );
+      }
     }
     
-
-    
-    const data = [];
-
-    
+    const data = [];    
 
     reports.map(function(report){
       if (ubi === report.module.ubication.title) {
-        if (ar === report.module.area.title) {
-          if (
-            report.module.conten3 === "null"
-          ){
-            return data.push({
-              codigo: report.module.codigo,
-              name: report.user.name,
-              date: report.date,
-              type1: report.module.conten1.title,
-              type2: report.module.conten2.title,
-              type3: report.module.conten3.title,
-              type4: report.module.conten4.title,
-              type5: report.module.conten5.title,
-              type6: report.module.conten6.title,
-              type7: report.module.conten7.title,
-            })
-          }
+        if (ar === report.module.area.title) {          
           return data.push({
             codigo: report.module.codigo,
             name: report.user.name,
             date: report.date,
-            type1: report.module.conten1.title,
-            type2: report.module.conten2.title,
-            // type3: report.module.conten3.title,
-            type4: report.module.conten4.title,
-            type5: report.module.conten5.title,
-            type6: report.module.conten6.title,
-            type7: report.module.conten7.title,
+            0: report.conten1,
+            1: report.conten2,
+            2: report.conten3,
+            3: report.conten4,
+            4: report.conten5,
+            5: report.conten6,
+            6: report.conten7,
+            7: report.conten8,
+            8: report.conten9,
+            9: report.conten10,
           })
         }
       }      

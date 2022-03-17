@@ -16,9 +16,10 @@
         }
 
         &_cont{
-
+            background-color: rgb(198, 216, 228);
+            
             &-list{
-                
+               
             }
         }
     }
@@ -59,4 +60,15 @@
 
 .ant-btn{
     margin-left: auto;
+}
+
+.ant-collapse{
+    border: #52c41a;
+    &-header{
+        align-items: center;
+    }
+}
+
+.ant-collapse > .ant-collapse-item > .ant-collapse-header {
+    align-items: center;    
 }

@@ -6,11 +6,13 @@ import {getUbicationsApi} from "../../../api/ubication";
 import VirtualList from 'rc-virtual-list';
 import {getAreasApi} from "../../../api/area";
 import ListReports from "../../../components/Admin/Reports/ListReports/ListReports";
+import ListReportsGrafic from "../../../components/Admin/Reports/ListReportsGrafic/ListReportsGrafic";
 import "./Reports.scss"
+import Modal from '../../../Modal/Modal';
 
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
-const ContainerHeight = 733;
+const ContainerHeight = 833;
 
 export default function MenuWeb(){
     const [reports, setReports] = useState([]);
@@ -18,6 +20,11 @@ export default function MenuWeb(){
     const [areas, setAreas] = useState([]);
     const token = getAccessTokenApi();
     const [reloadReports, setReloadReports] = useState(false);     
+
+    const [viewContainersActives, setViewContainersActives] = useState(true);
+    const [isVisibleModal, setIsVisibleModal] = useState(false);
+    const [modalTitle, setModalTitle] = useState("");
+    const [modalContent, setModalContent] = useState(null);
 
     useEffect(() => {
         getReportsApi(token).then(response => {       
@@ -34,18 +41,32 @@ export default function MenuWeb(){
     var ubi = "";
     var ar = "";
     var mod = "";
+    var are = [];
     const onScroll = e => {
         if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {      
         }
       };
+    areas.map(function(area){
+        ar = area.title;
+        console.log(ar);
+
+        are.push({area: ar});
+        console.log(are);
+    })
+
+    function graficas(){
+        setIsVisibleModal(true);
+        setModalTitle(`Informacion en grafica`);
+        setModalContent(<ListReportsGrafic setIsVisibleModal={setIsVisibleModal} setReloadReports={setReloadReports} /> )
+    }
     return (
         <div className="reports">
-            <Tabs  type="card" className="reports-list" height={ContainerHeight}>                
+            <Tabs  type="card" className="reports-list" >                
                 {ubications.map(function(ubication) {  
                     ubi = ubication.title;           
                     return(
                         
-                        <TabPane className="reports-list_header"  tab={ubication.title} key={ubication._id} >                           
+                        <TabPane className="reports-list_header"  tab={ubication.title} key={ubication._id} height={ContainerHeight}  >                           
                             {areas.map(function(area)  {                                                                  
                                 return(
                                     <>                                    
@@ -55,27 +76,21 @@ export default function MenuWeb(){
                                                 if (ar === report.module.area.title ) {
                                                     mod = report.module;
                                                     return(
-                                                        <List >
-                                                        <VirtualList data={reports} onScroll={onScroll} itemHeight={47}>
-                                                            {report => (
-                                                                <Collapse className="reports-list_cont"  >
-                                                                <Panel 
-                                                                className="reports-list_cont-list"
-                                                                header={
-                                                                    <>
-                                                                        <h1>{area.title}</h1>
-                                                                        <Progress type="circle" percent={75} />
-                                                                        <Button>Ver estadisticas</Button>
-                                                                    </>
-                                                                } 
-                                                                key={area._id}>
-                                                                    <ListReports reports={reports} ubi={ubi} ar={ar} mod={mod} setReloadReports={setReloadReports} />    
-                                                                </Panel>
-                                                            </Collapse>
-                                                            )}
-                                                            
-                                                        </VirtualList>
-                                                        </List>
+                                                        <Collapse className="reports-list_cont"  scroll={{  y: 833 }}>
+                                                        <Panel 
+                                                        className="reports-list_cont-list"
+                                                        header={
+                                                            <>
+                                                                <h1>{area.title}</h1>
+                                                                <Progress type="circle" percent={100} />
+                                                                <Button onClick={() => graficas } >Ver estadisticas</Button>
+                                                            </>
+                                                        } 
+                                                        key={area._id}>
+                                                            <ListReports reports={reports} ubi={ubi} ar={ar} mod={mod} setReloadReports={setReloadReports} />    
+                                                        </Panel>
+                                                    </Collapse>
+                                                     
                                                     )
                                                 } 
                                             } 
@@ -87,7 +102,7 @@ export default function MenuWeb(){
                                 )
                                 
                             })}  
-                        </TabPane>                        
+                        </TabPane>                                                                      
                     )                                      
                 })}                
             </Tabs>            

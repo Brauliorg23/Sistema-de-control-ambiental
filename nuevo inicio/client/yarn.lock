@@ -2795,6 +2795,20 @@
     "rc-util" "^5.14.0"
     "scroll-into-view-if-needed" "^2.2.25"
 
+"anychart-react@^1.4.1":
+  "integrity" "sha512-YgaNhlERFYsXmFdzHIndWw2p74OmD06deghyJs5VezjPK7yNkQVYuBBO/zExq2K3/Q412QpeIScOlELVCyIeSA=="
+  "resolved" "https://registry.npmmirror.com/anychart-react/-/anychart-react-1.4.1.tgz"
+  "version" "1.4.1"
+  dependencies:
+    "anychart" "^8.0.0"
+    "react" "^15.6.2"
+    "react-dom" "^15.6.2"
+
+"anychart@^8.0.0":
+  "integrity" "sha512-9QhPSG2mVndLJFsJxuZbtaq5M2jN9GOGNQ7MO2kZrg4cBeZJz0z0HG8HQwNvKDzuhClyOURiJg34pTTaDGyXaA=="
+  "resolved" "https://registry.npmmirror.com/anychart/-/anychart-8.11.0.tgz"
+  "version" "8.11.0"
+
 "anymatch@^2.0.0":
   "integrity" "sha512-5teOsQWABXHHBFP9y3skS5P3d/WfWXpv3FUpy+LorMrNYaT9pI4oLMQX7jzQ2KklNpGpWHzdCXTDT2Y3XGlZBw=="
   "resolved" "https://registry.npmmirror.com/anymatch/-/anymatch-2.0.0.tgz"
@@ -2948,7 +2962,7 @@
   "resolved" "https://registry.nlark.com/arrify/download/arrify-1.0.1.tgz"
   "version" "1.0.1"
 
-"asap@~2.0.6":
+"asap@~2.0.3", "asap@~2.0.6":
   "integrity" "sha1-5QNHYR1+aQlDIIu9r+vLwvuGbUY="
   "resolved" "https://registry.nlark.com/asap/download/asap-2.0.6.tgz"
   "version" "2.0.6"
@@ -3634,6 +3648,11 @@
   "resolved" "https://registry.nlark.com/char-regex/download/char-regex-2.0.0.tgz"
   "version" "2.0.0"
 
+"chartist@^0.11.4":
+  "integrity" "sha512-H4AimxaUD738/u9Mq8t27J4lh6STsLi4BQHt65nOtpLk3xyrBPaLiLMrHw7/WV9CmsjGA02WihjuL5qpSagLYw=="
+  "resolved" "https://registry.npmmirror.com/chartist/-/chartist-0.11.4.tgz"
+  "version" "0.11.4"
+
 "check-types@^11.1.1":
   "integrity" "sha1-hqfBK/VTn2Mk6w5wyoiWwOOPPi8="
   "resolved" "https://registry.npm.taobao.org/check-types/download/check-types-11.1.2.tgz"
@@ -3992,6 +4011,11 @@
   "resolved" "https://registry.npmmirror.com/core-js-pure/download/core-js-pure-3.20.3.tgz"
   "version" "3.20.3"
 
+"core-js@^1.0.0":
+  "integrity" "sha512-ZiPp9pZlgxpWRu0M+YWbm6+aQ84XEfH1JRXvfOc/fILWI0VKhLC2LX13X1NYq4fULzLMq7Hfh43CSo2/aIaUPA=="
+  "resolved" "https://registry.npmmirror.com/core-js/-/core-js-1.2.7.tgz"
+  "version" "1.2.7"
+
 "core-js@^3.19.2":
   "integrity" "sha512-vVl8j8ph6tRS3B8qir40H7yw7voy17xL0piAjlbBUsH7WIfzoedL/ZOr1OV9FyZQLWXsayOJyV4tnRyXR85/ag=="
   "resolved" "https://registry.npmmirror.com/core-js/download/core-js-3.20.3.tgz"
@@ -4048,6 +4072,14 @@
     "parse-json" "^5.0.0"
     "path-type" "^4.0.0"
     "yaml" "^1.10.0"
+
+"create-react-class@^15.6.0":
+  "integrity" "sha512-QZv4sFWG9S5RUvkTYWbflxeZX+JG7Cz0Tn33rQBJ+WFQTqTfUTjMjiv9tnfXazjsO5r0KhPs+AqCjyrQX6h2ng=="
+  "resolved" "https://registry.npmmirror.com/create-react-class/-/create-react-class-15.7.0.tgz"
+  "version" "15.7.0"
+  dependencies:
+    "loose-envify" "^1.3.1"
+    "object-assign" "^4.1.1"
 
 "cross-spawn@^6.0.0":
   "integrity" "sha512-eTVLrBSt7fjbDygz805pMnstIs2VTBNkRm0qxZd+M7A5XDdxVRWO5MxGBXZhjY4cqLYLdtrGqRf8mBPmzwSpWQ=="
@@ -4766,7 +4798,7 @@
   "resolved" "https://registry.npmmirror.com/encodeurl/download/encodeurl-1.0.2.tgz"
   "version" "1.0.2"
 
-"encoding@^0.1.0", "encoding@^0.1.12":
+"encoding@^0.1.0", "encoding@^0.1.11", "encoding@^0.1.12":
   "integrity" "sha1-VldK/deR9UqOmyeFwFgqLSYhD6k="
   "resolved" "https://registry.npmmirror.com/encoding/download/encoding-0.1.13.tgz"
   "version" "0.1.13"
@@ -5375,6 +5407,19 @@
   "version" "2.0.1"
   dependencies:
     "bser" "2.1.1"
+
+"fbjs@^0.8.9":
+  "integrity" "sha512-EQaWFK+fEPSoibjNy8IxUtaFOMXcWsY0JaVrQoZR9zC8N2Ygf9iDITPWjUTVIax95b6I742JFLqASHfsag/vKA=="
+  "resolved" "https://registry.npmmirror.com/fbjs/-/fbjs-0.8.18.tgz"
+  "version" "0.8.18"
+  dependencies:
+    "core-js" "^1.0.0"
+    "isomorphic-fetch" "^2.1.1"
+    "loose-envify" "^1.0.0"
+    "object-assign" "^4.1.0"
+    "promise" "^7.1.1"
+    "setimmediate" "^1.0.5"
+    "ua-parser-js" "^0.7.30"
 
 "file-entry-cache@^6.0.1":
   "integrity" "sha1-IRst2WWcsDlLBz5zI6w8kz1SICc="
@@ -6586,6 +6631,11 @@
   "resolved" "https://registry.npmmirror.com/is-shared-array-buffer/download/is-shared-array-buffer-1.0.1.tgz"
   "version" "1.0.1"
 
+"is-stream@^1.0.1":
+  "integrity" "sha512-uQPm8kcs47jx38atAcWTVxyltQYoPT68y9aWYdV6yWXSyW8mzSat0TL6CiWdZeCdF3KrAvpVtnHbTv4RN+rqdQ=="
+  "resolved" "https://registry.npmmirror.com/is-stream/-/is-stream-1.1.0.tgz"
+  "version" "1.1.0"
+
 "is-stream@^1.1.0":
   "integrity" "sha512-uQPm8kcs47jx38atAcWTVxyltQYoPT68y9aWYdV6yWXSyW8mzSat0TL6CiWdZeCdF3KrAvpVtnHbTv4RN+rqdQ=="
   "resolved" "https://registry.npmmirror.com/is-stream/-/is-stream-1.1.0.tgz"
@@ -6660,6 +6710,14 @@
   "integrity" "sha512-WhB9zCku7EGTj/HQQRz5aUQEUeoQZH2bWcltRErOpymJ4boYE6wL9Tbr23krRPSZ+C5zqNSrSw+Cc7sZZ4b7vg=="
   "resolved" "https://registry.npmmirror.com/isobject/-/isobject-3.0.1.tgz"
   "version" "3.0.1"
+
+"isomorphic-fetch@^2.1.1":
+  "integrity" "sha512-9c4TNAKYXM5PRyVcwUZrF3W09nQ+sO7+jydgs4ZGW9dhsLG2VOlISJABombdQqQRXCwuYG3sYV/puGf5rp0qmA=="
+  "resolved" "https://registry.npmmirror.com/isomorphic-fetch/-/isomorphic-fetch-2.2.1.tgz"
+  "version" "2.2.1"
+  dependencies:
+    "node-fetch" "^1.0.1"
+    "whatwg-fetch" ">=0.10.0"
 
 "isstream@~0.1.2":
   "integrity" "sha1-R+Y/evVa+m+S4VAOaQ64uFKcCZo="
@@ -7662,7 +7720,7 @@
     "dayjs" "^1.8.15"
     "yargs" "^15.1.0"
 
-"loose-envify@^1.0.0", "loose-envify@^1.1.0", "loose-envify@^1.4.0":
+"loose-envify@^1.0.0", "loose-envify@^1.1.0", "loose-envify@^1.3.1", "loose-envify@^1.4.0":
   "integrity" "sha1-ce5R+nvkyuwaY4OffmgtgTLTDK8="
   "resolved" "https://registry.npm.taobao.org/loose-envify/download/loose-envify-1.4.0.tgz"
   "version" "1.4.0"
@@ -8397,6 +8455,14 @@
   dependencies:
     "minimatch" "^3.0.2"
 
+"node-fetch@^1.0.1":
+  "integrity" "sha512-NhZ4CsKx7cYm2vSrBAr2PvFOe6sWDf0UYLRqA6svUYg7+/TSfVAu49jYC4BvQ4Sms9SZgdqGBgroqfDhJdTyKQ=="
+  "resolved" "https://registry.npmmirror.com/node-fetch/-/node-fetch-1.7.3.tgz"
+  "version" "1.7.3"
+  dependencies:
+    "encoding" "^0.1.11"
+    "is-stream" "^1.0.1"
+
 "node-fetch@^2.2.0", "node-fetch@^2.6.0":
   "integrity" "sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ=="
   "resolved" "https://registry.npmmirror.com/node-fetch/-/node-fetch-2.6.7.tgz"
@@ -8578,7 +8644,7 @@
   "resolved" "https://registry.npmmirror.com/ob1/-/ob1-0.66.2.tgz"
   "version" "0.66.2"
 
-"object-assign@^4.1.1":
+"object-assign@^4.1.0", "object-assign@^4.1.1":
   "integrity" "sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM="
   "resolved" "https://registry.nlark.com/object-assign/download/object-assign-4.1.1.tgz?cache=0&sync_timestamp=1618847148862&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fobject-assign%2Fdownload%2Fobject-assign-4.1.1.tgz"
   "version" "4.1.1"
@@ -9625,6 +9691,13 @@
     "err-code" "^2.0.2"
     "retry" "^0.12.0"
 
+"promise@^7.1.1":
+  "integrity" "sha512-nolQXZ/4L+bP/UGlkfaIujX9BKxGwmQ9OT4mOt5yvy8iK1h3wqTEJCijzGANTCCl9nWjY41juyAn2K3Q1hLLTg=="
+  "resolved" "https://registry.npmmirror.com/promise/-/promise-7.3.1.tgz"
+  "version" "7.3.1"
+  dependencies:
+    "asap" "~2.0.3"
+
 "promise@^8.0.3", "promise@^8.1.0":
   "integrity" "sha1-aXwlw9/nQ13Xn81Yw4oTWIjq8F4="
   "resolved" "https://registry.npm.taobao.org/promise/download/promise-8.1.0.tgz?cache=0&sync_timestamp=1583146806903&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpromise%2Fdownload%2Fpromise-8.1.0.tgz"
@@ -10158,6 +10231,16 @@
     "object-assign" "^4.1.1"
     "scheduler" "^0.20.2"
 
+"react-dom@^15.6.2":
+  "integrity" "sha512-mpjXqC2t1FuYsILOLCj0kg6pbg460byZkVA/80VtDmKU/pYmoTdHOtaMcTRIDiyXLz4sIur0cQ04nOC6iGndJg=="
+  "resolved" "https://registry.npmmirror.com/react-dom/-/react-dom-15.7.0.tgz"
+  "version" "15.7.0"
+  dependencies:
+    "fbjs" "^0.8.9"
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.0"
+    "prop-types" "^15.5.10"
+
 "react-dropzone@^12.0.2":
   "integrity" "sha512-fcqHEYe1MzAghU6/Hz86lHDlBNsA+lO48nAcm7/wA+kIzwS6uuJbUG33tBZjksj7GAZ1iUQ6NHwjUURPmSGang=="
   "resolved" "https://registry.npmmirror.com/react-dropzone/-/react-dropzone-12.0.4.tgz"
@@ -10351,6 +10434,17 @@
   dependencies:
     "loose-envify" "^1.1.0"
     "object-assign" "^4.1.1"
+
+"react@^15.6.2", "react@^15.7.0":
+  "integrity" "sha512-5/MMRYmpmM0sMTHGLossnJCrmXQIiJilD6y3YN3TzAwGFj6zdnMtFv6xmi65PHKRV+pehIHpT7oy67Sr6s9AHA=="
+  "resolved" "https://registry.npmmirror.com/react/-/react-15.7.0.tgz"
+  "version" "15.7.0"
+  dependencies:
+    "create-react-class" "^15.6.0"
+    "fbjs" "^0.8.9"
+    "loose-envify" "^1.1.0"
+    "object-assign" "^4.1.0"
+    "prop-types" "^15.5.10"
 
 "reactcss@^1.2.0":
   "integrity" "sha512-KiwVUcFu1RErkI97ywr8nvx8dNOpT03rbnma0SSalTYjkrPYaEajR4a/MRt6DZ46K6arDRbWMNHF+xH7G7n/8A=="
@@ -11013,6 +11107,11 @@
     "is-extendable" "^0.1.1"
     "is-plain-object" "^2.0.3"
     "split-string" "^3.0.1"
+
+"setimmediate@^1.0.5":
+  "integrity" "sha512-MATJdZp8sLqDl/68LfQmbP8zKPLQNV6BIZoIgrscFDQ+RsvK/BxeDQOgyxKKoh0y/8h3BqVFnCqQ/gd+reiIXA=="
+  "resolved" "https://registry.npmmirror.com/setimmediate/-/setimmediate-1.0.5.tgz"
+  "version" "1.0.5"
 
 "setprototypeof@1.1.0":
   "integrity" "sha1-0L2FU2iHtv58DYGMuWLZ2RxU5lY="
@@ -12053,6 +12152,11 @@
   "resolved" "https://registry.npmmirror.com/typescript/download/typescript-4.5.5.tgz"
   "version" "4.5.5"
 
+"ua-parser-js@^0.7.30":
+  "integrity" "sha512-qLK/Xe9E2uzmYI3qLeOmI0tEOt+TBBQyUIAh4aAgU05FVYzeZrKUdkAZfBNVGRaHVgV0TDkdEngJSw/SyQchkQ=="
+  "resolved" "https://registry.npmmirror.com/ua-parser-js/-/ua-parser-js-0.7.31.tgz"
+  "version" "0.7.31"
+
 "uglify-es@^3.1.9":
   "integrity" "sha512-r+MU0rfv4L/0eeW3xZrd16t4NZfK8Ld4SWVglYBb7ez5uXFWHuVRs6xCTrf1yirs9a4j4Y27nn7SRfO6v67XsQ=="
   "resolved" "https://registry.npmmirror.com/uglify-es/-/uglify-es-3.3.9.tgz"
@@ -12484,7 +12588,7 @@
   dependencies:
     "iconv-lite" "0.4.24"
 
-"whatwg-fetch@^3.0.0", "whatwg-fetch@^3.6.2":
+"whatwg-fetch@^3.0.0", "whatwg-fetch@^3.6.2", "whatwg-fetch@>=0.10.0":
   "integrity" "sha1-3O0k838mJO0CgXJdUdDi4/5nf4w="
   "resolved" "https://registry.npm.taobao.org/whatwg-fetch/download/whatwg-fetch-3.6.2.tgz?cache=0&sync_timestamp=1614451748242&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fwhatwg-fetch%2Fdownload%2Fwhatwg-fetch-3.6.2.tgz"
   "version" "3.6.2"

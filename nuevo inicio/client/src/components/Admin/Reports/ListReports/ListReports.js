@@ -20,7 +20,7 @@ export default function ListReports(props){
         title: 'usuario',
         dataIndex: 'name',
         key: 'name',
-        width: 200,
+        width: 100,
         fixed: 'left',
         filters: [
           {
@@ -38,7 +38,7 @@ export default function ListReports(props){
         title: 'fecha',
         dataIndex: 'date',
         key: 'date',
-        width: 150,
+        width: 100,
         fixed: 'left',
         filters: [
           {
@@ -119,6 +119,7 @@ export default function ListReports(props){
             dataSource={data}
             bordered
             size="middle"
+            scroll={{ x: 1500, y: 300 }}
         />
     );
 }

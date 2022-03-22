@@ -1,36 +1,48 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import AnyChart from '../../dist/anychart-react.min.js'
-import anychart from 'anychart'
+import { useMemo } from "react";
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+} from "chart.js";
+import {Line} from "react-chartjs-2";
 
-const data = anychart.data.set([
-  ['p1', 5, 4],
-  ['p2', 6, 2],
-  ['p3', 3, 7],
-  ['p4', 1, 5]
-]);
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Legend,
+  Filler
+);
 
-// Also you can set data as array or object
-// As array
-/*const data = [
-  ['p1', 5, 4],
-  ['p2', 6, 2],
-  ['p3', 3, 7],
-  ['p4', 1, 5]
-];*/
+const scores = [6, 5, 5, 5, 3, 4, 6, 4, 5];
+const labels = [100, 200, 300, 400, 500, 600, 700];
 
+const options = {
+  responsive: true,
+}
 
-// As object
-/*
-const data = [
-  {x: 'p1', value1: 5, value2: 4},
-  {x: 'p2', value1: 6, value2: 2},
-  {x: 'p3', value1: 3, value2: 7},
-  {x: 'p4', value1: 1, value2: 5}
-];
-*/
+export default function ListReportsGrafic(){
+  const data = useMemo(function () {
+    return{
+      datasets: [
+        {
+          type: 'bar',
+          label: "mis datos",
+          data: scores,          
+        }
+      ],
+      labels
+    }
+  }, []);
 
-// Render chart with settings
-ReactDOM.render(<AnyChart type="column" title="Multicolumn chart" width={800} height={600} legend={true} />, document.getElementById('root'));
-// Re-render with multicolumn data. No need to set type secondly, because it just updates data
-ReactDOM.render(<AnyChart data={data}/>, document.getElementById('root'));
+  return <Line data={data} options={options} />
+}

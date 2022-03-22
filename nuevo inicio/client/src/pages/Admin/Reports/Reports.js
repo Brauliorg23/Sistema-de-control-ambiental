@@ -8,7 +8,7 @@ import {getAreasApi} from "../../../api/area";
 import ListReports from "../../../components/Admin/Reports/ListReports/ListReports";
 import ListReportsGrafic from "../../../components/Admin/Reports/ListReportsGrafic/ListReportsGrafic";
 import "./Reports.scss"
-import Modal from '../../../Modal/Modal';
+import Modal from '../../../components/Modal/Modal';
 
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
@@ -25,6 +25,10 @@ export default function MenuWeb(){
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalContent, setModalContent] = useState(null);
+    var ubi = "";
+    var ar = "";
+    var mod = "";
+    var are = [];
 
     useEffect(() => {
         getReportsApi(token).then(response => {       
@@ -38,10 +42,7 @@ export default function MenuWeb(){
         })
         setReloadReports(false);
     }, [token, reloadReports]);
-    var ubi = "";
-    var ar = "";
-    var mod = "";
-    var are = [];
+    
     const onScroll = e => {
         if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {      
         }
@@ -57,8 +58,13 @@ export default function MenuWeb(){
     function graficas(){
         setIsVisibleModal(true);
         setModalTitle(`Informacion en grafica`);
-        setModalContent(<ListReportsGrafic setIsVisibleModal={setIsVisibleModal} setReloadReports={setReloadReports} /> )
+        setModalContent(<ListReportsGrafic /> )
     }
+
+    const genExtra = () => (
+        <Button type="primary" onClick={() => graficas()} >Ver estadisticas</Button>
+      );
+
     return (
         <div className="reports">
             <Tabs  type="card" className="reports-list" >                
@@ -67,6 +73,7 @@ export default function MenuWeb(){
                     return(
                         
                         <TabPane className="reports-list_header"  tab={ubication.title} key={ubication._id} height={ContainerHeight}  >                           
+                            <Button type="primary" onClick={() => graficas()} >Ver estadisticas</Button>
                             {areas.map(function(area)  {                                                                  
                                 return(
                                     <>                                    
@@ -75,17 +82,17 @@ export default function MenuWeb(){
                                                 ar = area.title; 
                                                 if (ar === report.module.area.title ) {
                                                     mod = report.module;
-                                                    return(
+                                                    return(                                                        
                                                         <Collapse className="reports-list_cont"  scroll={{  y: 833 }}>
                                                         <Panel 
                                                         className="reports-list_cont-list"
                                                         header={
                                                             <>
                                                                 <h1>{area.title}</h1>
-                                                                <Progress type="circle" percent={100} />
-                                                                <Button onClick={() => graficas } >Ver estadisticas</Button>
+                                                                <Progress type="circle" percent={100} />                                                               
                                                             </>
                                                         } 
+                                                        // extra={genExtra()}
                                                         key={area._id}>
                                                             <ListReports reports={reports} ubi={ubi} ar={ar} mod={mod} setReloadReports={setReloadReports} />    
                                                         </Panel>
@@ -105,7 +112,15 @@ export default function MenuWeb(){
                         </TabPane>                                                                      
                     )                                      
                 })}                
-            </Tabs>            
+            </Tabs>   
+
+            <Modal
+                title={modalTitle}
+                isVisible={isVisibleModal}
+                setIsVisible={setIsVisibleModal}
+            >
+                {modalContent}
+            </Modal>          
         </div>
     )
 }

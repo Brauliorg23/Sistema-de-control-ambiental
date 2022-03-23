@@ -1,48 +1,69 @@
-import { useMemo } from "react";
+import React from 'react';
 import {
   Chart as ChartJS,
-  CategoryScale,
   LinearScale,
+  CategoryScale,
+  BarElement,
   PointElement,
   LineElement,
-  Title,
-  Tooltip,
+  Filler,
   Legend,
-  Filler
-} from "chart.js";
-import {Line} from "react-chartjs-2";
+  Tooltip,
+} from 'chart.js';
+import { Chart } from 'react-chartjs-2';
+import faker from 'faker';
+import {  DownloadOutlined,} from '@ant-design/icons';
+import {Button} from 'antd';
 
 ChartJS.register(
-  CategoryScale,
   LinearScale,
+  CategoryScale,
+  BarElement,
   PointElement,
   LineElement,
-  Title,
-  Tooltip,
+  Filler,
   Legend,
-  Filler
+  Tooltip
 );
 
-const scores = [6, 5, 5, 5, 3, 4, 6, 4, 5];
-const labels = [100, 200, 300, 400, 500, 600, 700];
+export default function ListReportsGrafic(props) {
+  const {ar}=props;
+  console.log(ar);
+  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
 
-const options = {
-  responsive: true,
-}
+  const data = {
+    labels,
+    datasets: [
+      {
+        type: 'line',
+        label: 'Dataset 1',
+        borderColor: 'rgb(255, 99, 132)',
+        borderWidth: 2,
+        fill: false,
+        data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+      },
+      {
+        type: 'bar',
+        label: 'Dataset 2',
+        backgroundColor: 'rgb(75, 192, 192)',
+        data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+        borderColor: 'white',
+        borderWidth: 2,
+      },
+      {
+        label: 'Dataset 3',
+        backgroundColor: 'rgb(53, 162, 235)',
+        data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+      },
+    ],
+  };
 
-export default function ListReportsGrafic(){
-  const data = useMemo(function () {
-    return{
-      datasets: [
-        {
-          type: 'bar',
-          label: "mis datos",
-          data: scores,          
-        }
-      ],
-      labels
-    }
-  }, []);
-
-  return <Line data={data} options={options} />
+  return (
+    <div>
+      <Chart type='bar' data={data} />
+      <Button type="primary" shape="round" icon={<DownloadOutlined />}>
+      Download
+      </Button>
+    </div>  
+  );
 }

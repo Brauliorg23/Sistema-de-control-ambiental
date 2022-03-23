@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from "react";
-import { Tabs,  Collapse, Progress, List, Button} from 'antd';
+import { Tabs,  Collapse, Progress, Divider , Button} from 'antd';
 import {getAccessTokenApi} from "../../../api/auth";
 import {getReportsApi} from "../../../api/reports";
 import {getUbicationsApi} from "../../../api/ubication";
-import VirtualList from 'rc-virtual-list';
+import {  DownloadOutlined,} from '@ant-design/icons';
 import {getAreasApi} from "../../../api/area";
 import ListReports from "../../../components/Admin/Reports/ListReports/ListReports";
 import ListReportsGrafic from "../../../components/Admin/Reports/ListReportsGrafic/ListReportsGrafic";
@@ -20,8 +20,6 @@ export default function MenuWeb(){
     const [areas, setAreas] = useState([]);
     const token = getAccessTokenApi();
     const [reloadReports, setReloadReports] = useState(false);     
-
-    const [viewContainersActives, setViewContainersActives] = useState(true);
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
     const [modalContent, setModalContent] = useState(null);
@@ -47,42 +45,35 @@ export default function MenuWeb(){
         if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {      
         }
       };
-    areas.map(function(area){
-        ar = area.title;
-        console.log(ar);
 
-        are.push({area: ar});
-        console.log(are);
-    })
-
-    function graficas(){
+    function graficas(ar){
         setIsVisibleModal(true);
         setModalTitle(`Informacion en grafica`);
-        setModalContent(<ListReportsGrafic /> )
+        setModalContent(<ListReportsGrafic ar={ar} /> )
     }
 
-    const genExtra = () => (
-        <Button type="primary" onClick={() => graficas()} >Ver estadisticas</Button>
-      );
 
     return (
         <div className="reports">
             <Tabs  type="card" className="reports-list" >                
                 {ubications.map(function(ubication) {  
                     ubi = ubication.title;           
-                    return(
-                        
-                        <TabPane className="reports-list_header"  tab={ubication.title} key={ubication._id} height={ContainerHeight}  >                           
-                            <Button type="primary" onClick={() => graficas()} >Ver estadisticas</Button>
-                            {areas.map(function(area)  {                                                                  
+                    return(                        
+                        <TabPane className="reports-list_header"  tab={ubication.title} key={ubication._id} height={ContainerHeight}  >                                                       
+                            <Button type="primary" onClick={() => graficas(ar)} >Ver estadisticas</Button> 
+                            <Button type="primary" shape="round" icon={<DownloadOutlined />}>Descargar</Button> 
+                            <br></br>
+                            {reports.map(function(report)  {                                                                  
                                 return(
-                                    <>                                    
-                                        {reports.map(function(report) {   
+                                    <>                                                                      
+                                        {areas.map(function(area) {   
                                             if (ubi === report.module.ubication.title) {
-                                                ar = area.title; 
-                                                if (ar === report.module.area.title ) {
+                                                ar = area.title;                                               
+
+                                                if (area.title === report.module.area.title && area.title === ar) {
                                                     mod = report.module;
-                                                    return(                                                        
+                                                    return(       
+                                                                                                         
                                                         <Collapse className="reports-list_cont"  scroll={{  y: 833 }}>
                                                         <Panel 
                                                         className="reports-list_cont-list"
@@ -92,7 +83,6 @@ export default function MenuWeb(){
                                                                 <Progress type="circle" percent={100} />                                                               
                                                             </>
                                                         } 
-                                                        // extra={genExtra()}
                                                         key={area._id}>
                                                             <ListReports reports={reports} ubi={ubi} ar={ar} mod={mod} setReloadReports={setReloadReports} />    
                                                         </Panel>

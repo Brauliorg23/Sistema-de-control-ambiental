@@ -10,7 +10,7 @@ const ReportSchema = Schema({
     },
     title: String,
     description: String,
-    date: String,
+    date: Date,
     photo: String,
     conten1: String,
     conten2: String,

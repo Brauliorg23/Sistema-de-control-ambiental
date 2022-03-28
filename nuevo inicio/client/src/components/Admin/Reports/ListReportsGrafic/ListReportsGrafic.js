@@ -27,9 +27,15 @@ ChartJS.register(
 );
 
 export default function ListReportsGrafic(props) {
-  const {ar}=props;
-  console.log(ar);
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const {are}=props;
+  console.log(are);
+  const labels = [];
+
+  are.map(function (ar){
+    labels.push(ar)
+  })
+
+  console.log(labels);
 
   const data = {
     labels,
@@ -40,26 +46,26 @@ export default function ListReportsGrafic(props) {
         borderColor: 'rgb(255, 99, 132)',
         borderWidth: 2,
         fill: false,
-        data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+        data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
       },
       {
         type: 'bar',
         label: 'Dataset 2',
         backgroundColor: 'rgb(75, 192, 192)',
-        data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+        data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
         borderColor: 'white',
         borderWidth: 2,
       },
       {
         label: 'Dataset 3',
         backgroundColor: 'rgb(53, 162, 235)',
-        data: labels.map(() => faker.datatype.number({ min: -1000, max: 1000 })),
+        data: labels.map(() => faker.datatype.number({ min: -0, max: 100 })),
       },
     ],
   };
 
   return (
-    <div>
+    <div className='Graf'>
       <Chart type='bar' data={data} />
       <Button type="primary" shape="round" icon={<DownloadOutlined />}>
       Download

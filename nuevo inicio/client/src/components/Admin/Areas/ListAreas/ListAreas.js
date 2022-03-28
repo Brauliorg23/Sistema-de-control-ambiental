@@ -177,6 +177,7 @@ function AreaActive(props){
       <Button 
           type='primary'
           onClick={desactivateArea}
+          shape="round"
       >
           <PoweroffOutlined/>
       </Button> 
@@ -184,6 +185,7 @@ function AreaActive(props){
       <Button 
           type='primary'
           onClick={() => editArea(area)}
+          shape="round"
       >
           <EditOutlined/>
       </Button> 
@@ -191,6 +193,7 @@ function AreaActive(props){
       <Button 
           type='primary'
           onClick={showDeleteConfirm}
+          shape="round"
       >
           <DeleteOutlined/>
       </Button> 
@@ -288,6 +291,7 @@ function AreaInactive(props){
       <Button 
           type='primary'
           onClick={desactivateArea}
+          shape="round"
       >
           <PoweroffOutlined/>
       </Button> 
@@ -295,6 +299,7 @@ function AreaInactive(props){
       <Button 
           type='primary'
           onClick={showDeleteConfirm}
+          shape="round"
       >
           <DeleteOutlined/>
       </Button> 

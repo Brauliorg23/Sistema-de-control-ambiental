@@ -1,4 +1,4 @@
-import { Table, Tag } from 'antd';
+import { Table, Tag, Space } from 'antd';
 
 export default function ListReports(props){
     const {reports, mod, ubi, ar} =props    
@@ -54,36 +54,29 @@ export default function ListReports(props){
       },      
     ];
 
+    var ban = 0;
     for (let index = 0; index < 10; index++) {
       var cont = contens[index].conten;
       if (cont !== null) {
         columns.push(
           {
             title: cont.title,
-            dataIndex: cont._id,
-            key: cont._id,
-            children: [            
-              {
-                title: 'Estado de la condicion',
-                dataIndex: index,
-                key: index,
-                width: 50,
-              },
-            ],
+            dataIndex: 'tags',
+            key: 'tags',
+            
             width: 100,
-            render: tags => (
-              <>
-                {tags.map(tag => {
-                  let color = tag.length > 5 ? 'geekblue' : 'green';
-                  if (tag === 'loser') {
-                    color = 'volcano';
-                  }
-                  return (
-                    { text: 'bien', status: 'Success' }
-                  );
-                })}
-              </>
-            ),
+            render: tags => {
+              let color = "green";
+              if (tags[index] === "Mal") {                
+                color = 'volcano';
+              }   
+              
+              return (
+                <Tag color={color} key={tags[index]}>
+                  {tags[index]}
+                </Tag>
+              );
+            }       
           }
       );
       }
@@ -98,16 +91,7 @@ export default function ListReports(props){
             codigo: report.module.codigo,
             name: report.user.name,
             date: report.date,
-            0: report.conten1,
-            1: report.conten2,
-            2: report.conten3,
-            3: report.conten4,
-            4: report.conten5,
-            5: report.conten6,
-            6: report.conten7,
-            7: report.conten8,
-            8: report.conten9,
-            9: report.conten10,
+            tags: [report.conten1, report.conten2, report.conten3, report.conten4, report.conten5, report.conten6, report.conten7, report.conten8, report.conten9, report.conten10 ]
           })
         }
       }      

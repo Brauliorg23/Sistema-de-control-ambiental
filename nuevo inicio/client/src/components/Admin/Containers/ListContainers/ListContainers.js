@@ -178,6 +178,7 @@ function ContainerActive(props){
       <Button 
           type='primary'
           onClick={desactivateContainer}
+          shape="round"
       >
           <PoweroffOutlined/>
       </Button> 
@@ -185,6 +186,7 @@ function ContainerActive(props){
       <Button 
           type='primary'
           onClick={() => editContainer(container)}
+          shape="round"
       >
           <EditOutlined/>
       </Button> 
@@ -192,6 +194,7 @@ function ContainerActive(props){
       <Button 
           type='primary'
           onClick={showDeleteConfirm}
+          shape="round"
       >
           <DeleteOutlined/>
       </Button> 
@@ -289,6 +292,7 @@ function ContainerInactive(props){
       <Button 
           type='primary'
           onClick={desactivateContainer}
+          shape="round"
       >
           <PoweroffOutlined/>
       </Button> 
@@ -296,6 +300,7 @@ function ContainerInactive(props){
       <Button 
           type='primary'
           onClick={showDeleteConfirm}
+          shape="round"
       >
           <DeleteOutlined/>
       </Button> 

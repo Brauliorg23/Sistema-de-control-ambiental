@@ -8,12 +8,12 @@ const Area = require('../models/area');
 function addReport(req, res){
     const report = new Report();
 
-    const {codigo, title, description, date, photo, module, user, conten1, conten2, conten3, conten4, conten5, conten6, conten7, conten8, conten9, conten10} = req.body;
+    const {codigo, title, description,  photo, module, user, conten1, conten2, conten3, conten4, conten5, conten6, conten7, conten8, conten9, conten10} = req.body;
 
     report.codigo = codigo;
     report.title = title;
     report.description = description;
-    report.date = date;
+    report.date = new Date();
     report.photo = photo;
     report.module = module;
     report.user = user;
@@ -29,7 +29,7 @@ function addReport(req, res){
     report.conten10 = conten10;
 
 
-    if (!codigo || !title || !description || !date || !module || !user) {
+    if (!codigo || !title || !description || !module || !user) {
         res.status(500).send({message: "Los campos son oblicatorios"})
     } else {
         report.save((err, createReport) => {

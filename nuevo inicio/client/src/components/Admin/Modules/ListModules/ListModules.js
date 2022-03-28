@@ -115,6 +115,7 @@ const ModulesActive = (props) => {
                   module={module} 
                   editModule={editModule}
                   setReloadModules={setReloadModules}
+                  QRModule={QRModule}
                 />
         )}
     </VirtualList>
@@ -123,7 +124,7 @@ const ModulesActive = (props) => {
 };
 
 function ModuleActive(props){
-  const {module, editModule, setReloadModules} = props;
+  const {module, editModule, setReloadModules, QRModule} = props;
 
   const desactivateModule = () => {
       const accesToken = getAccessTokenApi();
@@ -167,6 +168,8 @@ function ModuleActive(props){
         }
       });
     };
+
+    
   
   return (
     <List.Item key={module.title}>
@@ -175,10 +178,19 @@ function ModuleActive(props){
         title={<a href="https://ant.design">{module.title}</a>}
         description={module.description}
       />
-      <Divider  type='vertical'/>            
+      <Divider  type='vertical'/> 
+      <Button 
+          type='primary'
+          onClick={() => QRModule(module)}
+          shape="round"
+      >
+          <EditOutlined/>
+      </Button> 
+      <Divider  type='vertical'/>           
       <Button 
           type='primary'
           onClick={desactivateModule}
+          shape="round"
       >
           <PoweroffOutlined/>
       </Button> 
@@ -186,6 +198,7 @@ function ModuleActive(props){
       <Button 
           type='primary'
           onClick={() => editModule(module)}
+          shape="round"
       >
           <EditOutlined/>
       </Button> 
@@ -193,6 +206,7 @@ function ModuleActive(props){
       <Button 
           type='primary'
           onClick={showDeleteConfirm}
+          shape="round"
       >
           <DeleteOutlined/>
       </Button> 
@@ -290,6 +304,7 @@ function ModuleInactive(props){
       <Button 
           type='primary'
           onClick={desactivateModule}
+          shape="round"
       >
           <PoweroffOutlined/>
       </Button> 
@@ -297,6 +312,7 @@ function ModuleInactive(props){
       <Button 
           type='primary'
           onClick={showDeleteConfirm}
+          shape="round"
       >
           <DeleteOutlined/>
       </Button> 

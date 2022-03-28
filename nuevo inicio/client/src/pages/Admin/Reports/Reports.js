@@ -12,7 +12,7 @@ import Modal from '../../../components/Modal/Modal';
 
 const { TabPane } = Tabs;
 const { Panel } = Collapse;
-const ContainerHeight = 833;
+const ContainerHeight = 933;
 
 export default function MenuWeb(){
     const [reports, setReports] = useState([]);
@@ -46,10 +46,10 @@ export default function MenuWeb(){
         }
       };
 
-    function graficas(ar){
+    function graficas(are){
         setIsVisibleModal(true);
         setModalTitle(`Informacion en grafica`);
-        setModalContent(<ListReportsGrafic ar={ar} /> )
+        setModalContent(<ListReportsGrafic are={are} /> )
     }
 
 
@@ -57,19 +57,22 @@ export default function MenuWeb(){
         <div className="reports">
             <Tabs  type="card" className="reports-list" >                
                 {ubications.map(function(ubication) {  
-                    ubi = ubication.title;           
+                    ubi = ubication.title;   
+                    console.log(are);        
                     return(                        
                         <TabPane className="reports-list_header"  tab={ubication.title} key={ubication._id} height={ContainerHeight}  >                                                       
-                            <Button type="primary" onClick={() => graficas(ar)} >Ver estadisticas</Button> 
-                            <Button type="primary" shape="round" icon={<DownloadOutlined />}>Descargar</Button> 
-                            <br></br>
+                            <div className="boto">
+                                <Button type="primary" shape="round" onClick={() => graficas(are)} >Ver estadisticas</Button> 
+                                <Divider  type='vertical'/>
+                                <Button type="primary" shape="round" icon={<DownloadOutlined />}>Descargar</Button>                             
+                            </div>
                             {reports.map(function(report)  {                                                                  
                                 return(
-                                    <>                                                                      
+                                    <>                                                                    
                                         {areas.map(function(area) {   
                                             if (ubi === report.module.ubication.title) {
                                                 ar = area.title;                                               
-
+                                                are.push(area.title);
                                                 if (area.title === report.module.area.title && area.title === ar) {
                                                     mod = report.module;
                                                     return(       

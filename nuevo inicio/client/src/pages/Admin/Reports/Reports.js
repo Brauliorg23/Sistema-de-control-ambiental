@@ -14,7 +14,7 @@ const { TabPane } = Tabs;
 const { Panel } = Collapse;
 const ContainerHeight = 933;
 
-export default function MenuWeb(){
+export default function Reports(){
     const [reports, setReports] = useState([]);
     const [ubications, setUbicaions] = useState([]);
     const [areas, setAreas] = useState([]);
@@ -27,6 +27,8 @@ export default function MenuWeb(){
     var ar = "";
     var mod = "";
     var are = [];
+    let ban = 0;
+    var rep = "";
 
     useEffect(() => {
         getReportsApi(token).then(response => {       
@@ -66,41 +68,26 @@ export default function MenuWeb(){
                                 <Divider  type='vertical'/>
                                 <Button type="primary" shape="round" icon={<DownloadOutlined />}>Descargar</Button>                             
                             </div>
-                            {reports.map(function(report)  {                                                                  
-                                return(
-                                    <>                                                                    
-                                        {areas.map(function(area) {   
-                                            if (ubi === report.module.ubication.title) {
-                                                ar = area.title;                                               
-                                                are.push(area.title);
-                                                if (area.title === report.module.area.title && area.title === ar) {
-                                                    mod = report.module;
-                                                    return(       
-                                                                                                         
-                                                        <Collapse className="reports-list_cont"  scroll={{  y: 833 }}>
-                                                        <Panel 
-                                                        className="reports-list_cont-list"
-                                                        header={
-                                                            <>
-                                                                <h1>{area.title}</h1>
-                                                                <Progress type="circle" percent={100} />                                                               
-                                                            </>
-                                                        } 
-                                                        key={area._id}>
-                                                            <ListReports reports={reports} ubi={ubi} ar={ar} mod={mod} setReloadReports={setReloadReports} />    
-                                                        </Panel>
-                                                    </Collapse>
-                                                     
-                                                    )
-                                                } 
-                                            } 
-                                                                                                                       
-                                            
-                                        })}
+                            {reports.map(function(report)  {   
+                                                                                               
+                                if(ban === 0){
+                                    if (rep === report.module.area.title) {
+                                        ban++;
+                                    }else{
+                                        rep = report.module.area.title;
+                                        ban = 0;
+                                    }
                                     
-                                    </>
-                                )
-                                
+                                    return(
+                                        
+                                        <Areas
+                                            areas={areas}
+                                            ubication={ubication}
+                                            report={report}
+                                            are={are}
+                                        />
+                                    )
+                                }                                
                             })}  
                         </TabPane>                                                                      
                     )                                      
@@ -117,3 +104,74 @@ export default function MenuWeb(){
         </div>
     )
 }
+
+
+const Areas = (props) => {
+    const {areas, ubication, report, are} = props;
+
+    return(
+        <div>
+            {areas.map(function(area){
+               if(area.title === report.module.area.title && ubication.title === report.module.ubication.title){
+                   if (are.length === 0) {
+                       are.push(area.title);
+                   }else{
+                    for (let index = 0; index < are.length; index++) {
+                        const element = are[index];
+                        if (are[index] !== area.title) {
+                            are.push(area.title);
+                        }                       
+                    }
+                   }  
+                   
+                       return (
+                           <>
+                            {are.map(function(a){
+                                <>{a}</>
+                            })}
+                           </>
+                       )
+                   
+                   
+
+               }else{
+                   console.log("no funciona nada");
+               }
+               
+            })}
+        </div>
+    )
+}
+
+
+{/* <>                                                                    
+{areas.map(function(area) {   
+    if (ubi === report.module.ubication.title) {
+        ar = area.title;                                               
+        are.push(area.title);
+        if (area.title === report.module.area.title && area.title === ar) {
+            mod = report.module;
+            return(       
+                                                                 
+                <Collapse className="reports-list_cont"  scroll={{  y: 833 }}>
+                <Panel 
+                className="reports-list_cont-list"
+                header={
+                    <>
+                        <h1>{area.title}</h1>
+                        <Progress type="circle" percent={100} />                                                               
+                    </>
+                } 
+                key={area._id}>
+                    <ListReports reports={reports} ubi={ubi} ar={ar} mod={mod} setReloadReports={setReloadReports} />    
+                </Panel>
+            </Collapse>
+             
+            )
+        } 
+    } 
+                                                                               
+    
+})}
+
+</> */}

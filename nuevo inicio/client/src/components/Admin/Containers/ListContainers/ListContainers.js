@@ -79,7 +79,7 @@ const ContainersActive = (props) => {
     setModalTitle,
     setModalContent,
     setReloadContainers
-} = props;
+  } = props;
 
   const editContainer = container => {
     setIsVisibleModal(true);

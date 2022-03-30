@@ -1,0 +1,42 @@
+.edit-user-form {
+    .upload-avatar {
+      display: table;
+      margin: 0 auto;
+      border: 2px solid aliceblue;
+      border-style: dashed;
+      border-radius: 100px;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+  
+    .form-edit {
+      text-align: center;
+  
+      .ant-form-item {
+        margin-top: 5px;
+        margin-bottom: 5px;
+  
+        i {
+          color: rgba(0, 0, 0, 0.25);
+        }
+      }
+    }    
+  }
+
+  .buttonModal:hover, .buttonModal:focus, .buttonModal{
+    background-color: #52c41a ;
+    width: 100%;
+    border-radius: 10px;
+    border-color: #52c41a;
+    background: #52c41a;
+  }
+
+  .ant-input:hover, .ant-input:focus{
+    border-color: #52c41a;
+  }
+
+  .selectModal:hover, .selectModal:hover{
+    border-color: #52c41a;
+  }
+
+  

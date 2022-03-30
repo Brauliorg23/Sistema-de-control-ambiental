@@ -30,6 +30,7 @@ function addModule(req,res){
         res.status(500).send({message: "Los campos son oblicatorios"})
     }else{
         module.save((err, createModule) => {
+            console.log(err);
             if(err){
                 res.status(500).send({message: "Modulo ya existe"});
             }else{

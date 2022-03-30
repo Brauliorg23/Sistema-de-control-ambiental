@@ -2,138 +2,75 @@ import React, { useState, useEffect, useCallback } from "react";
 import {Avatar, Form, Input, Select, Button, Row, Col, notification}from "antd";
 import {useDropzone} from "react-dropzone";
 import NoAvatar from '../../../../assets/img/jpg/Avatar.jpg';
-import { updateUbicationApi , uploadAvatarApi ,getAvatarApi} from "../../../../api/ubication";
+import { updateModuleApi  } from "../../../../api/modules";
 import {getAccessTokenApi} from "../../../../api/auth";
 
 import "./EditModuleForm.scss";
 
-export default function EditUbicationForm(props) {
-    const {ubication, setIsVisibleModal, setReloadUbications} = props;
+export default function EditModuleForm(props) {
+    const {module, setIsVisibleModal, setReloadModules} = props;
     const [avatar, setAvatar] = useState(null);
-    const [ubicationData, setUbicationData] = useState({});
+    const [moduleData, setModuleData] = useState({});
 
     useEffect(() => {
-        setUbicationData({
-        name: ubication.title, 
-        lastname: ubication.description,
-        avatar: ubication.avatar
+      setModuleData({
+        name: module.title, 
+        lastname: module.description
       });
-    }, [ubication]);
+    }, [module]);
   
-    useEffect(() => {
-      if (ubication.avatar) {
-        getAvatarApi(ubication.avatar).then(response => {
-          setAvatar(response);
-        });
-      } else {
-        setAvatar(null);
-      }
-    }, [ubication]);
+    
 
     useEffect(() => {
         if (avatar) {
-            setUbicationData({ ...ubicationData, avatar: avatar.file });
+          setModuleData({ ...moduleData, avatar: avatar.file });
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [avatar]);
 
-    const updateUbication = e => {
+    const updateModule = e => {
       e.preventDefault();
       const token = getAccessTokenApi();
-      let ubicationUpdate = ubicationData;
+      let moduleUpdate = moduleData;
   
-      if (!ubicationUpdate.title || !ubicationUpdate.description ) {
+      if (!moduleUpdate.title || !moduleUpdate.description ) {
         notification["error"]({
           message: "El nombre, apellidos y email son obligatorios."
         });
         return;
       }
   
-      if (typeof ubicationUpdate.avatar === "object") {
-        uploadAvatarApi(token, ubicationUpdate.avatar, ubication._id).then(response => {
-            ubicationUpdate.avatar = response.avatarName;
-          updateUbicationApi(token, ubicationUpdate, ubication._id).then(result => {
-            notification["success"]({
-              message: result.message
-            });
-            setIsVisibleModal(false);
-            setReloadUbications(true);
-          });
-        });
-      } else {
-        updateUbicationApi(token, ubicationUpdate, ubication._id).then(result => {
+     
+        updateModuleApi(token, moduleUpdate, module._id).then(result => {
           notification["success"]({
             message: result.message
           });
           setIsVisibleModal(false);
-          setReloadUbications(true);
+          setReloadModules(true);
         });
-      }
     };
 
 
     return (
         <div className="edit-ubication-form">
-        <UploadAvatar avatar={avatar} setAvatar={setAvatar} />
-        <EditForm  ubicationData={ubicationData} setUbicationData={setUbicationData} updateUbication={updateUbication}/>
+        <EditForm  moduleData={moduleData} setModuleData={setModuleData} updateModule={updateModule}/>
         </div>
     );
 }
 
-function UploadAvatar(props){
-    const {avatar, setAvatar} = props;
-    const [avatarUrl, setAvatarUrl] = useState(null);
-
-    useEffect(() => {
-      if (avatar) {
-        if (avatar.preview) {
-          setAvatarUrl(avatar.preview);
-        } else {
-          setAvatarUrl(avatar);
-        }
-      } else {
-        setAvatarUrl(null);
-      }
-    }, [avatar]);
-
-    const onDrop = useCallback(
-        acceptedFiles => {
-           const file = acceptedFiles[0];
-           setAvatar({file, preview: URL.createObjectURL(file)});
-       },
-       [setAvatar]
-    );
-
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({
-        accept: "image/jpeg, image/png",
-        noKeyboard: true,
-        onDrop
-      });
-
-    return (
-        <div className="upload-avatar" {...getRootProps()}>
-            <Input {...getInputProps()} />
-            {isDragActive ? (
-                <Avatar size={150} src={NoAvatar} />
-            ) : (
-                <Avatar size={150} src={avatarUrl  ? avatarUrl  : NoAvatar} />
-            )}
-        </div>
-    )
-}
 
 function EditForm(props) {
-    const {  ubicationData, setUbicationData, updateUbication } = props;    
-
+    const {  moduleData, setModuleData, updateModule } = props;    
+    
     return (
-      <Form className="form-edit" onSubmitCapture={updateUbication}>
+      <Form className="form-edit" onSubmitCapture={updateModule}>
         <Row gutter={24}>
           <Col span={12}>
             <Form.Item>
               <Input               
                 placeholder="Title"
-                value={ubicationData.title}
-                onChange={e => setUbicationData({ ...ubicationData, title: e.target.value })}
+                value={moduleData.name}
+                onChange={e => setModuleData({ ...moduleData, title: e.target.value })}
               />
             </Form.Item>
           </Col>
@@ -141,9 +78,9 @@ function EditForm(props) {
             <Form.Item>
               <Input                
                 placeholder="Description"
-                value={ubicationData.description}
+                value={moduleData.lastname}
                 onChange={e =>
-                    setUbicationData({ ...ubicationData, description: e.target.value })
+                  setModuleData({ ...moduleData, description: e.target.value })
                 }
               />
             </Form.Item>

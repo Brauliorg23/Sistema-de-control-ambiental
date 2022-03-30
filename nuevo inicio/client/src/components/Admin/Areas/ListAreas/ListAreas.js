@@ -2,7 +2,7 @@ import React, {useState,  } from 'react';
 import { EditOutlined , PoweroffOutlined, DeleteOutlined } from "@ant-design/icons";
 import { List, Avatar, notification,  Button,  Switch, Divider, Modal as ModalAntd, } from 'antd';
 import Modal from '../../../Modal/Modal';
-import AvatarC from "../../../../assets/img/png/containerAvatar.png";
+import AvatarC from "../../../../assets/img/png/area.png";
 import {activateAreaApi, deleteAreaApi} from "../../../../api/area";
 import {getAccessTokenApi} from "../../../../api/auth";
 import EditAreaFrom from "../EditAreasForm/EditAreasForm";
@@ -82,9 +82,10 @@ const AreasActive = (props) => {
 } = props;
 
   const editArea = area => {
+    console.log(area);
     setIsVisibleModal(true);
     setModalTitle(`Editar el contenedor ${area.title ? area.title : "..."}`);
-    setModalContent(<EditAreaFrom area={areasActive} setIsVisibleModal={setIsVisibleModal} setReloadAreas={setReloadAreas} />)
+    setModalContent(<EditAreaFrom area={area} setIsVisibleModal={setIsVisibleModal} setReloadAreas={setReloadAreas} />)
   }
 
   

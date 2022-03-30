@@ -57,7 +57,7 @@ function EditForm(props) {
             <Form.Item>
               <Input               
                 placeholder="Title"
-                value={containerData.title}
+                value={containerData.name}
                 onChange={e => setContainerData({ ...containerData, title: e.target.value })}
               />
             </Form.Item>
@@ -66,7 +66,7 @@ function EditForm(props) {
             <Form.Item>
               <Input                
                 placeholder="Description"
-                value={containerData.description}
+                value={containerData.lastname}
                 onChange={e =>
                   setContainerData({ ...containerData, description: e.target.value })
                 }

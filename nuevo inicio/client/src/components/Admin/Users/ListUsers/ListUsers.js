@@ -97,24 +97,7 @@ function UsersActive(props){
             grid={{ gutter: 16, column: 4 }}
             onScroll={onScroll}
             renderItem={user => <UserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers} />}
-        />
-        // <List
-        // grid={{ gutter: 16, column: 3 }}
-        // >
-        //   <VirtualList
-        //     data={usersActive}
-        //     height={UserHeight}
-        //     itemHeight={47}            
-        //     itemKey="email"
-        //     onScroll={onScroll}
-        //   >
-        //     { user => (
-        //       <UserActive user={user} editUser={editUser} setReloadUsers={setReloadUsers} />
-        //     )
-        //     }
-        //   </VirtualList>
-        // </List>
-                    
+        />                   
     );
 }
 
@@ -180,8 +163,7 @@ function UserActive(props){
     return (
         <List.Item >                                    
             <Card
-                className='Card-list'
-                style={{ width: 200 }}
+                className='Card-list'                
                 cover={
                 <img
                     alt="example"
@@ -285,7 +267,6 @@ function UserInactive(props){
         <List.Item >            
             <Card
                 className='Card-list'
-                style={{ width: 200 }}
                 cover={
                 <img
                     alt="example"

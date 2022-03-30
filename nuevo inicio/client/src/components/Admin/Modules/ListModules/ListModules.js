@@ -1,8 +1,8 @@
 import React, {useState, useEffect, } from 'react';
-import { EditOutlined , PoweroffOutlined, DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, QrcodeOutlined , PoweroffOutlined, DeleteOutlined } from "@ant-design/icons";
 import { List, Avatar, notification, message, Button, Skeleton, Switch, Divider, Modal as ModalAntd, } from 'antd';
 import Modal from '../../../Modal/Modal';
-import AvatarC from "../../../../assets/img/png/containerAvatar.png";
+import AvatarC from "../../../../assets/img/png/descarga.png";
 import {activateModuleApi, deleteModuleApi} from "../../../../api/modules";
 import {getAccessTokenApi} from "../../../../api/auth";
 import EditModuleForm from "../EditModuleForm/EditModuleForm";
@@ -101,6 +101,7 @@ const ModulesActive = (props) => {
     setModalTitle(`Agreagar un nuevo contenedor`);
     setModalContent(<QRModules module={module} setIsVisibleModal={setIsVisibleModal} setReloadModules={setReloadModules} />);
   }
+  
   return (
     <List >
       <VirtualList
@@ -184,7 +185,7 @@ function ModuleActive(props){
           onClick={() => QRModule(module)}
           shape="round"
       >
-          <EditOutlined/>
+          <QrcodeOutlined />
       </Button> 
       <Divider  type='vertical'/>           
       <Button 

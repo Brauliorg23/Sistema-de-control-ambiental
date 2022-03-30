@@ -172,7 +172,7 @@ export default function RegisterForm(props) {
           type="email"
           name="email"
           placeholder="Correo electronico"
-          className="register-form__input"
+          className="register-form__input top"
           onChange={inputValidation}
           value={inputs.email}
         />

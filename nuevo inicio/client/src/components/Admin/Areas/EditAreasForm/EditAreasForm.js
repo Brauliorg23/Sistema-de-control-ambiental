@@ -49,7 +49,6 @@ export default function EditAreaFrom(props) {
 
 function EditForm(props) {
     const {  areaData, setAreaData, updateArea } = props;    
-
     return (
       <Form className="form-edit" onSubmitCapture={updateArea}>
         <Row gutter={24}>
@@ -57,7 +56,7 @@ function EditForm(props) {
             <Form.Item>
               <Input               
                 placeholder="Title"
-                value={areaData.title}
+                value={areaData.name}
                 onChange={e => setAreaData({ ...areaData, title: e.target.value })}
               />
             </Form.Item>
@@ -66,7 +65,7 @@ function EditForm(props) {
             <Form.Item>
               <Input                
                 placeholder="Description"
-                value={areaData.description}
+                value={areaData.lastname}
                 onChange={e =>
                     setAreaData({ ...areaData, description: e.target.value })
                 }

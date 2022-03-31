@@ -47,16 +47,6 @@ export default function AddModule(props) {
     description : false,
     codigo: false,
     condition: false,
-    conten1: false,
-    conten2: false,
-    conten3: false,
-    conten4: false,
-    conten5: false,
-    conten6: false,
-    conten7: false,
-    conten8: false,
-    conten9: false,
-    conten10: false,
     ubication: false,
     area: false,
     privacyPolicy: false
@@ -175,24 +165,6 @@ export default function AddModule(props) {
     })
   }, [token]);
   
-  var mostrar = 0;
-
-  function mostrarmas(e){
-    return (
-      <Select
-          className="selectModal"
-          placeholder="Seleccióna el contenedor"
-          onChange={e => setModule({ ...module, ubication: e})}
-          value={module.ubication}
-        >
-          {ubications.map(function (ubication) {
-            return(
-              <Option value={ubication._id}>{ubication.title}</Option>
-            )
-          })}
-      </Select>
-    )
-  }
   
   return (
     <Form className="register-form" onSubmitCapture={register} onChange={changeForm}>
@@ -253,11 +225,10 @@ export default function AddModule(props) {
         <Col span={12}>
           <Select
               className="selectModal"
-              placeholder="Seleccióna el contenedor"
+              placeholder = "Seleccióna el contenedor"
               onChange={e => setModule({ ...module, conten1: e})}
               value={module.conten1}
             >
-              <Option value="false">default</Option>
               {containers.map(function (container) {
                 return(
                   <Option value={container._id}>{container.title}</Option>

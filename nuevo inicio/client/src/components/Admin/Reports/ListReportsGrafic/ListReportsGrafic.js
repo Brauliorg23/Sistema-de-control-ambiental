@@ -27,7 +27,9 @@ ChartJS.register(
 );
 
 export default function ListReportsGrafic(props) {
-  const {are}=props;
+  const {are, reports, ubi}=props;
+  console.log(reports);
+  console.log(ubi);
   console.log(are);
   const labels = [];
 

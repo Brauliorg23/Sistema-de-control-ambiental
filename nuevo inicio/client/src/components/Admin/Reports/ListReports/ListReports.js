@@ -1,7 +1,7 @@
 import { Table, Tag, Space } from 'antd';
 
 export default function ListReports(props){
-    const {reports, mod, ubi, ar} =props    
+    const {reports, mod, ubi, ar, setBueno, malo, setTotal} =props    
     var contens = [{
       conten: mod.conten1,},
       {conten: mod.conten2,},
@@ -54,7 +54,6 @@ export default function ListReports(props){
       },      
     ];
 
-    var ban = 0;
     for (let index = 0; index < 10; index++) {
       var cont = contens[index].conten;
       if (cont !== null) {
@@ -67,8 +66,9 @@ export default function ListReports(props){
             width: 100,
             render: tags => {
               let color = "green";
-              if (tags[index] === "Mal") {                
-                color = 'volcano';
+              if (tags[index] === "Mal") { 
+                malo++;              
+                color = 'volcano';                
               }   
               
               return (
@@ -83,16 +83,23 @@ export default function ListReports(props){
     }
     
     const data = [];    
-
-    reports.map(function(report){
+    reports.map(function(report){      
       if (ubi === report.module.ubication.title) {
-        if (ar === report.module.area.title) {          
-          return data.push({
-            codigo: report.module.codigo,
-            name: report.user.name,
-            date: report.date,
-            tags: [report.conten1, report.conten2, report.conten3, report.conten4, report.conten5, report.conten6, report.conten7, report.conten8, report.conten9, report.conten10 ]
-          })
+        if (ar === report.module.area.title) {
+          if (report.user !== null){
+            return data.push({
+              codigo: report.module.codigo,
+              name: report.user.name,
+              date: report.date,
+              tags: [report.conten1, report.conten2, report.conten3, report.conten4, report.conten5, report.conten6, report.conten7, report.conten8, report.conten9, report.conten10 ]
+            })
+          }else{
+            return data.push({
+              codigo: report.module.codigo,
+              date: report.date,
+              tags: [report.conten1, report.conten2, report.conten3, report.conten4, report.conten5, report.conten6, report.conten7, report.conten8, report.conten9, report.conten10 ]
+            })
+          }          
         }
       }      
     })

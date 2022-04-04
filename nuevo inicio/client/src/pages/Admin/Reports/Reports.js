@@ -3,8 +3,8 @@ import { Tabs,  Collapse, Progress, Divider , Button} from 'antd';
 import {getAccessTokenApi} from "../../../api/auth";
 import {getReportsApi} from "../../../api/reports";
 import {getUbicationsApi} from "../../../api/ubication";
+import {getModulesApi} from "../../../api/modules";
 import {  DownloadOutlined,} from '@ant-design/icons';
-import {getAreasApi} from "../../../api/area";
 import ListReports from "../../../components/Admin/Reports/ListReports/ListReports";
 import ListReportsGrafic from "../../../components/Admin/Reports/ListReportsGrafic/ListReportsGrafic";
 import "./Reports.scss"
@@ -17,19 +17,18 @@ const ContainerHeight = 933;
 export default function Reports(){
     const [reports, setReports] = useState([]);
     const [ubications, setUbicaions] = useState([]);
-    const [areas, setAreas] = useState([]);
+    const [modules, setModules] = useState([]);
     const token = getAccessTokenApi();
     const [reloadReports, setReloadReports] = useState(false);     
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
+    const [bueno, setBueno] = useState("");
+    var malo = 0;
+    const [total, setTotal] = useState("");
     const [modalContent, setModalContent] = useState(null);
-    var ubi = "";
     var ar = "";
-    var mod = "";
     var are = [];
-    let ban = 0;
-    var rep = "";
-
+    var ubi = "";
     useEffect(() => {
         getReportsApi(token).then(response => {       
             setReports(response);
@@ -37,9 +36,12 @@ export default function Reports(){
         getUbicationsApi(token).then(response => {
             setUbicaions(response.ubication);
         })
-        getAreasApi(token).then(response =>{
-            setAreas(response.area);
-        })
+        getModulesApi(token, true).then(response => {
+            setModules(response);
+        });
+        getModulesApi(token, false).then(response => {
+            setModules(response);
+        });
         setReloadReports(false);
     }, [token, reloadReports]);
     
@@ -48,38 +50,57 @@ export default function Reports(){
         }
       };
 
-    function graficas(are){
+    function graficas(are, ubi){
         setIsVisibleModal(true);
         setModalTitle(`Informacion en grafica`);
-        setModalContent(<ListReportsGrafic are={are} /> )
+        setModalContent(<ListReportsGrafic are={are} reports={reports} ubi={ubi} bueno={bueno} malo={malo} total={total} /> )
     }
 
+    console.log(malo);
+    console.log(bueno);
+    console.log(total);
 
     return (
         <div className="reports">
             <Tabs  type="card" className="reports-list" >                
-                {ubications.map(function(ubication) {  
-                    ubi = ubication.title;   
-                    
+                {ubications.map(function(ubication) {             
                     return(
                         <TabPane className="reports-list_header"  tab={ubication.title} key={ubication._id} height={ContainerHeight} >
                             <div className="boto">
-                                <Button type="primary" shape="round" onClick={() => graficas(are)} >Ver estadisticas</Button> 
+                                <Button type="primary" shape="round" onClick={() => graficas(are, ubi)} >Ver estadisticas</Button> 
                                 <Divider  type='vertical'/>
                                 <Button type="primary" shape="round" icon={<DownloadOutlined />}>Descargar</Button>                             
                             </div>
-                            {areas.map(function (area){
-                                ar = area.title;
+                            {modules.map(function (module){
+                                ar = module.area.title;
+                                var por = 0;
+                                if(ubication.title === module.ubication.title){
+                                   
+                                    
+
+                                   ubi = ubication.title;
+                                    return(
+                                        <Areas
+                                            reports={reports}
+                                            module={module}
+                                            are={are}
+                                            ubication={ubication}
+                                            ar={ar}
+                                            por={por}
+                                            setReloadReports={setReloadReports}
+                                            setBueno={setBueno}
+                                            malo={malo}
+                                            setTotal={setTotal}
+                                        />
+                                    )
+                                }else{
+                                    if(are.length >0){
+                                        are.clear();                                    
+                                    }
+                                }
+
                                 
-                                return(
-                                    <Areas
-                                        reports={reports}
-                                        area={area}
-                                        are={are}
-                                        ubication={ubication}
-                                        ar={ar}
-                                    />
-                                )
+                                
                             })}
                         </TabPane>
                     )
@@ -100,91 +121,42 @@ export default function Reports(){
 
 
 const Areas = (props) => {
-    const {area, ubication, reports, are, ar} = props;
-    if (are.length === 0) {
-        are.push(ar);
-
-    }else{
-        for (let i = are.length; i > 0; i--) {
-            are.pop();
-          }
-        console.log(are);
-        if (are.length===0) {
-            are.push(ar);
-        }
-    }
-    console.log(area);
-    console.log(ubication);
-    console.log(reports);
-    console.log(ar);
-    console.log(are);
-
+    const {module, ubication, reports,  ar, are, setBueno, malo, setTotal, setReloadReports} = props;
+    
+    var ban = false;
+    if(are.length === 0){
+        are.push(module.title);
+       }else{
+           if(ubication.title === module.ubication.title){
+                for (let index = 0; index < are.length; index++) {
+                    if(are[index] !== module.title){
+                        console.log("si puede entrar");
+                        ban = true;
+                        if(ban === true ){
+                            are.push(module.title);
+                            ban = false;
+                        }
+                    }
+                } 
+           }else{
+               are.clear();
+            }                  
+       }
     return(
-        <div>
-            {reports.map(function (report){
-                if(ubication.title === report.module.ubication.title && ar === report.module.area.title){
-                    return (<h1>are</h1>);
-                }
-
-                
-            })}
-        </div>
+        
+        <Collapse>
+            <Panel
+                header={
+                    <>
+                        <h1>{module.title}</h1>
+                        <Progress type="circle" percent={100} />                                                               
+                    </>
+                } 
+                key={1}>
+                    <ListReports reports={reports} setBueno={setBueno} malo={malo} setTotal={setTotal} ubi={ubication.title} ar={ar} mod={module} setReloadReports={setReloadReports} />
+                </Panel>
+        </Collapse>
+                   
     )
 }
 
-
-{/* <Tabs  type="card" className="reports-list" >                
-                {ubications.map(function(ubication) {  
-                    ubi = ubication.title;   
-                    console.log(are);        
-                    return(                        
-                        <TabPane className="reports-list_header"  tab={ubication.title} key={ubication._id} height={ContainerHeight}  >                                                       
-                            <div className="boto">
-                                <Button type="primary" shape="round" onClick={() => graficas(are)} >Ver estadisticas</Button> 
-                                <Divider  type='vertical'/>
-                                <Button type="primary" shape="round" icon={<DownloadOutlined />}>Descargar</Button>                             
-                            </div>
-                            {reports.map(function(report)  {   
-                                                                                               
-                                
-                                    
-                                    return(
-                                        
-                                        <>                                                                    
-                                        {areas.map(function(area) {   
-                                            if (ubi === report.module.ubication.title) {
-                                                ar = area.title;                                               
-                                                are.push(area.title);
-                                                if (area.title === report.module.area.title && area.title === ar) {
-                                                    mod = report.module;
-                                                    return(       
-                                                                                                        
-                                                        <Collapse className="reports-list_cont"  scroll={{  y: 833 }}>
-                                                        <Panel 
-                                                        className="reports-list_cont-list"
-                                                        header={
-                                                            <>
-                                                                <h1>{area.title}</h1>
-                                                                <Progress type="circle" percent={100} />                                                               
-                                                            </>
-                                                        } 
-                                                        key={area._id}>
-                                                            <ListReports reports={reports} ubi={ubi} ar={ar} mod={mod} setReloadReports={setReloadReports} />    
-                                                        </Panel>
-                                                    </Collapse>
-                                                    
-                                                    )
-                                                } 
-                                            } 
-                                                                                                                    
-                                            
-                                        })}
-
-                                    </>
-                                    )
-                                                                
-                            })}  
-                        </TabPane>                                                                      
-                    )                                      
-                })}                
-            </Tabs> */}

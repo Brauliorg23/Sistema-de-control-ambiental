@@ -27,11 +27,12 @@ ChartJS.register(
 );
 
 export default function ListReportsGrafic(props) {
-  const {are, reports, ubi}=props;
-  console.log(reports);
+  const {are, porM, ubi}=props;
+  console.log(porM);
   console.log(ubi);
   console.log(are);
   const labels = [];
+  
 
   are.map(function (ar){
     labels.push(ar)
@@ -42,14 +43,7 @@ export default function ListReportsGrafic(props) {
   const data = {
     labels,
     datasets: [
-      {
-        type: 'line',
-        label: 'Dataset 1',
-        borderColor: 'rgb(255, 99, 132)',
-        borderWidth: 2,
-        fill: false,
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
-      },
+      
       {
         type: 'bar',
         label: 'Dataset 2',
@@ -58,11 +52,7 @@ export default function ListReportsGrafic(props) {
         borderColor: 'white',
         borderWidth: 2,
       },
-      {
-        label: 'Dataset 3',
-        backgroundColor: 'rgb(53, 162, 235)',
-        data: labels.map(() => faker.datatype.number({ min: -0, max: 100 })),
-      },
+      
     ],
   };
 

@@ -8,11 +8,11 @@ import "./EditAreasForm.scss";
 export default function EditAreaFrom(props) {
     const {area, setIsVisibleModal, setReloadAreas} = props;
     const [areaData, setAreaData] = useState({});
-
+    console.log(area);
     useEffect(() => {
         setAreaData({
-        name: area.title,
-        lastname: area.description,
+        title: area.title,
+        description: area.description,
       });
     }, [area]);
 
@@ -56,7 +56,7 @@ function EditForm(props) {
             <Form.Item>
               <Input               
                 placeholder="Title"
-                value={areaData.name}
+                value={areaData.title}
                 onChange={e => setAreaData({ ...areaData, title: e.target.value })}
               />
             </Form.Item>
@@ -65,7 +65,7 @@ function EditForm(props) {
             <Form.Item>
               <Input                
                 placeholder="Description"
-                value={areaData.lastname}
+                value={areaData.description}
                 onChange={e =>
                     setAreaData({ ...areaData, description: e.target.value })
                 }

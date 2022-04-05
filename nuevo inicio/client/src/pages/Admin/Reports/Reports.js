@@ -27,7 +27,6 @@ export default function Reports(){
     const [total, setTotal] = useState("");
     const [modalContent, setModalContent] = useState(null);
     var ar = "";
-    var are = [];
     var ubi = "";
     useEffect(() => {
         getReportsApi(token).then(response => {       
@@ -50,53 +49,56 @@ export default function Reports(){
         }
       };
 
-    function graficas(are, ubi){
+    function graficas(are, ubi, porM){
         setIsVisibleModal(true);
         setModalTitle(`Informacion en grafica`);
-        setModalContent(<ListReportsGrafic are={are} reports={reports} ubi={ubi} bueno={bueno} malo={malo} total={total} /> )
+        setModalContent(<ListReportsGrafic are={are}  porM={porM} ubi={ubi} /> )
     }
-
-    console.log(malo);
-    console.log(bueno);
-    console.log(total);
+    
 
     return (
         <div className="reports">
             <Tabs  type="card" className="reports-list" >                
-                {ubications.map(function(ubication) {             
+                {ubications.map(function(ubication) {   
+                    
+                    var are = [];
+                    var porM = [];  
+                    let i = 0;      
                     return(
                         <TabPane className="reports-list_header"  tab={ubication.title} key={ubication._id} height={ContainerHeight} >
                             <div className="boto">
-                                <Button type="primary" shape="round" onClick={() => graficas(are, ubi)} >Ver estadisticas</Button> 
+                                <Button type="primary" shape="round" onClick={() => graficas(are, ubi, porM)} >Ver estadisticas</Button> 
                                 <Divider  type='vertical'/>
                                 <Button type="primary" shape="round" icon={<DownloadOutlined />}>Descargar</Button>                             
                             </div>
                             {modules.map(function (module){
                                 ar = module.area.title;
-                                var por = 0;
-                                if(ubication.title === module.ubication.title){
-                                   
-                                    
-
-                                   ubi = ubication.title;
+                                ubi = ubication.title;
+                                
+                                if(ubication.title === module.ubication.title){ 
+                                    if(are.length === 0){
+                                        are.push(module.title);
+                                       }else{
+                                           if(are[i] !== module.title){
+                                                are.push(module.title);
+                                                i++;
+                                           }
+                                
+                                                              
+                                       } 
                                     return(
                                         <Areas
                                             reports={reports}
                                             module={module}
-                                            are={are}
+                                            porM={porM}
                                             ubication={ubication}
                                             ar={ar}
-                                            por={por}
                                             setReloadReports={setReloadReports}
                                             setBueno={setBueno}
                                             malo={malo}
                                             setTotal={setTotal}
                                         />
                                     )
-                                }else{
-                                    if(are.length >0){
-                                        are.clear();                                    
-                                    }
                                 }
 
                                 
@@ -121,27 +123,13 @@ export default function Reports(){
 
 
 const Areas = (props) => {
-    const {module, ubication, reports,  ar, are, setBueno, malo, setTotal, setReloadReports} = props;
+    const {module, ubication, reports,  ar,  setBueno, malo, setTotal, setReloadReports, porM} = props;
     
-    var ban = false;
-    if(are.length === 0){
-        are.push(module.title);
-       }else{
-           if(ubication.title === module.ubication.title){
-                for (let index = 0; index < are.length; index++) {
-                    if(are[index] !== module.title){
-                        console.log("si puede entrar");
-                        ban = true;
-                        if(ban === true ){
-                            are.push(module.title);
-                            ban = false;
-                        }
-                    }
-                } 
-           }else{
-               are.clear();
-            }                  
-       }
+    let por = 0;
+    let mal = 0;
+    let bien =0;
+    
+    
     return(
         
         <Collapse>
@@ -149,7 +137,66 @@ const Areas = (props) => {
                 header={
                     <>
                         <h1>{module.title}</h1>
-                        <Progress type="circle" percent={100} />                                                               
+                        {reports.map(function (report) {
+                        
+                        if (report.module.title === module.title) {
+                        if(report.conten1 === "Mal"){
+                            mal++;
+                        }else{
+                            bien++;
+                        }
+                        if(report.conten2 === "Mal"){
+                            mal++;
+                        }else{
+                            bien++;
+                        }
+                        if(report.conten3 === "Mal"){
+                            mal++;
+                        }else{
+                            bien++;
+                        }
+                        if(report.conten4 === "Mal"){
+                            mal++;
+                        }else{
+                            bien++;
+                        }
+                        if(report.conten5 === "Mal"){
+                            mal++;
+                        }else{
+                            bien++;
+                        }
+                        if(report.conten6 === "Mal"){
+                            mal++;
+                        }else{
+                            bien++;
+                        }
+                        if(report.conten7 === "Mal"){
+                            mal++;
+                        }else{
+                            bien++;
+                        }
+                        if(report.conten8 === "Mal"){
+                            mal++;
+                        }else{
+                            bien++;
+                        }
+                        if(report.conten9 === "Mal"){
+                            mal++;
+                        }else{
+                            bien++;
+                        }
+                        if(report.conten10 === "Mal"){
+                            mal++;
+                        }else{
+                            bien++;
+                        }
+                        }
+
+                        
+                        por = (bien/(bien+mal))*100;
+                    })}
+                                <Progress type="circle" percent={por} /> 
+                                {porM.push(module.title, por)}                                                     
                     </>
                 } 
                 key={1}>

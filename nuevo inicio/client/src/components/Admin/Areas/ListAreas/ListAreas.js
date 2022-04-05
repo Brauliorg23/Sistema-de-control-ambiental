@@ -25,7 +25,7 @@ export default function ListArea(props){
 
     function addArea (){
       setIsVisibleModal(true);
-      setModalTitle(`Agreagar un nuevo contenedor`);
+      setModalTitle(`Agreagar una nueva area`);
       setModalContent(<AddAreas setIsVisibleModal={setIsVisibleModal} setReloadAreas={setReloadAreas} />);
     }
     return (
@@ -42,7 +42,7 @@ export default function ListArea(props){
                 type='primary'
                 onClick={() => addArea()}
             >
-                Agregar contenedor
+                Agregar area
             </Button>            
           </div>
           {viewAreasActives ? (

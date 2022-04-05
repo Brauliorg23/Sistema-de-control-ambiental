@@ -14,7 +14,6 @@ export default function ListReports(props){
       {conten: mod.conten9,},
       {conten: mod.conten10,
     }];
-
     const columns = [
       {
         title: 'usuario',
@@ -66,10 +65,10 @@ export default function ListReports(props){
             width: 100,
             render: tags => {
               let color = "green";
-              if (tags[index] === "Mal") { 
-                malo++;              
+              if (tags[index] === "Mal") {           
                 color = 'volcano';                
-              }   
+              }else{
+              }
               
               return (
                 <Tag color={color} key={tags[index]}>

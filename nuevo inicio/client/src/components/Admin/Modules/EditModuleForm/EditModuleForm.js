@@ -14,8 +14,8 @@ export default function EditModuleForm(props) {
 
     useEffect(() => {
       setModuleData({
-        name: module.title, 
-        lastname: module.description
+        title: module.title, 
+        description: module.description
       });
     }, [module]);
   
@@ -69,7 +69,7 @@ function EditForm(props) {
             <Form.Item>
               <Input               
                 placeholder="Title"
-                value={moduleData.name}
+                value={moduleData.title}
                 onChange={e => setModuleData({ ...moduleData, title: e.target.value })}
               />
             </Form.Item>
@@ -78,7 +78,7 @@ function EditForm(props) {
             <Form.Item>
               <Input                
                 placeholder="Description"
-                value={moduleData.lastname}
+                value={moduleData.description}
                 onChange={e =>
                   setModuleData({ ...moduleData, description: e.target.value })
                 }

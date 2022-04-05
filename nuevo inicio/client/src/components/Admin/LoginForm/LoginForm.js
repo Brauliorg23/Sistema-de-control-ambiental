@@ -10,14 +10,12 @@ export default function LoginForm(){
         email: "",
         password: ""
     });
-
     const changeForm = e => {
         setInputs({
           ...inputs,
           [e.target.name]: e.target.value
         });
       };
-
     const login = async e => {
         e.preventDefault();
         const result = await signInApi(inputs);
@@ -37,7 +35,6 @@ export default function LoginForm(){
     
           window.location.href = "/admin";
         }
-    
         console.log(result);
     };
 

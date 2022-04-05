@@ -1,10 +1,8 @@
-const { countDocuments } = require("../models/containerTrash");
 const ContainerTrash = require("../models/containerTrash");
 
 
 function addContainerTrash(req, res){
     const containerTrash = new ContainerTrash();
-    console.log(req.body);
     const {code, title, description} = req.body;
     containerTrash.code = code;
     containerTrash.title = title;
@@ -16,6 +14,7 @@ function addContainerTrash(req, res){
     }else{    
         containerTrash.save((err, createdContainerTrash) => {
             if (err) {
+              console.log(err);
                 res.status(500).send({message: "Ubicasion ya existe"});
             }else{
                if(!createdContainerTrash){

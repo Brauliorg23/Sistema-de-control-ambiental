@@ -31,7 +31,6 @@ export default function LayoutAdmin(props){
                 <Content className="layout-admin__content">                    
                     {children}                    
                 </Content>
-                <Footer className="layout-admin__footer">piedepagina..</Footer>
             </Layout> 
         </Layout>
     );

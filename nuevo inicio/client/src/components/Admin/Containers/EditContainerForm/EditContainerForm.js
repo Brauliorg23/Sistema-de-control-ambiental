@@ -21,7 +21,7 @@ export default function EditContainerFrom(props) {
       const token = getAccessTokenApi();
       let containerUpdate = containerData;
   
-      if (!containerUpdate.title || !containerUpdate.description ) {
+      if (!containerUpdate.name || !containerUpdate.lastname ) {
         notification["error"]({
           message: "El nombre, apellidos y email son obligatorios."
         });
@@ -58,7 +58,7 @@ function EditForm(props) {
               <Input               
                 placeholder="Title"
                 value={containerData.name}
-                onChange={e => setContainerData({ ...containerData, title: e.target.value })}
+                onChange={e => setContainerData({ ...containerData, name: e.target.value })}
               />
             </Form.Item>
           </Col>
@@ -68,7 +68,7 @@ function EditForm(props) {
                 placeholder="Description"
                 value={containerData.lastname}
                 onChange={e =>
-                  setContainerData({ ...containerData, description: e.target.value })
+                  setContainerData({ ...containerData, lastname: e.target.value })
                 }
               />
             </Form.Item>

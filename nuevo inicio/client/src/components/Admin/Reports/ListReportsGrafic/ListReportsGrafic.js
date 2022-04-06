@@ -11,7 +11,6 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Chart } from 'react-chartjs-2';
-import faker from 'faker';
 import {  DownloadOutlined,} from '@ant-design/icons';
 import {Button} from 'antd';
 
@@ -26,20 +25,44 @@ ChartJS.register(
   Tooltip
 );
 
-export default function ListReportsGrafic(props) {
-  const {are, porM, ubi}=props;
-  console.log(porM);
-  console.log(ubi);
-  console.log(are);
-  const labels = [];
-  
 
+
+class Modulo {
+  constructor(modulo, porsentaje) {
+    this.modulo = modulo;
+    this.porsentaje = porsentaje;
+  }
+}
+
+export default function ListReportsGrafic(props) {
+  const {are, porM}=props;
+  const labels = [];
+  var misModulos = [];
+  for (let i = 0; i < porM.length; i++) {
+    var modulo = "";
+    var porsentaje = 0;
+    
+    if (i === 0) {
+      modulo = porM[i];
+      porsentaje = porM[i+1];
+      var modul = new Modulo(modulo, porsentaje);
+      misModulos.push(modul);
+      i++;
+    }else{
+      if(porM[i]===porM[i-2]){
+      }else{
+        modulo = porM[i];
+        porsentaje = porM[i+1];
+        var modul = new Modulo(modulo, porsentaje);
+        misModulos.push(modul);
+        i++;
+      }
+    }
+    
+  }
   are.map(function (ar){
     labels.push(ar)
   })
-
-  console.log(labels);
-
   const data = {
     labels,
     datasets: [
@@ -48,7 +71,7 @@ export default function ListReportsGrafic(props) {
         type: 'bar',
         label: 'Dataset 2',
         backgroundColor: 'rgb(75, 192, 192)',
-        data: labels.map(() => faker.datatype.number({ min: 0, max: 100 })),
+        data: misModulos.map((modul) => modul.porsentaje),
         borderColor: 'white',
         borderWidth: 2,
       },

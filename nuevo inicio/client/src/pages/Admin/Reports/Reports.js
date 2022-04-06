@@ -22,9 +22,6 @@ export default function Reports(){
     const [reloadReports, setReloadReports] = useState(false);     
     const [isVisibleModal, setIsVisibleModal] = useState(false);
     const [modalTitle, setModalTitle] = useState("");
-    const [bueno, setBueno] = useState("");
-    var malo = 0;
-    const [total, setTotal] = useState("");
     const [modalContent, setModalContent] = useState(null);
     var ar = "";
     var ubi = "";
@@ -43,11 +40,6 @@ export default function Reports(){
         });
         setReloadReports(false);
     }, [token, reloadReports]);
-    
-    const onScroll = e => {
-        if (e.target.scrollHeight - e.target.scrollTop === ContainerHeight) {      
-        }
-      };
 
     function graficas(are, ubi, porM){
         setIsVisibleModal(true);
@@ -94,9 +86,6 @@ export default function Reports(){
                                             ubication={ubication}
                                             ar={ar}
                                             setReloadReports={setReloadReports}
-                                            setBueno={setBueno}
-                                            malo={malo}
-                                            setTotal={setTotal}
                                         />
                                     )
                                 }
@@ -123,7 +112,7 @@ export default function Reports(){
 
 
 const Areas = (props) => {
-    const {module, ubication, reports,  ar,  setBueno, malo, setTotal, setReloadReports, porM} = props;
+    const {module, ubication, reports,  ar, setReloadReports, porM} = props;
     
     let por = 0;
     let mal = 0;
@@ -200,7 +189,7 @@ const Areas = (props) => {
                     </>
                 } 
                 key={1}>
-                    <ListReports reports={reports} setBueno={setBueno} malo={malo} setTotal={setTotal} ubi={ubication.title} ar={ar} mod={module} setReloadReports={setReloadReports} />
+                    <ListReports reports={reports} ubi={ubication.title} ar={ar} mod={module} setReloadReports={setReloadReports} />
                 </Panel>
         </Collapse>
                    

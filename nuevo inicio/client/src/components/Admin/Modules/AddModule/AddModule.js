@@ -3,9 +3,6 @@ import { Form, Input, Button, Checkbox, notification, Row, Col, Select} from "an
 import {
   emailValidation,
 } from "../../../../utils/formValidation";
-import {
-  PlusOutlined
-} from '@ant-design/icons';
 import { addModuleApi } from "../../../../api/modules";
 import {getUbicationsApi} from "../../../../api/ubication";
 import {getContainersApi} from "../../../../api/containers";
@@ -374,7 +371,17 @@ export default function AddModule(props) {
               })}
           </Select>
         </Col>
-      </Row>      
+      </Row>   
+      
+      <Row gutter={24}>
+        <Col span={12}>
+            <Form.Item>
+              <Button htmlType="submit" className="register-form__button" onCl>
+               uno mas
+              </Button>
+            </Form.Item>   
+          </Col>
+        </Row>
       
       <Row gutter={24}>
         <Col span={12}>
@@ -417,7 +424,7 @@ export default function AddModule(props) {
         </Checkbox>
       </Form.Item>
       <Form.Item>
-        <Button htmlType="submit" className="register-form__button">
+        <Button htmlType="submit" className="register-form__button" onCl>
           Crear cuenta
         </Button>
       </Form.Item>

@@ -33,8 +33,8 @@ export default function ListContainer(props){
           <div className='list-cont__switch'>
             <Switch
                 defaultChecked
-                checkedChildren="Ubicasiones Activas" 
-                unCheckedChildren="Ubicasiones inactivas"
+                checkedChildren="Contenedores Activas" 
+                unCheckedChildren="Contenedores inactivas"
                 onChange={() => setViewContainersActives(!viewContainersActives)}
             />
             <Divider  type='vertical'/>

@@ -1,7 +1,7 @@
 import { Table, Tag, Space } from 'antd';
 
 export default function ListReports(props){
-    const {reports, mod, ubi, ar, setBueno, malo, setTotal} =props    
+    const {reports, mod, ubi, ar} =props    
     var contens = [{
       conten: mod.conten1,},
       {conten: mod.conten2,},
@@ -14,6 +14,7 @@ export default function ListReports(props){
       {conten: mod.conten9,},
       {conten: mod.conten10,
     }];
+
     const columns = [
       {
         title: 'usuario',
@@ -55,7 +56,7 @@ export default function ListReports(props){
 
     for (let index = 0; index < 10; index++) {
       var cont = contens[index].conten;
-      if (cont !== null) {
+      if (cont !== null && cont !== undefined) {
         columns.push(
           {
             title: cont.title,

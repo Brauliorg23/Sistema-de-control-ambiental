@@ -1,6 +1,6 @@
 import React from "react";
 import './App.scss';
-import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {HashRouter, Route, Routes} from 'react-router-dom';
 import routes from "./config/routes";
 import AuthProvider from "./providers/AuthProvider";
 
@@ -8,7 +8,7 @@ function App() {
   
   return (
     <AuthProvider> 
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           {routes.map((route, index)=> (
             <Route 
@@ -22,7 +22,7 @@ function App() {
             />
           ))}
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </AuthProvider>
     
   );

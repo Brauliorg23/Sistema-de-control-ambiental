@@ -13,6 +13,8 @@ import {
 import { Chart } from 'react-chartjs-2';
 import {  DownloadOutlined,} from '@ant-design/icons';
 import {Button} from 'antd';
+import { jsPDF } from "jspdf";
+import { renderToString } from "react-dom/server";
 
 ChartJS.register(
   LinearScale,
@@ -79,10 +81,54 @@ export default function ListReportsGrafic(props) {
     ],
   };
 
+  // downloadBtn.addEventListener("click", function() {
+  //   var d = new Date();
+  //   var n = d.toISOString();
+  //   // only jpeg is supported by jsPDF
+  //   var imgData = Chart.toDataURL("image/png", 1.0);
+  //   var pdf = new jsPDF();
+  //   pdf.addImage(imgData, "JPEG", 0, 0);
+  //   pdf.save(n+"-graf01.pdf");
+  // }, false);
+
+  // function downloadBtn (){
+  //   var d = new Date();
+  //   var n = d.toISOString();
+  //   var imgData = Chart.toDataURL("image/png", 1.0);
+  //   var pdf = new jsPDF();
+  //   pdf.addImage(imgData, "JPEG", 0, 0);
+  //   pdf.save(n+"-graf01.pdf");
+  // }
+
+  const downloadBtn = () => {
+    var d = new Date();
+    var n = d.toISOString();
+    const string = renderToString(<Chart type='bar' data={data} />);
+    const pdf = new jsPDF("p", "mm", "a4");
+    const columns = [
+      "SOW Creation Date",
+      "SOW Start Date",
+      "Project",
+      "Last Updated",
+      "SOW End Date"
+    ];
+    var rows = [
+      [
+        "Dec 13, 2017",
+        "Jan 1, 2018",
+        "ABC Connect - ABCXYZ",
+        "Dec 13, 2017",
+        "Dec 31, 2018"
+      ]
+    ];
+    pdf.addImage(string, "JPEG", 0, 0);
+    pdf.save(n+"pdf");
+  };
+
   return (
     <div className='Graf'>
       <Chart type='bar' data={data} />
-      <Button type="primary" shape="round" icon={<DownloadOutlined />}>
+      <Button onClick={() => downloadBtn()} type="primary" shape="round" icon={<DownloadOutlined />}>
       Download
       </Button>
     </div>  

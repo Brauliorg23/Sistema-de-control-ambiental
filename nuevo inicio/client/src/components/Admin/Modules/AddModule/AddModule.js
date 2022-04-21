@@ -19,24 +19,7 @@ export default function AddModule(props) {
   const { Option } = Select;
   const token = getAccessTokenApi();
   const [module, setModule] = useState({
-    title: "",
-    description : "",
-    codigo: "",
-    condition: "",
-    conten1: "",
-    conten2: "",
-    conten3: "",
-    conten4: "",
-    conten5: "",
-    conten6: "",
-    conten7: "",
-    conten8: "",
-    conten9: "",
-    conten10: "",
-    ubication: "",
-    area: "",
     privacyPolicy: false
-    
   });
 
   const [formValid, setFormValid] = useState({
@@ -110,22 +93,6 @@ export default function AddModule(props) {
     }
 
     setModule({
-      title: "",
-      description : "",
-      codigo: "",
-      condition: "",
-      conten1: "",
-      conten2: "",
-      conten3: "",
-      conten4: "",
-      conten5: "",
-      conten6: "",
-      conten7: "",
-      conten8: "",
-      conten9: "",
-      conten10: "",
-      ubication: "",
-      area: "",
       privacyPolicy: false
     });
 

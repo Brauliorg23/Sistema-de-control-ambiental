@@ -7,106 +7,68 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
+  Link,
   Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+  HStack,
+  Center,
+  Heading,
+  Switch,
+  useColorMode,
+  NativeBaseProvider,
+  VStack,
+  Box,
+} from 'native-base';
+import NativeBaseIcon from './src/components/NativeBaseIcon';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
-
-const Section = ({children, title}): Node => {
-  const isDarkMode = useColorScheme() === 'dark';
+// Color Switch Component
+function ToggleDarkMode() {
+  const {colorMode, toggleColorMode} = useColorMode();
   return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
+    <HStack space={2} alignItems="center">
+      <Text>Dark</Text>
+      <Switch
+        isChecked={colorMode === 'light'}
+        onToggle={toggleColorMode}
+        aria-label={
+          colorMode === 'light' ? 'switch to dark mode' : 'switch to light mode'
+        }
+      />
+      <Text>Light</Text>
+    </HStack>
+  );
+}
+const App = () => {
+  return (
+    <NativeBaseProvider>
+      <Center
+        _dark={{bg: 'blueGray.900'}}
+        _light={{bg: 'blueGray.50'}}
+        px={4}
+        flex={1}>
+        <VStack space={5} alignItems="center">
+          <NativeBaseIcon />
+          <Heading size="lg">Welcome to NativeBase</Heading>
+          <HStack space={2} alignItems="center">
+            <Text>Edit</Text>
+            <Box
+              px={2}
+              py={1}
+              _dark={{bg: 'blueGray.800'}}
+              _light={{bg: 'blueGray.200'}}>
+              App.js
+            </Box>
+            <Text>and save to reload.</Text>
+          </HStack>
+          <Link href="https://docs.nativebase.io" isExternal>
+            <Text color="primary.500" underline fontSize={'xl'}>
+              Learn NativeBase
+            </Text>
+          </Link>
+          <ToggleDarkMode />
+        </VStack>
+      </Center>
+    </NativeBaseProvider>
   );
 };
-
-const App: () => Node = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
-  return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
-
 export default App;

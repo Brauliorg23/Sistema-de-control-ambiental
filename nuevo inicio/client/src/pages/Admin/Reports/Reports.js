@@ -61,7 +61,7 @@ export default function Reports(){
                             <div className="boto">
                                 <Button type="primary" shape="round" onClick={() => graficas(are, ubi, porM)} >Ver estadisticas</Button> 
                                 <Divider  type='vertical'/>
-                                <Button type="primary" shape="round" icon={<DownloadOutlined />}>Descargar</Button>                             
+                                {/* <Button type="primary" shape="round" icon={<DownloadOutlined />}>Descargar</Button>                              */}
                             </div>
                             {modules.map(function (module){
                                 ar = module.area.title;

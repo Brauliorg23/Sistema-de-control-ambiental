@@ -128,9 +128,9 @@ export default function ListReportsGrafic(props) {
   return (
     <div className='Graf'>
       <Chart type='bar' data={data} />
-      <Button onClick={() => downloadBtn()} type="primary" shape="round" icon={<DownloadOutlined />}>
+      {/* <Button onClick={() => downloadBtn()} type="primary" shape="round" icon={<DownloadOutlined />}>
       Download
-      </Button>
+      </Button> */}
     </div>  
   );
 }

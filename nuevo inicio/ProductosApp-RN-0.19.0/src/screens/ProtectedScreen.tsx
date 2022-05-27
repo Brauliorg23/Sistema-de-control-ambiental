@@ -1,30 +1,28 @@
 import React, { useContext } from 'react'
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { AuthContext } from '../context/AuthContext';
+import { RNCamera } from 'react-native-camera';
 
 export const ProtectedScreen = () => {
 
-    const { user, token, logOut } = useContext( AuthContext );
+    
 
-
+const { user, token, logOut } = useContext( AuthContext );
+    
     return (
-        <View style={ styles.container }>
-            <Text style={ styles.title }>Protected Screen</Text>
-
-            <Button 
-                title="logout"
-                color="#5856D6"
-                onPress={ logOut }
-            />
-
-            <Text>
-                { JSON.stringify( user, null, 5 ) }
-            </Text>
-            <Text>
-                { token }
-            </Text>
-
-        </View>
+        <View style={styles.container}>
+        <RNCamera
+          ref={ref => {
+            this.camera = ref;
+          }}
+          style={{
+            flex: 1,
+            width: '100%',
+          }}
+          onGoogleVisionBarcodesDetected={this.barcodeRecognized}
+        >
+        </RNCamera>
+       </View>
     )
 }
 

@@ -50,7 +50,7 @@ export const LoginScreen = ({ navigation }: Props) => {
                     {/* Keyboard avoid view */}
                     <WhiteLogo />
 
-                    <Text style={ loginStyles.title }>Iniciar secion</Text>
+                    <Text style={ loginStyles.title }>Login</Text>
 
                     <Text style={ loginStyles.label }>Email:</Text>
                     <TextInput 
@@ -102,7 +102,17 @@ export const LoginScreen = ({ navigation }: Props) => {
                             style={ loginStyles.button }
                             onPress={ onLogin }
                         >
-                            <Text style={ loginStyles.buttonText } >Iniciar secion</Text>
+                            <Text style={ loginStyles.buttonText } >Login</Text>
+                        </TouchableOpacity>
+                    </View>
+
+                    {/* Crear una nueva cuenta */}
+                    <View style={ loginStyles.newUserContainer  }>
+                        <TouchableOpacity
+                            activeOpacity={ 0.8 }
+                            onPress={ () => navigation.replace('RegisterScreen') }
+                        >
+                            <Text style={ loginStyles.buttonText }>Nueva cuenta </Text>
                         </TouchableOpacity>
                     </View>
                 </View>

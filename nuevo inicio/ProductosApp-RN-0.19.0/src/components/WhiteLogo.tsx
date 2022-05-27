@@ -7,7 +7,7 @@ export const WhiteLogo = () => {
             alignItems: 'center'
         }}>
             <Image 
-                source={ require('../assets/Amb.png') }
+                source={ require('../assets/colibri.png') }
                 style={{
                     width: 110,
                     height: 100 
